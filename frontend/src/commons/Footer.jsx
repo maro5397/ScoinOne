@@ -75,7 +75,7 @@ export default function Footer() {
             공지사항
           </Link>
           <Link color="text.secondary" href="#">
-            FAQs
+            질의사항
           </Link>
         </Box>
         <Box

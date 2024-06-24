@@ -32,20 +32,6 @@ export default function Navigation({ mode, toggleColorMode }) {
     setOpen(newOpen);
   };
 
-  const scrollToSection = (sectionId) => {
-    const sectionElement = document.getElementById(sectionId);
-    const offset = 128;
-    if (sectionElement) {
-      const targetScroll = sectionElement.offsetTop - offset;
-      sectionElement.scrollIntoView({ behavior: "smooth" });
-      window.scrollTo({
-        top: targetScroll,
-        behavior: "smooth",
-      });
-      setOpen(false);
-    }
-  };
-
   return (
     <div>
       <AppBar
@@ -100,18 +86,12 @@ export default function Navigation({ mode, toggleColorMode }) {
                   placeholder="가상자산 검색"
                   autoComplete="off"
                 />
-                <MenuItem
-                  onClick={() => scrollToSection("auction")}
-                  sx={{ py: "6px", px: "12px" }}
-                >
+                <MenuItem onClick={""} sx={{ py: "6px", px: "12px" }}>
                   <Typography variant="body2" color="text.primary">
                     거래소
                   </Typography>
                 </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection("stock")}
-                  sx={{ py: "6px", px: "12px" }}
-                >
+                <MenuItem onClick={""} sx={{ py: "6px", px: "12px" }}>
                   <Typography variant="body2" color="text.primary">
                     내 자산
                   </Typography>
@@ -184,18 +164,10 @@ export default function Navigation({ mode, toggleColorMode }) {
                       toggleColorMode={toggleColorMode}
                     />
                   </Box>
-                  <MenuItem onClick={() => scrollToSection("auction")}>
-                    거래소
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection("stock")}>
-                    내 자산
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection("announce")}>
-                    공지사항
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection("FAQ")}>
-                    FAQ
-                  </MenuItem>
+                  <MenuItem onClick={""}>거래소</MenuItem>
+                  <MenuItem onClick={""}>내 자산</MenuItem>
+                  <MenuItem onClick={""}>공지사항</MenuItem>
+                  <MenuItem onClick={""}>질의사항</MenuItem>
                   <Divider />
                   <MenuItem>
                     <Button
