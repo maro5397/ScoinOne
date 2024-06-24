@@ -54,7 +54,7 @@ export default function OrderHistory() {
                 <>
                   <Typography
                     variant="body1"
-                    color={order.type === "매도" ? "error" : "primary"}
+                    color={order.type === "매수" ? "error" : "primary"}
                   >
                     SOL 지정가 {order.type} {order.date}
                   </Typography>
