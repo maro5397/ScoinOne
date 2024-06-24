@@ -3,6 +3,7 @@ import LandingPage from "./landing-page/LandingPage.jsx";
 import LoginPage from "./login-page/LoginPage.jsx";
 import RegisterPage from "./register-page/RegisterPage.jsx";
 import AuctionPage from "./auction-page/AuctionPage.jsx";
+import MyPage from "./my-page/MyPage.jsx";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/auction" element={<AuctionPage />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </BrowserRouter>
   );
