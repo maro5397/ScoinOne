@@ -1,21 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { CssBaseline, Box, Button, Container, Typography } from "@mui/material";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import Navigation from "../commons/Navigation";
+import { Box, Button, Container, Divider, Typography } from "@mui/material";
 import CommentList from "../commons/CommentList";
 import CommentForm from "../commons/CommentForm";
-import getTheme from "../commons/getTheme";
-import Footer from "../commons/Footer";
+import BaseLayout from "../commons/BaseLayout";
 
 export default function BoardDetail({ postId, path }) {
-  const [mode, setMode] = useState("light");
-  const theme = createTheme(getTheme(mode));
-
-  const toggleColorMode = () => {
-    setMode((prev) => (prev === "dark" ? "light" : "dark"));
-  };
-
   const [posts, setPosts] = useState({
     id: 1,
     title: "React 게시판 개발 시작!",
@@ -58,51 +48,38 @@ export default function BoardDetail({ postId, path }) {
   }, [postId]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Navigation mode={mode} toggleColorMode={toggleColorMode} />
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "100vh",
-          bgcolor: "background.default",
-          margin: "0 auto",
-          mt: 15,
-        }}
-        maxWidth="lg"
-      >
-        <Container maxWidth="md">
-          {posts && (
-            <>
-              <Typography variant="h5" component="h2" gutterBottom>
-                {posts.title}
-              </Typography>
-              <Typography variant="body2" paragraph>
-                {posts.author}
-              </Typography>
-              <Typography variant="body2" paragraph>
-                {posts.createdAt}
-              </Typography>
-              <Typography variant="body1" paragraph>
-                {posts.content}
-              </Typography>
-              <Box display="flex" justifyContent="flex-end">
-                <Button
-                  component={Link}
-                  to={`/${path}/${postId}/edit`}
-                  variant="outlined"
-                >
-                  수정
-                </Button>
-              </Box>
-              <CommentList comments={comments} />
-              <CommentForm postId={postId} setComments={setComments} />
-            </>
-          )}
-        </Container>
-        <Footer></Footer>
-      </Box>
-    </ThemeProvider>
+    <BaseLayout marginTop={100}>
+      <Container maxWidth="md">
+        {posts && (
+          <>
+            <Typography variant="h5" component="h2" gutterBottom>
+              {posts.title}
+            </Typography>
+            <Typography variant="body2" paragraph>
+              {posts.author}
+            </Typography>
+            <Typography variant="body2" paragraph>
+              {posts.createdAt}
+            </Typography>
+            <Divider sx={{ mt: 5, mb: 10 }} />
+            <Typography variant="body1" paragraph>
+              {posts.content}
+            </Typography>
+            <Divider sx={{ mt: 10, mb: 5 }} />
+            <Box display="flex" justifyContent="flex-end">
+              <Button
+                component={Link}
+                to={`/${path}/${postId}/edit`}
+                variant="outlined"
+              >
+                수정
+              </Button>
+            </Box>
+            <CommentList comments={comments} />
+            <CommentForm postId={postId} setComments={setComments} />
+          </>
+        )}
+      </Container>
+    </BaseLayout>
   );
 }
