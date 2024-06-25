@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { CssBaseline, Box, Divider } from "@mui/material/";
+import { CssBaseline, Box, Divider } from "@mui/material";
 import Introduction from "./components/Introduction";
 import Slider from "./components/Slider";
 import Announce from "./components/Announce";

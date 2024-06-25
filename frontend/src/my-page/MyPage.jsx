@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, CssBaseline, alpha } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Profile from "./components/Profile";
 import Menu from "./components/Menu";
