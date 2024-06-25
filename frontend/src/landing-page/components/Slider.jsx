@@ -1,10 +1,5 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import Container from "@mui/material/Container";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import Carousel from "react-material-ui-carousel";
+import { Box, Card, Container, Stack, Typography } from "@mui/material";
 
 const items = [
   {

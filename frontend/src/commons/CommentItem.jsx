@@ -1,4 +1,3 @@
-import React from "react";
 import { ListItem, ListItemText, Typography } from "@mui/material";
 
 export default function CommentItem({ comment }) {

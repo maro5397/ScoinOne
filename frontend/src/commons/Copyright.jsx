@@ -1,4 +1,4 @@
-import Link from "@mui/material/Link";
+import { Link } from "@mui/material";
 
 export default function Copyright() {
   return (

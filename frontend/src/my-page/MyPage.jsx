@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box, CssBaseline, alpha } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Profile from "./components/Profile";
@@ -8,7 +8,7 @@ import getTheme from "../commons/getTheme";
 import Footer from "../commons/Footer";
 
 export default function MyPage() {
-  const [mode, setMode] = React.useState("light");
+  const [mode, setMode] = useState("light");
   const theme = createTheme(getTheme(mode));
 
   const toggleColorMode = () => {

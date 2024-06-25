@@ -1,6 +1,5 @@
-import React from "react";
-import { Grid, Typography, Box, Container } from "@mui/material";
 import { Gauge } from "@mui/x-charts/Gauge";
+import { Grid, Typography, Box, Container } from "@mui/material";
 import VirtualAssetCard from "./VirtualAssetCard";
 
 export default function VirtualAssetInfoContent() {

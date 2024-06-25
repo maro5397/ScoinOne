@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import { Box } from "@mui/material";
+import { useState } from "react";
+import { Box, Divider, CssBaseline } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import AuctionLayout from "./components/AuctionLayout";
 import Chart from "./components/Chart";

@@ -1,9 +1,6 @@
-import * as React from "react";
-
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
+import { useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { CssBaseline, Box, Divider } from "@mui/material/";
 import Introduction from "./components/Introduction";
 import Slider from "./components/Slider";
 import Announce from "./components/Announce";
@@ -14,7 +11,7 @@ import Footer from "../commons/Footer";
 import Navigation from "../commons/Navigation";
 
 export default function LandingPage() {
-  const [mode, setMode] = React.useState("light");
+  const [mode, setMode] = useState("light");
   const theme = createTheme(getTheme(mode));
 
   const toggleColorMode = () => {

@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LineStyle, createChart } from "lightweight-charts";
-import { Grid, Box, Typography, touchRippleClasses } from "@mui/material";
+import { Grid, Box, Typography } from "@mui/material";
 
 export default function Chart({ mode }) {
   const chartContainerRef = useRef();

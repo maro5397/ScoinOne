@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { CssBaseline, TextField, Button, Box } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-
 import Navigation from "../commons/Navigation";
 import getTheme from "../commons/getTheme";
 import Footer from "../commons/Footer";

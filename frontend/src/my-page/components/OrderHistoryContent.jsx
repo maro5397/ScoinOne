@@ -1,4 +1,4 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   List,
   ListItemButton,
@@ -9,7 +9,6 @@ import {
   Grid,
   Paper,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
 export default function OrderHistoryContent() {
   const navigate = useNavigate();
