@@ -1,4 +1,3 @@
-import React from "react";
 import { Grid, Box } from "@mui/material";
 
 export default function AuctionLayout({
@@ -13,7 +12,7 @@ export default function AuctionLayout({
       container
       spacing={1}
       component="main"
-      sx={{ height: "100vh", mt: 10, flex: 1 }}
+      sx={{ height: "100vh", flex: 1 }}
     >
       <Grid item xs={12} sm={8}>
         <Box

@@ -1,21 +1,22 @@
-import * as React from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
-
-import Box from "@mui/material/Box";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
-import MenuItem from "@mui/material/MenuItem";
-import Drawer from "@mui/material/Drawer";
+import {
+  Box,
+  AppBar,
+  Toolbar,
+  Button,
+  Container,
+  Divider,
+  Typography,
+  MenuItem,
+  Drawer,
+  TextField,
+  Badge,
+  IconButton,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import TextField from "@mui/material/TextField";
-import Badge from "@mui/material/Badge";
-import IconButton from "@mui/material/IconButton";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import ToggleColorMode from "../landing-page/components/ToggleColorMode";
+import ToggleColorMode from "./ToggleColorMode";
 
 const logoStyle = {
   width: "140px",
@@ -26,7 +27,7 @@ const logoStyle = {
 };
 
 export default function Navigation({ mode, toggleColorMode }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);

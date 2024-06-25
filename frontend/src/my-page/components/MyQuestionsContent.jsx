@@ -1,4 +1,4 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   List,
   ListItemButton,
@@ -7,7 +7,6 @@ import {
   Link,
   Container,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
 export default function MyQuestionsContent() {
   const navigate = useNavigate();

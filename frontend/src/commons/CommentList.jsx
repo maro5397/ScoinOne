@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, List, Typography } from "@mui/material";
 import CommentItem from "./CommentItem";
 

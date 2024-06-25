@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { Container, Typography, List, Pagination } from "@mui/material";
+import {
+  Container,
+  Typography,
+  List,
+  Pagination,
+  Divider,
+} from "@mui/material";
 import BoardItem from "../commons/BoardItem";
 
 export default function BoardList({ path, pageName }) {
@@ -43,6 +49,7 @@ export default function BoardList({ path, pageName }) {
       <Typography variant="h4" gutterBottom>
         {pageName}
       </Typography>
+      <Divider />
       <List
         sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
       >
