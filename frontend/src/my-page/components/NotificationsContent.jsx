@@ -6,7 +6,7 @@ import {
   Box,
   Container,
   Typography,
-} from "@mui/material/Accordion";
+} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const alarm = [
