@@ -44,7 +44,7 @@ export default function Footer() {
         >
           <Box sx={{ width: { xs: "100%", sm: "60%" } }}>
             <Box sx={{ ml: "-15px" }}>
-              <img src={"logo.png"} style={logoStyle} alt="ScoinOne" />
+              <img src={"/logo.png"} style={logoStyle} alt="ScoinOne" />
             </Box>
             <Typography variant="body2" color="text.secondary" mb={2}>
               ScoinOne | reindeer002 | lsj000424@gmail.com
