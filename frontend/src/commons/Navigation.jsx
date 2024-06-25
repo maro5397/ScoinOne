@@ -75,7 +75,7 @@ export default function Navigation({ mode, toggleColorMode }) {
                 px: 0,
               }}
             >
-              <img src={"logo.png"} style={logoStyle} alt="ScoinOne" />
+              <img src={"/logo.png"} style={logoStyle} alt="ScoinOne" />
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
                 <TextField
                   id="outlined-basic"
