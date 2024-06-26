@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Box, Button, Container, Divider, Typography } from "@mui/material";
 import CommentList from "../commons/CommentList";
 import CommentForm from "../commons/CommentForm";
 import BaseLayout from "../commons/BaseLayout";
 
-export default function BoardDetail({ postId, path }) {
+export default function BoardDetail() {
+  const { boardType, postId } = useParams();
+
   const [posts, setPosts] = useState({
     id: 1,
     title: "React 게시판 개발 시작!",
@@ -43,7 +45,7 @@ export default function BoardDetail({ postId, path }) {
   ]);
 
   useEffect(() => {
-    console.log(path);
+    console.log(boardType);
     // 게시글 상세 정보 및 댓글 목록 API 호출
   }, [postId]);
 
@@ -69,14 +71,14 @@ export default function BoardDetail({ postId, path }) {
             <Box display="flex" justifyContent="flex-end">
               <Button
                 component={Link}
-                to={`/${path}/${postId}/edit`}
+                to={`/${boardType}/${postId}/edit`}
                 variant="outlined"
               >
                 수정
               </Button>
             </Box>
             <CommentList comments={comments} />
-            <CommentForm postId={postId} setComments={setComments} />
+            <CommentForm setComments={setComments} />
           </>
         )}
       </Container>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import {
   Container,
   Typography,
@@ -8,7 +9,8 @@ import {
 } from "@mui/material";
 import BoardItem from "../commons/BoardItem";
 
-export default function BoardList({ path, pageName }) {
+export default function BoardList() {
+  const { boardType } = useParams();
   const [posts, setPosts] = useState([
     {
       id: 1,
@@ -47,14 +49,14 @@ export default function BoardList({ path, pageName }) {
   return (
     <Container maxWidth="md">
       <Typography variant="h4" gutterBottom>
-        {pageName}
+        {boardType === "announce" ? "공지사항" : "질의사항"}
       </Typography>
       <Divider />
       <List
         sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
       >
         {posts.map((post) => (
-          <BoardItem key={post.id} post={post} path={path} />
+          <BoardItem key={post.id} post={post} />
         ))}
       </List>
       <Pagination

@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { Box, TextField, Button } from "@mui/material";
 
-export default function CommentForm({ postId, setComments }) {
+export default function CommentForm({ setComments }) {
+  const { postId } = useParams();
+
   const [content, setContent] = useState("");
 
   const handleSubmit = async (event) => {

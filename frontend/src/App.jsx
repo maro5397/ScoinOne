@@ -17,30 +17,10 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/auction" element={<AuctionPage />} />
         <Route path="/mypage" element={<MyPage />} />
-        <Route
-          path="/announce"
-          element={<BoardPage path="announce" pageName="공지사항" />}
-        />
-        <Route
-          path="/announce/:postId"
-          element={<BoardDetail pathId={1} path="announce" />}
-        />
-        <Route
-          path="/announce/:postId/edit"
-          element={<BoardForm path="announce" />}
-        />
-        <Route
-          path="/questions"
-          element={<BoardPage path="questions" pageName="질의사항" />}
-        />
-        <Route
-          path="/questions/:postId"
-          element={<BoardDetail pathId={1} path="questions" />}
-        />
-        <Route
-          path="/questions/:postId/edit"
-          element={<BoardForm path="questions" />}
-        />
+        <Route path="/board/:boardType" element={<BoardPage />} />
+        <Route path="/board/:boardType/post" element={<BoardForm />} />
+        <Route path="/board/:boardType/edit/:postId" element={<BoardForm />} />
+        <Route path="/board/:boardType/:postId" element={<BoardDetail />} />
       </Routes>
     </BrowserRouter>
   );

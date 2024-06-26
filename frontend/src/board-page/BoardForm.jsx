@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { TextField, Button, Box, Divider } from "@mui/material";
+import { useParams } from "react-router-dom";
+import { TextField, Button, Box } from "@mui/material";
 import BaseLayout from "../commons/BaseLayout";
 
-export default function BoardForm({ initialPost = false, path }) {
-  const [title, setTitle] = useState(initialPost?.title || "");
-  const [content, setContent] = useState(initialPost?.content || "");
+export default function BoardForm() {
+  const { boardType, postId } = useParams();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(path);
+    console.log(boardType + postId);
   };
 
   return (
@@ -40,7 +42,7 @@ export default function BoardForm({ initialPost = false, path }) {
         />
         <Box display="flex" justifyContent="flex-end">
           <Button type="submit" variant="contained" color="primary">
-            {initialPost ? "수정" : "작성"}
+            {postId ? "수정" : "작성"}
           </Button>
         </Box>
       </Box>

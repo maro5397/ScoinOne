@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ListItem, ListItemText, Typography } from "@mui/material";
 
-export default function BoardItem({ post, path }) {
+export default function BoardItem({ post }) {
+  const { boardType } = useParams();
   return (
-    <ListItem component={Link} to={`/${path}/${post.id}`}>
+    <ListItem component={Link} to={`/${boardType}/${post.id}`}>
       <ListItemText
         primary={
           <Typography variant="h6" color="primary">
