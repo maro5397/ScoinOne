@@ -103,16 +103,12 @@ export default function LoginPage() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link
-                  component={RouterLink}
-                  variant="body2"
-                  onClick={handleFindClick}
-                >
+                <Link variant="body2" onClick={handleFindClick}>
                   비밀번호 찾기
                 </Link>
               </Grid>
               <Grid item>
-                <Link component={RouterLink} href="" variant="body2">
+                <Link component={RouterLink} to="/register" variant="body2">
                   회원가입
                 </Link>
               </Grid>

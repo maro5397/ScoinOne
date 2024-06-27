@@ -454,10 +454,6 @@ export default function getTheme(mode) {
               opacity: 0.7,
               transition: "width 0.3s ease, opacity 0.3s ease",
             },
-            "&:hover::before": {
-              width: "100%",
-              opacity: 1,
-            },
             ...(theme.palette.mode === "dark" && {
               color: brand[200],
             }),
