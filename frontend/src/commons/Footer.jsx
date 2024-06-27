@@ -61,16 +61,28 @@ export default function Footer() {
           <Typography variant="body2" fontWeight={600}>
             Service
           </Typography>
-          <Link component={RouterLink} color="text.secondary" to="">
+          <Link component={RouterLink} color="text.secondary" to="/auction">
             거래소
           </Link>
-          <Link component={RouterLink} color="text.secondary" to="">
+          <Link
+            component={RouterLink}
+            color="text.secondary"
+            to="/mypage/assetinfo"
+          >
             내 자산
           </Link>
-          <Link component={RouterLink} color="text.secondary" to="">
+          <Link
+            component={RouterLink}
+            color="text.secondary"
+            to="/board/announce"
+          >
             공지사항
           </Link>
-          <Link component={RouterLink} color="text.secondary" to="">
+          <Link
+            component={RouterLink}
+            color="text.secondary"
+            to="/board/questions"
+          >
             질의사항
           </Link>
         </Box>
@@ -84,13 +96,13 @@ export default function Footer() {
           <Typography variant="body2" fontWeight={600}>
             Developer
           </Typography>
-          <Link component={RouterLink} color="text.secondary" to="">
+          <Link component={RouterLink} color="text.secondary" to="#">
             About
           </Link>
-          <Link component={RouterLink} color="text.secondary" to="">
+          <Link component={RouterLink} color="text.secondary" to="#">
             Careers
           </Link>
-          <Link component={RouterLink} color="text.secondary" to="">
+          <Link component={RouterLink} color="text.secondary" to="#">
             Contact
           </Link>
         </Box>

@@ -1,10 +1,9 @@
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   List,
   ListItemButton,
   ListItemText,
   Typography,
-  Link,
   Container,
   Grid,
   Paper,
@@ -75,16 +74,14 @@ export default function OrderHistoryContent() {
           >
             <ListItemText
               primary={
-                <Link component={RouterLink} underline="none" color="inherit">
-                  <Typography
-                    variant="body1"
-                    color={executionData.type === "매수" ? "error" : "primary"}
-                    fontWeight="bold"
-                  >
-                    {executionData.assetName} {executionData.tradingType}{" "}
-                    {executionData.type}
-                  </Typography>
-                </Link>
+                <Typography
+                  variant="body1"
+                  color={executionData.type === "매수" ? "error" : "primary"}
+                  fontWeight="bold"
+                >
+                  {executionData.assetName} {executionData.tradingType}{" "}
+                  {executionData.type}
+                </Typography>
               }
               secondary={
                 <>

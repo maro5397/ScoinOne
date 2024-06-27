@@ -96,7 +96,7 @@ export default function Register() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link component={RouterLink} href="" variant="body2">
+                <Link component={RouterLink} to="/login" variant="body2">
                   로그인 화면으로
                 </Link>
               </Grid>

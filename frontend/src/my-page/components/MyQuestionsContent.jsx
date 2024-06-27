@@ -1,10 +1,9 @@
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   List,
   ListItemButton,
   ListItemText,
   Typography,
-  Link,
   Container,
 } from "@mui/material";
 
@@ -49,9 +48,9 @@ export default function MyQuestionsContent() {
           >
             <ListItemText
               primary={
-                <Link component={RouterLink} underline="none" color="inherit">
+                <Typography variant="body1" color="textPrimary">
                   {question.title}
-                </Link>
+                </Typography>
               }
               secondary={
                 <Typography variant="body2" color="textSecondary">

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
   Box,
@@ -13,6 +14,7 @@ import {
   TextField,
   Badge,
   IconButton,
+  Link,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -76,7 +78,9 @@ export default function Navigation({ mode, toggleColorMode }) {
                 px: 0,
               }}
             >
-              <img src={"/logo.png"} style={logoStyle} alt="ScoinOne" />
+              <Link component={RouterLink} to="/">
+                <img src={"/logo.png"} style={logoStyle} alt="ScoinOne" />
+              </Link>
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
                 <TextField
                   id="outlined-basic"
@@ -87,15 +91,19 @@ export default function Navigation({ mode, toggleColorMode }) {
                   placeholder="가상자산 검색"
                   autoComplete="off"
                 />
-                <MenuItem onClick={""} sx={{ py: "6px", px: "12px" }}>
-                  <Typography variant="body2" color="text.primary">
-                    거래소
-                  </Typography>
+                <MenuItem sx={{ py: "6px", px: "12px" }}>
+                  <Link component={RouterLink} to="/auction">
+                    <Typography variant="body2" color="text.primary">
+                      거래소
+                    </Typography>
+                  </Link>
                 </MenuItem>
-                <MenuItem onClick={""} sx={{ py: "6px", px: "12px" }}>
-                  <Typography variant="body2" color="text.primary">
-                    내 자산
-                  </Typography>
+                <MenuItem sx={{ py: "6px", px: "12px" }}>
+                  <Link component={RouterLink} to="/mypage/assetinfo">
+                    <Typography variant="body2" color="text.primary">
+                      내 자산
+                    </Typography>
+                  </Link>
                 </MenuItem>
               </Box>
             </Box>
@@ -107,7 +115,11 @@ export default function Navigation({ mode, toggleColorMode }) {
               }}
             >
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
-              <IconButton color="primary">
+              <IconButton
+                component={RouterLink}
+                to="/mypage/alarm"
+                color="primary"
+              >
                 <Badge badgeContent={1} color="secondary">
                   <NotificationsIcon />
                 </Badge>
@@ -116,9 +128,8 @@ export default function Navigation({ mode, toggleColorMode }) {
                 color="primary"
                 variant="text"
                 size="small"
-                component="a"
-                href="/login"
-                target="_blank"
+                component={RouterLink}
+                to="/login"
               >
                 로그인
               </Button>
@@ -126,9 +137,8 @@ export default function Navigation({ mode, toggleColorMode }) {
                 color="primary"
                 variant="contained"
                 size="small"
-                component="a"
-                href="/register"
-                target="_blank"
+                component={RouterLink}
+                to="/register"
               >
                 회원가입
               </Button>
@@ -165,18 +175,33 @@ export default function Navigation({ mode, toggleColorMode }) {
                       toggleColorMode={toggleColorMode}
                     />
                   </Box>
-                  <MenuItem onClick={""}>거래소</MenuItem>
-                  <MenuItem onClick={""}>내 자산</MenuItem>
-                  <MenuItem onClick={""}>공지사항</MenuItem>
-                  <MenuItem onClick={""}>질의사항</MenuItem>
+                  <MenuItem>
+                    <Link component={RouterLink} to="/auction">
+                      거래소
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link component={RouterLink} to="/mypage/assetinfo">
+                      내 자산
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link component={RouterLink} to="/board/announce">
+                      공지사항
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link component={RouterLink} to="/board/questions">
+                      질의사항
+                    </Link>
+                  </MenuItem>
                   <Divider />
                   <MenuItem>
                     <Button
                       color="primary"
                       variant="contained"
-                      component="a"
-                      href="/register"
-                      target="_blank"
+                      component={RouterLink}
+                      to="/register"
                       sx={{ width: "100%" }}
                     >
                       회원가입
@@ -186,9 +211,8 @@ export default function Navigation({ mode, toggleColorMode }) {
                     <Button
                       color="primary"
                       variant="outlined"
-                      component="a"
-                      href="/login"
-                      target="_blank"
+                      component={RouterLink}
+                      to="/login"
                       sx={{ width: "100%" }}
                     >
                       로그인

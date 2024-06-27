@@ -1,3 +1,4 @@
+import { Link as RouterLink } from "react-router-dom";
 import { alpha } from "@mui/material/styles";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 
@@ -51,7 +52,12 @@ export default function Introduction() {
             useFlexGap
             sx={{ pt: 2, width: { xs: "100%", sm: "auto" } }}
           >
-            <Button variant="contained" color="primary">
+            <Button
+              component={RouterLink}
+              variant="contained"
+              color="primary"
+              to="/auction"
+            >
               거래소로 이동하기
             </Button>
           </Stack>
