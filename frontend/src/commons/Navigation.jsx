@@ -99,7 +99,7 @@ export default function Navigation({ mode, toggleColorMode }) {
                   </Link>
                 </MenuItem>
                 <MenuItem sx={{ py: "6px", px: "12px" }}>
-                  <Link component={RouterLink} to="/mypage">
+                  <Link component={RouterLink} to="/mypage/assetinfo">
                     <Typography variant="body2" color="text.primary">
                       내 자산
                     </Typography>
@@ -115,7 +115,11 @@ export default function Navigation({ mode, toggleColorMode }) {
               }}
             >
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
-              <IconButton color="primary">
+              <IconButton
+                component={RouterLink}
+                to="/mypage/alarm"
+                color="primary"
+              >
                 <Badge badgeContent={1} color="secondary">
                   <NotificationsIcon />
                 </Badge>
@@ -177,7 +181,7 @@ export default function Navigation({ mode, toggleColorMode }) {
                     </Link>
                   </MenuItem>
                   <MenuItem>
-                    <Link component={RouterLink} to="/mypage">
+                    <Link component={RouterLink} to="/mypage/assetinfo">
                       내 자산
                     </Link>
                   </MenuItem>

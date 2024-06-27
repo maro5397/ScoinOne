@@ -64,7 +64,11 @@ export default function Footer() {
           <Link component={RouterLink} color="text.secondary" to="/auction">
             거래소
           </Link>
-          <Link component={RouterLink} color="text.secondary" to="/mypage">
+          <Link
+            component={RouterLink}
+            color="text.secondary"
+            to="/mypage/assetinfo"
+          >
             내 자산
           </Link>
           <Link

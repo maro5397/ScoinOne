@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import { Paper, Tabs, Tab } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
@@ -10,7 +11,8 @@ import OrderHistoryContent from "./OrderHistoryContent";
 import MyQuestionsContent from "./MyQuestionsContent";
 
 export default function Menu() {
-  const [selectedTab, setSelectedTab] = useState(0); // 선택된 탭 인덱스
+  const { menu } = useParams();
+  const [selectedTab, setSelectedTab] = useState(menu || "alarm"); // 선택된 탭 인덱스
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -29,16 +31,40 @@ export default function Menu() {
             },
           }}
         >
-          <Tab icon={<NotificationsIcon />} label="알림" />
-          <Tab icon={<AccountBalanceWalletIcon />} label="자산정보" />
-          <Tab icon={<HistoryIcon />} label="체결/미체결" />
-          <Tab icon={<QuestionAnswerIcon />} label="내 질문" />
+          <Tab
+            value="alarm"
+            component={RouterLink}
+            to="/mypage/alarm"
+            icon={<NotificationsIcon />}
+            label="알림"
+          />
+          <Tab
+            value="assetinfo"
+            component={RouterLink}
+            to="/mypage/assetinfo"
+            icon={<AccountBalanceWalletIcon />}
+            label="자산정보"
+          />
+          <Tab
+            value="execution"
+            component={RouterLink}
+            to="/mypage/execution"
+            icon={<HistoryIcon />}
+            label="체결/미체결"
+          />
+          <Tab
+            value="questions"
+            component={RouterLink}
+            to="/mypage/questions"
+            icon={<QuestionAnswerIcon />}
+            label="내 질문"
+          />
         </Tabs>
       </Paper>
-      {selectedTab === 0 && <NotificationsContent />}
-      {selectedTab === 1 && <VirtualAssetInfoContent />}
-      {selectedTab === 2 && <OrderHistoryContent />}
-      {selectedTab === 3 && <MyQuestionsContent />}
+      {selectedTab === "alarm" && <NotificationsContent />}
+      {selectedTab === "assetinfo" && <VirtualAssetInfoContent />}
+      {selectedTab === "execution" && <OrderHistoryContent />}
+      {selectedTab === "questions" && <MyQuestionsContent />}
     </>
   );
 }
