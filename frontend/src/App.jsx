@@ -7,10 +7,12 @@ import MyPage from "./my-page/MyPage.jsx";
 import BoardPage from "./board-page/BoardPage.jsx";
 import BoardDetail from "./board-page/BoardDetail.jsx";
 import BoardForm from "./board-page/BoardForm.jsx";
+import ScrollToTop from "./commons/ScrollToTop.jsx";
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
