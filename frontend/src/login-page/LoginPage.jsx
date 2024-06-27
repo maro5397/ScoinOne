@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   Avatar,
@@ -102,12 +103,16 @@ export default function LoginPage() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2" onClick={handleFindClick}>
+                <Link
+                  component={RouterLink}
+                  variant="body2"
+                  onClick={handleFindClick}
+                >
                   비밀번호 찾기
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link component={RouterLink} href="" variant="body2">
                   회원가입
                 </Link>
               </Grid>

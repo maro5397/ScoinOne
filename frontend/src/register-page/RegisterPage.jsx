@@ -1,3 +1,4 @@
+import { Link as RouterLink } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   Avatar,
@@ -95,7 +96,7 @@ export default function Register() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link component={RouterLink} href="" variant="body2">
                   로그인 화면으로
                 </Link>
               </Grid>

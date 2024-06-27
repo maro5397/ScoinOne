@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   List,
   ListItemButton,
@@ -75,7 +75,7 @@ export default function OrderHistoryContent() {
           >
             <ListItemText
               primary={
-                <Link underline="none" color="inherit">
+                <Link component={RouterLink} underline="none" color="inherit">
                   <Typography
                     variant="body1"
                     color={executionData.type === "매수" ? "error" : "primary"}

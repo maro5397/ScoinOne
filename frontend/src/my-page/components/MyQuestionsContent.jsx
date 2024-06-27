@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   List,
   ListItemButton,
@@ -49,7 +49,7 @@ export default function MyQuestionsContent() {
           >
             <ListItemText
               primary={
-                <Link underline="none" color="inherit">
+                <Link component={RouterLink} underline="none" color="inherit">
                   {question.title}
                 </Link>
               }

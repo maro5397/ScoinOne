@@ -1,3 +1,4 @@
+import { Link as RouterLink } from "react-router-dom";
 import { Box, Container, Link, Stack, Typography } from "@mui/material";
 import Copyright from "./Copyright";
 
@@ -60,16 +61,16 @@ export default function Footer() {
           <Typography variant="body2" fontWeight={600}>
             Service
           </Typography>
-          <Link color="text.secondary" href="#">
+          <Link component={RouterLink} color="text.secondary" to="">
             거래소
           </Link>
-          <Link color="text.secondary" href="#">
+          <Link component={RouterLink} color="text.secondary" to="">
             내 자산
           </Link>
-          <Link color="text.secondary" href="#">
+          <Link component={RouterLink} color="text.secondary" to="">
             공지사항
           </Link>
-          <Link color="text.secondary" href="#">
+          <Link component={RouterLink} color="text.secondary" to="">
             질의사항
           </Link>
         </Box>
@@ -83,13 +84,13 @@ export default function Footer() {
           <Typography variant="body2" fontWeight={600}>
             Developer
           </Typography>
-          <Link color="text.secondary" href="#">
+          <Link component={RouterLink} color="text.secondary" to="">
             About
           </Link>
-          <Link color="text.secondary" href="#">
+          <Link component={RouterLink} color="text.secondary" to="">
             Careers
           </Link>
-          <Link color="text.secondary" href="#">
+          <Link component={RouterLink} color="text.secondary" to="">
             Contact
           </Link>
         </Box>
