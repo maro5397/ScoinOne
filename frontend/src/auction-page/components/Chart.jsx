@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { LineStyle, createChart } from "lightweight-charts";
 import { Grid, Box, Typography } from "@mui/material";
 
-export default function Chart({ mode }) {
+export default function Chart() {
+  const mode = useSelector((state) => state.theme.mode);
   const chartContainerRef = useRef();
   const [candlePrice, setCandlePrice] = useState(null);
   const [linePrice, setLinePrice] = useState(null);

@@ -8,12 +8,10 @@ import OrderHistory from "./components/OrderHistory";
 import BaseLayout from "../commons/BaseLayout";
 
 export default function AuctionPage() {
-  const [mode, setMode] = useState("light");
-
   return (
     <BaseLayout marginTop={100}>
       <AuctionLayout
-        Chart={<Chart mode={mode}></Chart>}
+        Chart={<Chart></Chart>}
         VirtualAssetList={<VirtualAssetList></VirtualAssetList>}
         OrderBook={<OrderBook></OrderBook>}
         OrderForm={<OrderForm></OrderForm>}

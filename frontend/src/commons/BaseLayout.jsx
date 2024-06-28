@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { CssBaseline, Box, Divider } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { toggleTheme } from "../store/slices/themeSlice";
 import Navigation from "./Navigation";
 import getTheme from "./getTheme";
 import Footer from "./Footer";
 
 export default function BaseLayout({ children, marginTop }) {
-  const [mode, setMode] = useState("light");
+  const mode = useSelector((state) => state.theme.mode);
   const theme = createTheme(getTheme(mode));
+  const dispatch = useDispatch();
 
   const toggleColorMode = () => {
-    setMode((prev) => (prev === "dark" ? "light" : "dark"));
+    dispatch(toggleTheme());
   };
 
   return (
