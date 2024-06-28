@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import {
   Container,
   Typography,
   List,
   Pagination,
   Divider,
+  Box,
+  Button,
 } from "@mui/material";
 import BoardItem from "../commons/BoardItem";
 
@@ -56,17 +58,31 @@ export default function BoardList() {
       </Typography>
       <Divider />
       <List
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          mb: 3,
+        }}
       >
         {postData.post.map((post) => (
           <BoardItem key={post.id} post={post} />
         ))}
       </List>
+      <Box display="flex" justifyContent="flex-end">
+        <Button
+          component={RouterLink}
+          to={`/board/${boardType}/post`}
+          variant="outlined"
+        >
+          글쓰기
+        </Button>
+      </Box>
       <Pagination
         count={postData.totalPageCount} // 전체 페이지 수
         page={page}
         onChange={handlePageChange}
-        sx={{ display: "flex", justifyContent: "center" }}
+        sx={{ display: "flex", justifyContent: "center", mt: 3 }}
       />
     </Container>
   );
