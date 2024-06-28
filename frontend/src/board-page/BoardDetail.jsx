@@ -45,7 +45,6 @@ export default function BoardDetail() {
   ]);
 
   useEffect(() => {
-    console.log(boardType);
     // 게시글 상세 정보 및 댓글 목록 API 호출
   }, [postId]);
 
@@ -71,7 +70,7 @@ export default function BoardDetail() {
             <Box display="flex" justifyContent="flex-end">
               <Button
                 component={Link}
-                to={`/${boardType}/${postId}/edit`}
+                to={`/board/${boardType}/edit/${postId}`}
                 variant="outlined"
               >
                 수정

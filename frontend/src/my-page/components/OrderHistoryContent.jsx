@@ -73,6 +73,7 @@ export default function OrderHistoryContent() {
             }
           >
             <ListItemText
+              secondaryTypographyProps={{ component: "div" }}
               primary={
                 <Typography
                   variant="body1"

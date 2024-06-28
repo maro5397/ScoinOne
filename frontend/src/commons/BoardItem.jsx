@@ -4,8 +4,9 @@ import { ListItem, ListItemText, Typography } from "@mui/material";
 export default function BoardItem({ post }) {
   const { boardType } = useParams();
   return (
-    <ListItem component={Link} to={`/${boardType}/${post.id}`}>
+    <ListItem component={Link} to={`/board/${boardType}/${post.id}`}>
       <ListItemText
+        secondaryTypographyProps={{ component: "div" }}
         primary={
           <Typography variant="h6" color="primary">
             {post.title}

@@ -47,6 +47,7 @@ export default function NotificationsContent() {
         <Box sx={{ width: "100%", alignItems: "center" }}>
           {alarm.map((alarm, index) => (
             <Accordion
+              key={index}
               expanded={expanded === index.toString()}
               onChange={handleChange(index.toString())}
             >

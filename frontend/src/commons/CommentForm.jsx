@@ -10,9 +10,13 @@ export default function CommentForm({ setComments }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newComment = await createComment(postId, content);
-    setComments((prevComments) => [...prevComments, newComment]);
+    // setComments((prevComments) => [...prevComments, newComment]);
     setContent(""); // 댓글 작성 후 입력 필드 초기화
   };
+
+  async function createComment(postId, content) {
+    console.log(postId, content);
+  }
 
   return (
     <Box component="form" onSubmit={handleSubmit} mt={2}>
