@@ -4,6 +4,7 @@ export default function CommentItem({ comment }) {
   return (
     <ListItem>
       <ListItemText
+        secondaryTypographyProps={{ component: "div" }}
         primary={
           <>
             <Typography variant="subtitle1">{comment.author}</Typography>

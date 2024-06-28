@@ -1,41 +1,46 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import {
   Container,
   Typography,
   List,
   Pagination,
   Divider,
+  Box,
+  Button,
 } from "@mui/material";
 import BoardItem from "../commons/BoardItem";
 
 export default function BoardList() {
   const { boardType } = useParams();
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      title: "React 게시판 개발 시작!",
-      author: "John Doe",
-      content:
-        "React와 MUI를 사용하여 게시판을 만들고 있습니다. 많은 조언 부탁드립니다.",
-      createdAt: "2024-06-24T10:30:00",
-    },
-    {
-      id: 2,
-      title: "MUI 컴포넌트 활용 팁",
-      author: "Alice Kim",
-      content: "MUI의 다양한 컴포넌트를 활용하여 멋진 UI를 만들어보세요!",
-      createdAt: "2024-06-23T15:45:00",
-    },
-    {
-      id: 3,
-      title: "댓글 기능 추가 완료",
-      author: "Bob Lee",
-      content:
-        "게시글에 댓글을 달 수 있는 기능을 구현했습니다. 많은 의견 남겨주세요.",
-      createdAt: "2024-06-22T12:15:00",
-    },
-  ]);
+  const [postData, setPostData] = useState({
+    totalPageCount: 1,
+    post: [
+      {
+        id: 1,
+        title: "React 게시판 개발 시작!",
+        author: "John Doe",
+        content:
+          "React와 MUI를 사용하여 게시판을 만들고 있습니다. 많은 조언 부탁드립니다.",
+        createdAt: "2024-06-24T10:30:00",
+      },
+      {
+        id: 2,
+        title: "MUI 컴포넌트 활용 팁",
+        author: "Alice Kim",
+        content: "MUI의 다양한 컴포넌트를 활용하여 멋진 UI를 만들어보세요!",
+        createdAt: "2024-06-23T15:45:00",
+      },
+      {
+        id: 3,
+        title: "댓글 기능 추가 완료",
+        author: "Bob Lee",
+        content:
+          "게시글에 댓글을 달 수 있는 기능을 구현했습니다. 많은 의견 남겨주세요.",
+        createdAt: "2024-06-22T12:15:00",
+      },
+    ],
+  });
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -53,17 +58,31 @@ export default function BoardList() {
       </Typography>
       <Divider />
       <List
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          mb: 3,
+        }}
       >
-        {posts.map((post) => (
+        {postData.post.map((post) => (
           <BoardItem key={post.id} post={post} />
         ))}
       </List>
+      <Box display="flex" justifyContent="flex-end">
+        <Button
+          component={RouterLink}
+          to={`/board/${boardType}/post`}
+          variant="outlined"
+        >
+          글쓰기
+        </Button>
+      </Box>
       <Pagination
-        count={posts.length / 10 + 1} // 전체 페이지 수
+        count={postData.totalPageCount} // 전체 페이지 수
         page={page}
         onChange={handlePageChange}
-        sx={{ display: "flex", justifyContent: "center" }}
+        sx={{ display: "flex", justifyContent: "center", mt: 3 }}
       />
     </Container>
   );

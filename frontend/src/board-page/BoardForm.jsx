@@ -10,7 +10,6 @@ export default function BoardForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(boardType + postId);
   };
 
   return (

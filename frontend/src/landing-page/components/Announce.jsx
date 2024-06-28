@@ -59,7 +59,7 @@ export default function Announce() {
       </Typography>
       <Box sx={{ width: "100%" }}>
         {Announcement.map((testimonial, index) => (
-          <Box sx={{ width: "100%" }}>
+          <Box key={index} sx={{ width: "100%" }}>
             <Card
               sx={{
                 display: "flex",

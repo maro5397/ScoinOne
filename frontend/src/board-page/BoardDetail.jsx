@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import { Box, Button, Container, Divider, Typography } from "@mui/material";
 import CommentList from "../commons/CommentList";
 import CommentForm from "../commons/CommentForm";
@@ -45,7 +45,6 @@ export default function BoardDetail() {
   ]);
 
   useEffect(() => {
-    console.log(boardType);
     // 게시글 상세 정보 및 댓글 목록 API 호출
   }, [postId]);
 
@@ -70,8 +69,8 @@ export default function BoardDetail() {
             <Divider sx={{ mt: 10, mb: 5 }} />
             <Box display="flex" justifyContent="flex-end">
               <Button
-                component={Link}
-                to={`/${boardType}/${postId}/edit`}
+                component={RouterLink}
+                to={`/board/${boardType}/edit/${postId}`}
                 variant="outlined"
               >
                 수정

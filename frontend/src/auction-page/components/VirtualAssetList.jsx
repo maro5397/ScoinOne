@@ -74,8 +74,8 @@ export default function VirtualAssetList() {
           </Grid>
         </ListItem>
         <Divider />
-        {filteredAssets.map((asset) => (
-          <Box>
+        {filteredAssets.map((asset, index) => (
+          <Box key={index}>
             <ListItem key={asset.name}>
               <Grid container spacing={2} justifyContent="space-around">
                 <Grid item xs={3}>

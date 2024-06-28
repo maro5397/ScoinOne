@@ -47,6 +47,7 @@ export default function MyQuestionsContent() {
             onClick={() => handleQuestionClick(question.id)}
           >
             <ListItemText
+              secondaryTypographyProps={{ component: "div" }}
               primary={
                 <Typography variant="body1" color="textPrimary">
                   {question.title}

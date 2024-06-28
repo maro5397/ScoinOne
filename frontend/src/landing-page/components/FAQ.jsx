@@ -66,6 +66,7 @@ export default function FAQ() {
       <Box sx={{ width: "100%" }}>
         {faq.map((faq, index) => (
           <Accordion
+            key={index}
             expanded={expanded === index.toString()}
             onChange={handleChange(index.toString())}
           >
