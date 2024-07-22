@@ -1,4 +1,4 @@
-package com.scoinone.core.dto.response.board;
+package com.scoinone.core.dto.response.post;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ public class GetPostListResponseDto {
     @Setter
     public static class PostDto {
         private String postId;
-        private String boardType;
+        private String postType;
         private String title;
         private String author;
         private String createdAt;
