@@ -10,7 +10,7 @@ import java.util.Date;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Builder
+@Builder // 수정 및 삭제가 없으므로 Setter를 만들지 않음
 public class Trade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
