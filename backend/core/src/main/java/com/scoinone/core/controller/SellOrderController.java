@@ -1,4 +1,4 @@
 package com.scoinone.core.controller;
 
-public class SellController {
+public class SellOrderController {
 }
