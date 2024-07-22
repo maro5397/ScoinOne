@@ -1,13 +1,13 @@
-package com.scoinone.core.dto.response.board;
+package com.scoinone.core.dto.response.post;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class GetPostResponseDto {
+public class UpdatePostResponseDto {
     private String postId;
-    private String boardType;
+    private String postType;
     private String title;
     private String content;
     private String author;

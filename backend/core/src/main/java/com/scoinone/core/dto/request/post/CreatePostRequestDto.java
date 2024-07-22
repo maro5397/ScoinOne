@@ -1,4 +1,4 @@
-package com.scoinone.core.dto.request.board;
+package com.scoinone.core.dto.request.post;
 
 import lombok.Getter;
 import lombok.Setter;
