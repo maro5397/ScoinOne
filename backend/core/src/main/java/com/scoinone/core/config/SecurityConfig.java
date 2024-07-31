@@ -28,12 +28,12 @@ public class SecurityConfig {
         UserDetails manager = User.builder()
                 .username("manager")
                 .password(passwordEncoder.encode("manager"))
-                .roles("USER", "MANAGER")
+                .roles("MANAGER")
                 .build();
         UserDetails admin = User.builder()
                 .username("admin")
                 .password(passwordEncoder.encode("admin"))
-                .roles("USER", "MANAGER", "ADMIN")
+                .roles("ADMIN")
                 .build();
 
         return new InMemoryUserDetailsManager(user, manager, admin);
