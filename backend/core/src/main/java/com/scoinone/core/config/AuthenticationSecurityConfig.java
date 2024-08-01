@@ -42,6 +42,8 @@ public class AuthenticationSecurityConfig {
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
                         .defaultSuccessUrl("/")
                         .failureUrl("/login?error=true")
                         .loginProcessingUrl("/api/user/login")
