@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Post> getQuestionsByUserId(Long userId) {
-        return postRepository.findByUser_UserIdAndType(userId, PostType.QNA)
+        return postRepository.findByUser_UserIdAndPostType(userId, PostType.QNA)
                 .orElseThrow(() -> new EntityNotFoundException("Questions not found with userId: " + userId));
     }
 }
