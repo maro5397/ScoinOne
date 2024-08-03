@@ -74,12 +74,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Object> getBuySellOrderByUserId(Long userId) {
-        List<BuyOrder> buyOrders = buyOrderRepository.findByBuyer_UserIdAndStatus(userId, OrderStatus.PENDING)
+    public List<BuyOrder> getBuyOrderByUserId(Long userId) {
+        return buyOrderRepository.findByBuyer_UserIdAndStatus(userId, OrderStatus.PENDING)
                 .orElseThrow(() -> new EntityNotFoundException("BuyOrder not found with userId: " + userId));
+    }
 
-        List<SellOrder> sellOrders = sellOrderRepository.findBySeller_UserIdAndStatus(userId, OrderStatus.PENDING)
+    @Override
+    public List<SellOrder> getSellOrderByUserId(Long userId) {
+        return sellOrderRepository.findBySeller_UserIdAndStatus(userId, OrderStatus.PENDING)
                 .orElseThrow(() -> new EntityNotFoundException("SellOrder not found with userId: " + userId));
+    }
+
+    @Override
+    public List<Object> getOrderByUserId(Long userId) {
+        List<BuyOrder> buyOrders = getBuyOrderByUserId(userId);
+        List<SellOrder> sellOrders = getSellOrderByUserId(userId);
 
         List<Object> allOrders = new CopyOnWriteArrayList<>();
         allOrders.addAll(buyOrders);
@@ -90,8 +99,9 @@ public class UserServiceImpl implements UserService {
                 return ((BuyOrder) order).getCreatedAt();
             } else if (order instanceof SellOrder) {
                 return ((SellOrder) order).getCreatedAt();
+            } else {
+                throw new NoSuchElementException("Unknown Instance Not BuyOrder, SellOrder");
             }
-            return new Date(0);
         }));
 
         return allOrders;

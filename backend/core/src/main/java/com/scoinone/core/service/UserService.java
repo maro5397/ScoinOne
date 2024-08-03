@@ -18,7 +18,11 @@ public interface UserService extends UserDetailsService {
 
     List<OwnedVirtualAsset> getOwnedVirtualAssetsByUserId(Long userId);
 
-    List<Object> getBuySellOrderByUserId(Long userId);
+    List<BuyOrder> getBuyOrderByUserId(Long userId);
+
+    List<SellOrder> getSellOrderByUserId(Long userId);
+
+    List<Object> getOrderByUserId(Long userId);
 
     List<Trade> getTradeByUserId(Long userId);
 
