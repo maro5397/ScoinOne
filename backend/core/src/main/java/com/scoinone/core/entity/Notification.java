@@ -25,7 +25,7 @@ public class Notification {
     private String message;
 
     @Enumerated(EnumType.STRING)
-    private NotificationStatus status; // Enum 타입으로 정의 필요
+    private NotificationStatus status;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;

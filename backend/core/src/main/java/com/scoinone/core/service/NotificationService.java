@@ -5,7 +5,6 @@ import com.scoinone.core.entity.Notification;
 import java.util.List;
 
 public interface NotificationService {
-    List<Notification> getNotifications();
 
     Notification getNotificationById(Long id);
 

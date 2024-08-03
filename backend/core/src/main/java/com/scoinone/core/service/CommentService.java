@@ -5,7 +5,7 @@ import com.scoinone.core.entity.Comment;
 import java.util.List;
 
 public interface CommentService {
-    List<Comment> getComments();
+    List<Comment> getCommentsByPostId(Long postId);
 
     Comment getCommentById(Long id);
 

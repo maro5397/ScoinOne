@@ -16,8 +16,9 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
 
     @Override
-    public List<Comment> getComments() {
-        return commentRepository.findAll();
+    public List<Comment> getCommentsByPostId(Long postId) {
+        return commentRepository.findByPost_PostId(postId)
+                .orElseThrow(() -> new EntityNotFoundException("Comments not found with postId: " + postId));
     }
 
     @Override

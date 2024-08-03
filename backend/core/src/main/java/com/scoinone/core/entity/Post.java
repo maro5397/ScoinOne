@@ -23,7 +23,7 @@ public class Post {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    private PostType type; // Enum 타입으로 정의 필요
+    private PostType postType;
 
     private String title;
     private String content;
@@ -34,6 +34,4 @@ public class Post {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-
-    // Getters and Setters
 }

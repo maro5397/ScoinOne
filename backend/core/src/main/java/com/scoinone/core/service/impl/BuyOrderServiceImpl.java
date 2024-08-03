@@ -16,27 +16,8 @@ public class BuyOrderServiceImpl implements BuyOrderService {
     private final BuyOrderRepository buyOrderRepository;
 
     @Override
-    public List<BuyOrder> getBuyOrders() {
-        return buyOrderRepository.findAll();
-    }
-
-    @Override
-    public BuyOrder getBuyOrderById(Long id) {
-        return buyOrderRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("BuyOrder not found with id: " + id));
-    }
-
-    @Override
     public BuyOrder createBuyOrder(BuyOrder buyOrder) {
         return buyOrderRepository.save(buyOrder);
-    }
-
-    @Override
-    public BuyOrder updateBuyOrder(Long id, BuyOrder updatedBuyOrder) {
-        BuyOrder existedBuyOrder = getBuyOrderById(id);
-        existedBuyOrder.setQuantity(updatedBuyOrder.getQuantity());
-        existedBuyOrder.setPrice(updatedBuyOrder.getPrice());
-        return buyOrderRepository.save(existedBuyOrder);
     }
 
     @Override

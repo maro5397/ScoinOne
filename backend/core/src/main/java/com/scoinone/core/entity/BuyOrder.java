@@ -11,7 +11,6 @@ import java.util.Date;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Setter
 @Builder
 public class BuyOrder {
     @Id
@@ -30,7 +29,7 @@ public class BuyOrder {
     private double price;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status; // Enum 타입으로 정의 필요
+    private OrderStatus status;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date tradeTime;

@@ -22,7 +22,7 @@ import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
-@Order(1)
+@Order(2)
 public class AuthorizationSecurityConfig {
 
     @Bean

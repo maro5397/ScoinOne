@@ -24,7 +24,7 @@ import java.io.IOException;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@Order(0)
+@Order(1)
 public class AuthenticationSecurityConfig {
 
     private final UserService userService;

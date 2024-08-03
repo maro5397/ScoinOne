@@ -12,7 +12,7 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
-@Order(2)
+@Order(3)
 public class SecurityConfig {
 
     @Bean
