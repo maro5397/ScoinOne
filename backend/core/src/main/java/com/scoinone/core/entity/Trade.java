@@ -36,6 +36,4 @@ public class Trade {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-
-    // Getters and Setters
 }

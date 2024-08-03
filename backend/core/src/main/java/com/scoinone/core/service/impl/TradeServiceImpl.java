@@ -26,6 +26,7 @@ public class TradeServiceImpl implements TradeService {
                 .orElseThrow(() -> new EntityNotFoundException("Trade not found with id: " + id));
     }
 
+    // 다른 서버가 담당하게 할지 검색해봐야함
     @Override
     public Trade createTrade(Trade trade) {
         return tradeRepository.save(trade);

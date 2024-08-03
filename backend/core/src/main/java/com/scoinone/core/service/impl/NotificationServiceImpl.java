@@ -8,6 +8,8 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -15,11 +17,6 @@ import java.util.List;
 public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationRepository notificationRepository;
-
-    @Override
-    public List<Notification> getNotifications() {
-        return notificationRepository.findAll();
-    }
 
     @Override
     public Notification getNotificationById(Long id) {

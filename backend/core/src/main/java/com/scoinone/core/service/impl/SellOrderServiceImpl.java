@@ -16,27 +16,8 @@ public class SellOrderServiceImpl implements SellOrderService {
     private final SellOrderRepository sellOrderRepository;
 
     @Override
-    public List<SellOrder> getSellOrders() {
-        return sellOrderRepository.findAll();
-    }
-
-    @Override
-    public SellOrder getSellOrderById(Long id) {
-        return sellOrderRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("SellOrder not found with id: " + id));
-    }
-
-    @Override
     public SellOrder createSellOrder(SellOrder sellOrder) {
         return sellOrderRepository.save(sellOrder);
-    }
-
-    @Override
-    public SellOrder updateSellOrder(Long id, SellOrder updatedSellOrder) {
-        SellOrder existedSellOrder = getSellOrderById(id);
-        existedSellOrder.setQuantity(updatedSellOrder.getQuantity());
-        existedSellOrder.setPrice(updatedSellOrder.getPrice());
-        return sellOrderRepository.save(existedSellOrder);
     }
 
     @Override

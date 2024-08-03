@@ -4,14 +4,11 @@ import com.scoinone.core.entity.BuyOrder;
 
 import java.util.List;
 
+// 거래 체결값을 구해서 그 값을 기준으로 위/아래 X개의 데이터를 리스트로 전달
+// 매도 유저 ID를 대상으로 매도 주문 데이터를 리스트로 전달
 public interface BuyOrderService {
-    List<BuyOrder> getBuyOrders();
-
-    BuyOrder getBuyOrderById(Long id);
 
     BuyOrder createBuyOrder(BuyOrder buyOrder);
-
-    BuyOrder updateBuyOrder(Long id, BuyOrder updatedBuyOrder);
 
     void deleteBuyOrder(Long id);
 }

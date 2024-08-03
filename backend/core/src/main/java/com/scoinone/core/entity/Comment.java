@@ -29,6 +29,4 @@ public class Comment {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-
-    // Getters and Setters
 }
