@@ -32,14 +32,6 @@ public class AuthenticationSecurityConfig {
     @Bean
     public SecurityFilterChain authenticationSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(
-                                "/signup",
-                                "/login",
-                                "/reset-password"
-                        ).permitAll()
-                        .anyRequest().authenticated()
-                )
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .usernameParameter("email")
