@@ -3,6 +3,7 @@ package com.scoinone.core.dto.response.trade;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -17,9 +18,7 @@ public class GetTradeListResponseDto {
         private String buyId;
         private String sellId;
         private String virtualAssetId;
-        private Double quantity;
-        private Double price;
-        private String tradeTime;
-        private String createdAt;
+        private BigDecimal quantity;
+        private BigDecimal price;
     }
 }

@@ -10,6 +10,4 @@ public class CreateNotificationResponseDto {
     private String userId;
     private String message;
     private String status;
-    private String createdAt;
-    private String expiresAt;
 }
