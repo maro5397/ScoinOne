@@ -3,6 +3,7 @@ package com.scoinone.core.dto.response.user;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -16,7 +17,7 @@ public class GetOwnedAssetListResponseDto {
         private String ownedVirtualAssetId;
         private String userId;
         private String virtualAssetId;
-        private Double amount;
+        private BigDecimal amount;
         private String updatedAt;
     }
 }

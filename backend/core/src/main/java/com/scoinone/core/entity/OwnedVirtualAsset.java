@@ -3,6 +3,7 @@ package com.scoinone.core.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -26,7 +27,7 @@ public class OwnedVirtualAsset {
     @JoinColumn(name = "virtual_asset_id")
     private VirtualAsset virtualAsset;
 
-    private Double amount;
+    private BigDecimal amount;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;

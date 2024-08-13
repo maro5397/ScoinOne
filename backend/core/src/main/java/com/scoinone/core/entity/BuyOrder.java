@@ -4,6 +4,7 @@ import com.scoinone.core.common.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -11,6 +12,7 @@ import java.util.Date;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 @Builder
 public class BuyOrder {
     @Id
@@ -25,8 +27,8 @@ public class BuyOrder {
     @JoinColumn(name = "virtual_asset_id")
     private VirtualAsset virtualAsset;
 
-    private double quantity;
-    private double price;
+    private BigDecimal quantity;
+    private BigDecimal price;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;

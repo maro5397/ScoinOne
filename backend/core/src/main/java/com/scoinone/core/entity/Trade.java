@@ -3,7 +3,8 @@ package com.scoinone.core.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "trades")
@@ -28,12 +29,9 @@ public class Trade {
     @JoinColumn(name = "virtual_asset_id")
     private VirtualAsset virtualAsset;
 
-    private double quantity;
-    private double price;
+    private BigDecimal quantity;
+    private BigDecimal price;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date tradeTime;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 }

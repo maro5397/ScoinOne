@@ -24,7 +24,7 @@ import java.io.IOException;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@Order(1)
+@Order(2)
 public class AuthenticationSecurityConfig {
 
     private final UserService userService;
@@ -48,7 +48,6 @@ public class AuthenticationSecurityConfig {
                                 response.sendRedirect(redirectUrl);
                             }
                         })
-                        .permitAll()
                 )
                 .logout((logout) -> logout
                         .logoutUrl("/api/user/logout")
