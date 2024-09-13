@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "buy_orders")
@@ -34,8 +34,8 @@ public class BuyOrder {
     private OrderStatus status;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date tradeTime;
+    private LocalDateTime tradeTime;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 }
