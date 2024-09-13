@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -59,10 +61,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Notification> getCommentsFromLast30DaysByUserId(Long userId) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, -30);
-        Date thirtyDaysAgo = calendar.getTime();
-
+        LocalDateTime thirtyDaysAgo = LocalDateTime.now().minus(30, ChronoUnit.DAYS);
         return notificationRepository.findByUser_UserIdAndCreatedAtAfter(userId, thirtyDaysAgo)
                 .orElseThrow(() -> new EntityNotFoundException("Notifications not found with userId: " + userId));
     }

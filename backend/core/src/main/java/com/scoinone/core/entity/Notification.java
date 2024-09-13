@@ -4,7 +4,7 @@ import com.scoinone.core.common.NotificationStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "notifications")
@@ -22,14 +22,14 @@ public class Notification {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private String message;
+    private String content;
 
     @Enumerated(EnumType.STRING)
     private NotificationStatus status;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date expiresAt;
+    private LocalDateTime expiresAt;
 }

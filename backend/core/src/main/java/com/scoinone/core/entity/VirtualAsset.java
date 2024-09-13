@@ -3,7 +3,7 @@ package com.scoinone.core.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "virtual_assets")
@@ -22,5 +22,5 @@ public class VirtualAsset {
     private String description;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 }

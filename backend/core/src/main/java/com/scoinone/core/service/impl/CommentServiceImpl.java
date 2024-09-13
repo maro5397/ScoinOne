@@ -5,9 +5,9 @@ import com.scoinone.core.repository.CommentRepository;
 import com.scoinone.core.service.CommentService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,8 +16,8 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
 
     @Override
-    public List<Comment> getCommentsByPostId(Long postId) {
-        return commentRepository.findByPost_PostId(postId)
+    public Page<Comment> getCommentsByPostId(Pageable pageable, Long postId) {
+        return commentRepository.findByPost_PostId(pageable, postId)
                 .orElseThrow(() -> new EntityNotFoundException("Comments not found with postId: " + postId));
     }
 
