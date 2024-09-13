@@ -1,16 +1,14 @@
 package com.scoinone.core.service.impl;
 
+import com.scoinone.core.common.PostType;
 import com.scoinone.core.entity.Post;
 import com.scoinone.core.repository.PostRepository;
 import com.scoinone.core.service.PostService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,9 +17,9 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
     @Override
-    public Page<Post> getPosts(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return postRepository.findAll(pageable);
+    public Page<Post> getPosts(Pageable pageable, PostType postType) {
+        return postRepository.findByPostType(pageable, postType)
+                .orElseThrow(() -> new EntityNotFoundException("Page<Post> not found"));
     }
 
     @Override
