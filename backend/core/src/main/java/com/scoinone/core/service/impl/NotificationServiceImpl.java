@@ -1,16 +1,11 @@
 package com.scoinone.core.service.impl;
 
-import com.scoinone.core.entity.Comment;
 import com.scoinone.core.entity.Notification;
 import com.scoinone.core.repository.NotificationRepository;
 import com.scoinone.core.service.NotificationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +27,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public Notification updateNotification(Long id, Notification updatedNotification) {
         Notification existedNotification = getNotificationById(id);
-        existedNotification.setMessage(updatedNotification.getMessage());
+        existedNotification.setContent(updatedNotification.getContent());
         return notificationRepository.save(existedNotification);
     }
 
