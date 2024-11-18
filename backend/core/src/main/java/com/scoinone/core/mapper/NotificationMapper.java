@@ -28,11 +28,11 @@ public interface NotificationMapper {
     @Mapping(source = "expiresAt", target = "expiresAt")
     UpdateNotificationResponseDto notificationToUpdateNotificationResponseDto(Notification notification);
 
-    List<GetNotificationResponseDto> notificationsToGetNotificationResponseDtos(List<Notification> notifications);
+    List<GetNotificationResponseDto> notificationsToGetNotificationsResponseDto(List<Notification> notifications);
 
     default GetNotificationListResponseDto listtoGetNotificationListResponseDto(List<Notification> notifications) {
         GetNotificationListResponseDto responseDto = new GetNotificationListResponseDto();
-        responseDto.setNotifications(notificationsToGetNotificationResponseDtos(notifications));
+        responseDto.setNotifications(notificationsToGetNotificationsResponseDto(notifications));
         return responseDto;
     }
 }

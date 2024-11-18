@@ -19,11 +19,11 @@ public interface TradeMapper {
     @Mapping(source = "price", target = "price")
     GetTradeResponseDto tradeToGetTradeResponseDto(Trade trade);
 
-    List<GetTradeResponseDto> tradesToGetTradeResponseDtos(List<Trade> trades);
+    List<GetTradeResponseDto> tradesToGetTradesResponseDto(List<Trade> trades);
 
     default GetTradeListResponseDto listToGetTradeListResponseDto(List<Trade> trades) {
         GetTradeListResponseDto responseDto = new GetTradeListResponseDto();
-        responseDto.setTrades(tradesToGetTradeResponseDtos(trades));
+        responseDto.setTrades(tradesToGetTradesResponseDto(trades));
         return responseDto;
     }
 }

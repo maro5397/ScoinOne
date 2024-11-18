@@ -41,11 +41,11 @@ public interface PostMapper {
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     UpdatePostResponseDto postToUpdatePostResponseDto(Post post);
 
-    List<GetPostResponseDto> postsToGetPostResponseDtos(List<Post> posts);
+    List<GetPostResponseDto> postsToGetPostsResponseDto(List<Post> posts);
 
     default GetPostListResponseDto pageToGetPostListResponseDto(Page<Post> page) {
         GetPostListResponseDto responseDto = new GetPostListResponseDto();
-        responseDto.setPosts(postsToGetPostResponseDtos(page.getContent()));
+        responseDto.setPosts(postsToGetPostsResponseDto(page.getContent()));
         responseDto.setPageInfo(PageInfoDto.builder()
                 .totalElements(page.getTotalElements())
                 .totalPages(page.getTotalPages())

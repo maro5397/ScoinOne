@@ -65,19 +65,19 @@ public interface OrderMapper {
     @Mapping(source = "status", target = "status")
     UpdateSellOrderResponseDto sellOrderToUpdateSellOrderResponseDto(SellOrder sellOrder);
 
-    List<GetBuyOrderResponseDto> buyOrdersToGetBuyOrderResponseDtos(List<BuyOrder> buyOrders);
+    List<GetBuyOrderResponseDto> buyOrdersToGetBuyOrdersResponseDto(List<BuyOrder> buyOrders);
 
     default GetBuyOrderListResponseDto listToGetBuyOrderListResponseDto(List<BuyOrder> buyOrders) {
         GetBuyOrderListResponseDto responseDto = new GetBuyOrderListResponseDto();
-        responseDto.setBuyOrders(buyOrdersToGetBuyOrderResponseDtos(buyOrders));
+        responseDto.setBuyOrders(buyOrdersToGetBuyOrdersResponseDto(buyOrders));
         return responseDto;
     }
 
-    List<GetSellOrderResponseDto> sellOrdersToGetSellOrderResponseDtos(List<SellOrder> sellOrders);
+    List<GetSellOrderResponseDto> sellOrdersToGetSellOrdersResponseDto(List<SellOrder> sellOrders);
 
     default GetSellOrderListResponseDto listToGetSellOrderListResponseDto(List<SellOrder> sellOrders) {
         GetSellOrderListResponseDto responseDto = new GetSellOrderListResponseDto();
-        responseDto.setSellOrders(sellOrdersToGetSellOrderResponseDtos(sellOrders));
+        responseDto.setSellOrders(sellOrdersToGetSellOrdersResponseDto(sellOrders));
         return responseDto;
     }
 }

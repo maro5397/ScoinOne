@@ -18,11 +18,11 @@ public interface OwnedVirtualAssetMapper {
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     GetOwnedAssetResponseDto ownedVirtualAssetToGetOwnedAssetResponseDto(OwnedVirtualAsset ownedVirtualAsset);
 
-    List<GetOwnedAssetResponseDto> ownedVirtualAssetsToGetOwnedAssetResponseDtos(List<OwnedVirtualAsset> ownedVirtualAssets);
+    List<GetOwnedAssetResponseDto> ownedVirtualAssetsToGetOwnedAssetsResponseDto(List<OwnedVirtualAsset> ownedVirtualAssets);
 
     default GetOwnedAssetListResponseDto listToGetOwnedAssetListResponseDto(List<OwnedVirtualAsset> ownedVirtualAssets) {
         GetOwnedAssetListResponseDto responseDto = new GetOwnedAssetListResponseDto();
-        responseDto.setOwnedAssets(ownedVirtualAssetsToGetOwnedAssetResponseDtos(ownedVirtualAssets));
+        responseDto.setOwnedAssets(ownedVirtualAssetsToGetOwnedAssetsResponseDto(ownedVirtualAssets));
         return responseDto;
     }
 }
