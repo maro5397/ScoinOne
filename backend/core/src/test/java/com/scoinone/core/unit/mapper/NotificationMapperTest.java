@@ -32,7 +32,7 @@ class NotificationMapperTest {
     }
 
     @Test
-    @DisplayName("알람 엔티티 객체를 생성하는 응답 DTO로 매핑")
+    @DisplayName("알람 엔티티 객체를 생성용 응답 DTO로 매핑")
     public void testNotificationToCreateNotificationResponseDto() {
         Notification notification = notifications.getFirst();
         CreateNotificationResponseDto responseDto = notificationMapper.notificationToCreateNotificationResponseDto(
@@ -45,7 +45,7 @@ class NotificationMapperTest {
     }
 
     @Test
-    @DisplayName("알람 엔티티 객체를 조회하는 응답 DTO로 매핑")
+    @DisplayName("알람 엔티티 객체를 조회용 응답 DTO로 매핑")
     public void testNotificationToGetNotificationResponseDto() {
         Notification notification = notifications.getFirst();
         GetNotificationResponseDto responseDto = notificationMapper.notificationToGetNotificationResponseDto(
@@ -61,7 +61,7 @@ class NotificationMapperTest {
     }
 
     @Test
-    @DisplayName("알람 엔티티 객체를 수정하는 응답 DTO로 매핑")
+    @DisplayName("알람 엔티티 객체를 수정용 응답 DTO로 매핑")
     public void testNotificationToUpdateNotificationResponseDto() {
         Notification notification = notifications.getFirst();
         UpdateNotificationResponseDto responseDto = notificationMapper.notificationToUpdateNotificationResponseDto(
@@ -75,7 +75,7 @@ class NotificationMapperTest {
     }
 
     @Test
-    @DisplayName("알람 엔티티 객체를 리스트를 통해 조회하는 응답 DTO로 매핑")
+    @DisplayName("알람 엔티티 객체를 리스트를 통해 조회용 응답 DTO로 매핑")
     public void testListToGetNotificationListResponseDto() {
         GetNotificationListResponseDto responseDto = notificationMapper.listToGetNotificationListResponseDto(
                 notifications
