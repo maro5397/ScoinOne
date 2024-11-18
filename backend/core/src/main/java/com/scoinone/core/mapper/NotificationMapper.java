@@ -30,7 +30,7 @@ public interface NotificationMapper {
 
     List<GetNotificationResponseDto> notificationsToGetNotificationsResponseDto(List<Notification> notifications);
 
-    default GetNotificationListResponseDto listtoGetNotificationListResponseDto(List<Notification> notifications) {
+    default GetNotificationListResponseDto listToGetNotificationListResponseDto(List<Notification> notifications) {
         GetNotificationListResponseDto responseDto = new GetNotificationListResponseDto();
         responseDto.setNotifications(notificationsToGetNotificationsResponseDto(notifications));
         return responseDto;
