@@ -1,6 +1,7 @@
 package com.scoinone.core.dto.response.order;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.scoinone.core.common.OrderStatus;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Getter;
@@ -16,7 +17,7 @@ public class CreateBuyOrderResponseDto {
     private Long virtualAssetId;
     private BigDecimal quantity;
     private BigDecimal price;
-    private String status;
+    private OrderStatus status;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 }
