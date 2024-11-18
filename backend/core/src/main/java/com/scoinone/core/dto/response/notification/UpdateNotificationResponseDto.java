@@ -12,5 +12,4 @@ public class UpdateNotificationResponseDto {
     private String status;
     private String createdAt;
     private String expiresAt;
-    private String updatedAt;
 }

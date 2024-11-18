@@ -11,5 +11,4 @@ public class UpdateVirtualAssetResponseDto {
     private String symbol;
     private String description;
     private String createdAt;
-    private String updatedAt;
 }
