@@ -49,7 +49,7 @@ class CommentMapperTest {
     }
 
     @Test
-    @DisplayName("댓글 엔티티 객체를 조회하는 DTO로 매핑")
+    @DisplayName("댓글 엔티티 객체를 조회하는 응답 DTO로 매핑")
     public void testCommentToGetCommentResponseDto() {
         Comment comment = comments.getFirst();
         GetCommentResponseDto responseDto = commentMapper.commentToGetCommentResponseDto(comment);
@@ -61,7 +61,7 @@ class CommentMapperTest {
     }
 
     @Test
-    @DisplayName("다수의 댓글 엔티티 객체들을 조회하는 DTO로 매핑")
+    @DisplayName("다수의 댓글 엔티티 객체들을 조회하는 응답 DTO로 매핑")
     public void testCommentsToGetCommentsResponseDto() {
         Comment comment1 = comments.get(1);
         Comment comment2 = comments.get(2);
@@ -77,7 +77,7 @@ class CommentMapperTest {
     }
 
     @Test
-    @DisplayName("다수의 댓글 엔티티 객체를 페이지네이션을 통해 조회하는 DTO로 매핑")
+    @DisplayName("다수의 댓글 엔티티 객체를 페이지네이션을 통해 조회하는 응답 DTO로 매핑")
     public void testPageToGetCommentListResponseDto() {
         Comment comment = comments.getFirst();
         Page<Comment> page = new PageImpl<>(Collections.singletonList(comment), Pageable.ofSize(1), 1);
@@ -93,7 +93,7 @@ class CommentMapperTest {
     }
 
     @Test
-    @DisplayName("댓글 엔티티 객체를 수정하는 DTO로 매핑")
+    @DisplayName("댓글 엔티티 객체를 수정하는 응답 DTO로 매핑")
     public void testCommentToUpdateCommentResponseDto() {
         Comment comment = comments.getFirst();
         UpdateCommentResponseDto responseDto = commentMapper.commentToUpdateCommentResponseDto(comment);
