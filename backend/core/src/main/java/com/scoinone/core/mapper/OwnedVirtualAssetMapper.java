@@ -11,9 +11,9 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface OwnedVirtualAssetMapper {
 
-    @Mapping(source = "ownedVirtualAssetId", target = "ownedVirtualAssetId")
-    @Mapping(source = "user.userId", target = "userId")
-    @Mapping(source = "virtualAsset.virtualAssetId", target = "virtualAssetId")
+    @Mapping(source = "ownedVirtualAsset.id", target = "ownedVirtualAssetId")
+    @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "virtualAsset.id", target = "virtualAssetId")
     @Mapping(source = "amount", target = "amount")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     GetOwnedAssetResponseDto ownedVirtualAssetToGetOwnedAssetResponseDto(OwnedVirtualAsset ownedVirtualAsset);

@@ -11,9 +11,9 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface TradeMapper {
 
-    @Mapping(source = "tradeId", target = "tradeId")
-    @Mapping(source = "buyOrder.orderId", target = "buyId")
-    @Mapping(source = "sellOrder.orderId", target = "sellId")
+    @Mapping(source = "id", target = "tradeId")
+    @Mapping(source = "buyOrder.id", target = "buyId")
+    @Mapping(source = "sellOrder.id", target = "sellId")
     @Mapping(source = "virtualAsset.id", target = "virtualAssetId")
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "price", target = "price")

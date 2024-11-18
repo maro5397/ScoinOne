@@ -11,27 +11,25 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
 
-    @Mapping(source = "orderId", target = "orderId")
+    @Mapping(source = "id", target = "orderId")
     @Mapping(source = "buyer.id", target = "buyerId")
     @Mapping(source = "virtualAsset.id", target = "virtualAssetId")
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "price", target = "price")
     @Mapping(source = "status", target = "status")
-    @Mapping(source = "tradeTime", target = "tradeTime", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     CreateBuyOrderResponseDto buyOrderToCreateBuyOrderResponseDto(BuyOrder buyOrder);
 
-    @Mapping(source = "orderId", target = "orderId")
+    @Mapping(source = "id", target = "orderId")
     @Mapping(source = "seller.id", target = "sellerId")
     @Mapping(source = "virtualAsset.id", target = "virtualAssetId")
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "price", target = "price")
     @Mapping(source = "status", target = "status")
-    @Mapping(source = "tradeTime", target = "tradeTime", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     CreateSellOrderResponseDto sellOrderToCreateSellOrderResponseDto(SellOrder sellOrder);
 
-    @Mapping(source = "orderId", target = "orderId")
+    @Mapping(source = "id", target = "orderId")
     @Mapping(source = "buyer.id", target = "buyerId")
     @Mapping(source = "virtualAsset.id", target = "virtualAssetId")
     @Mapping(source = "tradeTime", target = "tradeTime", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
@@ -40,7 +38,7 @@ public interface OrderMapper {
     @Mapping(source = "status", target = "status")
     GetBuyOrderResponseDto buyOrderToGetBuyOrderResponseDto(BuyOrder buyOrder);
 
-    @Mapping(source = "orderId", target = "orderId")
+    @Mapping(source = "id", target = "orderId")
     @Mapping(source = "seller.id", target = "sellerId")
     @Mapping(source = "virtualAsset.id", target = "virtualAssetId")
     @Mapping(source = "tradeTime", target = "tradeTime", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
@@ -49,7 +47,7 @@ public interface OrderMapper {
     @Mapping(source = "status", target = "status")
     GetSellOrderResponseDto sellOrderToGetSellOrderResponseDto(SellOrder sellOrder);
 
-    @Mapping(source = "orderId", target = "orderId")
+    @Mapping(source = "id", target = "orderId")
     @Mapping(source = "buyer.id", target = "buyerId")
     @Mapping(source = "virtualAsset.id", target = "virtualAssetId")
     @Mapping(source = "tradeTime", target = "tradeTime", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
@@ -58,7 +56,7 @@ public interface OrderMapper {
     @Mapping(source = "status", target = "status")
     UpdateBuyOrderResponseDto buyOrderToUpdateBuyOrderResponseDto(BuyOrder buyOrder);
 
-    @Mapping(source = "orderId", target = "orderId")
+    @Mapping(source = "id", target = "orderId")
     @Mapping(source = "seller.id", target = "sellerId")
     @Mapping(source = "virtualAsset.id", target = "virtualAssetId")
     @Mapping(source = "tradeTime", target = "tradeTime", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")

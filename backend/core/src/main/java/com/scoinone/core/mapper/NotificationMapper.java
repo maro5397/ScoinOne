@@ -13,19 +13,18 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface NotificationMapper {
 
-    @Mapping(source = "notificationId", target = "notificationId")
-    @Mapping(source = "user.userId", target = "userId")
+    @Mapping(source = "id", target = "notificationId")
+    @Mapping(source = "user.id", target = "userId")
     CreateNotificationResponseDto notificationToCreateNotificationResponseDto(Notification notification);
 
-    @Mapping(source = "notificationId", target = "notificationId")
-    @Mapping(source = "user.userId", target = "userId")
+    @Mapping(source = "id", target = "notificationId")
+    @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "createdAt", target = "createdAt")
     @Mapping(source = "expiresAt", target = "expiresAt")
     GetNotificationResponseDto notificationToGetNotificationResponseDto(Notification notification);
 
-    @Mapping(source = "notificationId", target = "notificationId")
-    @Mapping(source = "user.userId", target = "userId")
-    @Mapping(source = "updatedAt", target = "updatedAt")
+    @Mapping(source = "id", target = "notificationId")
+    @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "expiresAt", target = "expiresAt")
     UpdateNotificationResponseDto notificationToUpdateNotificationResponseDto(Notification notification);
 

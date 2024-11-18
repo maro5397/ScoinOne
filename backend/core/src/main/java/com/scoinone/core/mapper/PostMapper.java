@@ -14,29 +14,29 @@ import java.util.List;
 public interface PostMapper {
     PostMapper INSTANCE = Mappers.getMapper(PostMapper.class);
 
-    @Mapping(source = "postId", target = "postId")
+    @Mapping(source = "id", target = "postId")
     @Mapping(source = "postType", target = "postType")
     @Mapping(source = "title", target = "title")
     @Mapping(source = "content", target = "content")
-    @Mapping(source = "user.userId", target = "userId")
+    @Mapping(source = "user.username", target = "author")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     CreatePostResponseDto postToCreatePostResponseDto(Post post);
 
-    @Mapping(source = "postId", target = "postId")
+    @Mapping(source = "id", target = "postId")
     @Mapping(source = "postType", target = "postType")
     @Mapping(source = "title", target = "title")
     @Mapping(source = "content", target = "content")
-    @Mapping(source = "user.userId", target = "userId")
+    @Mapping(source = "user.username", target = "author")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     GetPostResponseDto postToGetPostResponseDto(Post post);
 
-    @Mapping(source = "postId", target = "postId")
+    @Mapping(source = "id", target = "postId")
     @Mapping(source = "postType", target = "postType")
     @Mapping(source = "title", target = "title")
     @Mapping(source = "content", target = "content")
-    @Mapping(source = "user.userId", target = "userId")
+    @Mapping(source = "user.username", target = "author")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     UpdatePostResponseDto postToUpdatePostResponseDto(Post post);

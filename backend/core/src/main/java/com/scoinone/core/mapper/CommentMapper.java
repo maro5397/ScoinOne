@@ -12,24 +12,24 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
 
-    @Mapping(source = "commentId", target = "commentId")
-    @Mapping(source = "post.postId", target = "postId")
+    @Mapping(source = "id", target = "commentId")
+    @Mapping(source = "post.id", target = "postId")
     @Mapping(source = "content", target = "content")
     @Mapping(source = "user.username", target = "author")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "createdAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     CreateCommentResponseDto commentToCreateCommentResponseDto(Comment comment);
 
-    @Mapping(source = "commentId", target = "commentId")
-    @Mapping(source = "post.postId", target = "postId")
+    @Mapping(source = "id", target = "commentId")
+    @Mapping(source = "post.id", target = "postId")
     @Mapping(source = "content", target = "content")
     @Mapping(source = "user.username", target = "author")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "createdAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     GetCommentResponseDto commentToGetCommentResponseDto(Comment comment);
 
-    @Mapping(source = "commentId", target = "commentId")
-    @Mapping(source = "post.postId", target = "postId")
+    @Mapping(source = "id", target = "commentId")
+    @Mapping(source = "post.id", target = "postId")
     @Mapping(source = "content", target = "content")
     @Mapping(source = "user.username", target = "author")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
