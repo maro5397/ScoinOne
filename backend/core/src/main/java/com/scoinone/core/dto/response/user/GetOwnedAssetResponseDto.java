@@ -8,9 +8,9 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class GetOwnedAssetResponseDto {
-    private String ownedVirtualAssetId;
-    private String userId;
-    private String virtualAssetId;
+    private Long ownedVirtualAssetId;
+    private Long userId;
+    private Long virtualAssetId;
     private BigDecimal amount;
     private String updatedAt;
 }

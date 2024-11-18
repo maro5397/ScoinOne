@@ -8,9 +8,9 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class GetSellOrderResponseDto {
-    private String orderId;
-    private String sellerId;
-    private String virtualAssetId;
+    private Long orderId;
+    private Long sellerId;
+    private Long virtualAssetId;
     private BigDecimal quantity;
     private BigDecimal price;
     private String status;

@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class CreateSellOrderRequestDto {
-    private String sellerId;
+    private Long sellerId;
     private String virtualAssetId;
     private BigDecimal quantity;
     private BigDecimal price;

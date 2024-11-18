@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GetPostResponseDto {
-    private String postId;
+    private Long postId;
     private String postType;
     private String title;
     private String content;

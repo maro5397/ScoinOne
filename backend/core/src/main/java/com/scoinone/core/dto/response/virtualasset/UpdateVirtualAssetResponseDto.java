@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UpdateVirtualAssetResponseDto {
-    private String virtualAssetId;
+    private Long virtualAssetId;
     private String name;
     private String symbol;
     private String description;

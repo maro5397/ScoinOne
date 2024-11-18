@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateNotificationRequestDto {
-    private String userId;
+    private Long userId;
     private String message;
     private String status;
     private String expiresAt;

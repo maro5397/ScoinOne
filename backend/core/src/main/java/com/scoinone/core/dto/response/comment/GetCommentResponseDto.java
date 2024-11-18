@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GetCommentResponseDto {
-    private String commentId;
-    private String postId;
+    private Long commentId;
+    private Long postId;
     private String content;
     private String author;
     private String createdAt;
