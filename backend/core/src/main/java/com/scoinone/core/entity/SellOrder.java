@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class SellOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "seller_id")
