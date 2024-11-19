@@ -10,6 +10,7 @@ import com.scoinone.core.service.TradeService;
 import com.scoinone.core.service.impl.BuyOrderServiceImpl;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -34,6 +35,7 @@ class BuyOrderServiceImplTest {
     }
 
     @Test
+    @DisplayName("구매 주문 생성 테스트")
     public void testCreateBuyOrder() {
         BuyOrder buyOrder = BuyOrder.builder()
                 .id(1L)
@@ -52,6 +54,7 @@ class BuyOrderServiceImplTest {
     }
 
     @Test
+    @DisplayName("구매 주문 삭제 테스트")
     public void testDeleteBuyOrder() {
         Long buyOrderId = 1L;
         buyOrderService.deleteBuyOrder(buyOrderId);
