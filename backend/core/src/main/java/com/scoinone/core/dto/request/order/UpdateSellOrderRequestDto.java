@@ -1,5 +1,6 @@
 package com.scoinone.core.dto.request.order;
 
+import com.scoinone.core.common.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,5 +11,5 @@ import java.math.BigDecimal;
 public class UpdateSellOrderRequestDto {
     private BigDecimal quantity;
     private BigDecimal price;
-    private String status;
+    private OrderStatus status;
 }

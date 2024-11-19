@@ -1,13 +1,14 @@
 package com.scoinone.core.dto.response.notification;
 
+import com.scoinone.core.common.NotificationStatus;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class CreateNotificationResponseDto {
-    private String notificationId;
-    private String userId;
+    private Long notificationId;
+    private Long userId;
     private String content;
-    private String status;
+    private NotificationStatus status;
 }

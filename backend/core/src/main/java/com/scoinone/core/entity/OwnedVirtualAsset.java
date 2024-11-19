@@ -17,7 +17,7 @@ public class OwnedVirtualAsset {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ownedVirtualAssetId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

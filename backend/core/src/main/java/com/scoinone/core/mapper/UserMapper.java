@@ -10,20 +10,20 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    @Mapping(source = "userId", target = "userId")
+    @Mapping(source = "id", target = "userId")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     CreateUserResponseDto userToCreateUserResponseDto(User user);
 
-    @Mapping(source = "userId", target = "userId")
+    @Mapping(source = "id", target = "userId")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     GetUserResponseDto userToGetUserResponseDto(User user);
 
-    @Mapping(source = "userId", target = "userId")
+    @Mapping(source = "id", target = "userId")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")

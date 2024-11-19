@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class VirtualAsset {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long virtualAssetId;
+    private Long id;
 
     private String name;
     private String symbol;

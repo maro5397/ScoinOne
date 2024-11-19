@@ -13,33 +13,32 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface VirtualAssetMapper {
 
-    @Mapping(source = "virtualAssetId", target = "virtualAssetId")
+    @Mapping(source = "id", target = "virtualAssetId")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "symbol", target = "symbol")
     @Mapping(source = "description", target = "description")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     GetVirtualAssetResponseDto virtualAssetToGetVirtualAssetResponseDto(VirtualAsset virtualAsset);
 
-    @Mapping(source = "virtualAssetId", target = "virtualAssetId")
+    @Mapping(source = "id", target = "virtualAssetId")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "symbol", target = "symbol")
     @Mapping(source = "description", target = "description")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     CreateVirtualAssetResponseDto virtualAssetToCreateVirtualAssetResponseDto(VirtualAsset virtualAsset);
 
-    @Mapping(source = "virtualAssetId", target = "virtualAssetId")
+    @Mapping(source = "id", target = "virtualAssetId")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "symbol", target = "symbol")
     @Mapping(source = "description", target = "description")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
-    @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     UpdateVirtualAssetResponseDto virtualAssetToUpdateVirtualAssetResponseDto(VirtualAsset virtualAsset);
 
-    List<GetVirtualAssetResponseDto> virtualAssetsToGetVirtualAssetResponseDtos(List<VirtualAsset> virtualAssets);
+    List<GetVirtualAssetResponseDto> virtualAssetsToGetVirtualAssetsResponseDto(List<VirtualAsset> virtualAssets);
 
     default GetVirtualAssetListResponseDto listToGetVirtualAssetListResponseDto(List<VirtualAsset> virtualAssets) {
         GetVirtualAssetListResponseDto responseDto = new GetVirtualAssetListResponseDto();
-        responseDto.setVirtualAssets(virtualAssetsToGetVirtualAssetResponseDtos(virtualAssets));
+        responseDto.setVirtualAssets(virtualAssetsToGetVirtualAssetsResponseDto(virtualAssets));
         return responseDto;
     }
 }

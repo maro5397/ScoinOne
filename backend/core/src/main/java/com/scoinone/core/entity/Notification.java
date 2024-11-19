@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long notificationId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
