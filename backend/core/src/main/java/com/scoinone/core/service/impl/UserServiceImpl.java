@@ -6,6 +6,7 @@ import com.scoinone.core.entity.*;
 import com.scoinone.core.repository.*;
 import com.scoinone.core.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
+import java.time.Clock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,8 @@ public class UserServiceImpl implements UserService {
     private final SellOrderRepository sellOrderRepository;
     private final TradeRepository tradeRepository;
     private final PostRepository postRepository;
+
+    private final Clock clock;
 
     @Override
     public User getUserById(Long id) {
@@ -61,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Notification> getCommentsFromLast30DaysByUserId(Long userId) {
-        LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
+        LocalDateTime thirtyDaysAgo = LocalDateTime.now(clock).minusDays(30);
         return notificationRepository.findByUser_UserIdAndCreatedAtAfter(userId, thirtyDaysAgo)
                 .orElseThrow(() -> new EntityNotFoundException("Notifications not found with userId: " + userId));
     }

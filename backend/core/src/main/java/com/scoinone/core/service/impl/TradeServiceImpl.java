@@ -9,6 +9,7 @@ import com.scoinone.core.repository.SellOrderRepository;
 import com.scoinone.core.repository.TradeRepository;
 import com.scoinone.core.service.TradeService;
 import jakarta.persistence.EntityNotFoundException;
+import java.time.Clock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,8 @@ public class TradeServiceImpl implements TradeService {
     private final TradeRepository tradeRepository;
     private final SellOrderRepository sellOrderRepository;
     private final BuyOrderRepository buyOrderRepository;
+
+    private final Clock clock;
 
     @Override
     public List<Trade> getTrades() {
@@ -44,7 +47,7 @@ public class TradeServiceImpl implements TradeService {
                 .virtualAsset(sellOrder.getVirtualAsset())
                 .quantity(tradeQuantity)
                 .price(sellOrder.getPrice())
-                .createdAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now(clock))
                 .build();
         return tradeRepository.save(trade);
     }
