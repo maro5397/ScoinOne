@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     public User updateUser(Long id, User updatedUser) {
         User existedUser = getUserById(id);
         existedUser.setUsername(updatedUser.getUsername());
-        return null;
+        return existedUser;
     }
 
     @Override
