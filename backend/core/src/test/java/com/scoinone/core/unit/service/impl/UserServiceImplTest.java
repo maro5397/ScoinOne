@@ -25,6 +25,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,13 +34,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.security.core.userdetails.UserDetails;
 
 class UserServiceImplTest {
-    @SpyBean
-    private Clock clock;
-
     @InjectMocks
     private UserServiceImpl userService;
 
@@ -63,6 +60,9 @@ class UserServiceImplTest {
 
     @Mock
     private PostRepository postRepository;
+
+    @Mock
+    private Clock clock;
 
     @BeforeEach
     public void setUp() {
@@ -187,11 +187,12 @@ class UserServiceImplTest {
 
     @Test
     public void testGetCommentsFromLast30DaysByUserId() {
+        when(clock.instant()).thenReturn(Instant.parse("2024-11-21T00:00:00Z"));
+        when(clock.getZone()).thenReturn(ZoneId.systemDefault());
+
         Long userId = 1L;
-        LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
+        LocalDateTime thirtyDaysAgo = LocalDateTime.now(clock).minusDays(30);
         List<Notification> notifications = new ArrayList<>();
-        when(clock.instant())
-                .thenReturn(Instant.parse("2024-11-21T00:00:00Z"));
         when(notificationRepository.findByUser_UserIdAndCreatedAtAfter(userId, thirtyDaysAgo))
                 .thenReturn(Optional.of(notifications));
 
