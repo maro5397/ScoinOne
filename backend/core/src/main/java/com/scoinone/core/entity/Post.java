@@ -1,10 +1,9 @@
 package com.scoinone.core.entity;
 
 import com.scoinone.core.common.PostType;
+import com.scoinone.core.entity.base.UpdatableEntity;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "posts")
@@ -13,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-public class Post {
+public class Post extends UpdatableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,10 +27,4 @@ public class Post {
     private String title;
     private String content;
     private int viewCount;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createdAt;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime updatedAt;
 }

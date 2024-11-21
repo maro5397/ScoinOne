@@ -10,7 +10,6 @@ import com.scoinone.core.entity.User;
 import com.scoinone.core.entity.VirtualAsset;
 import com.scoinone.core.mapper.OwnedVirtualAssetMapper;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,7 +58,6 @@ class OwnedVirtualAssetMapperTest {
     private OwnedVirtualAsset createOwnedVirtualAsset(Long id, Long userId, Long virtualAssetId) {
         VirtualAsset virtualAsset = VirtualAsset.builder()
                 .id(virtualAssetId)
-                .createdAt(LocalDateTime.now())
                 .build();
 
         User user = User.builder()
@@ -71,7 +69,6 @@ class OwnedVirtualAssetMapperTest {
                 .user(user)
                 .id(id)
                 .amount(BigDecimal.valueOf(100))
-                .updatedAt(LocalDateTime.now())
                 .build();
     }
 }

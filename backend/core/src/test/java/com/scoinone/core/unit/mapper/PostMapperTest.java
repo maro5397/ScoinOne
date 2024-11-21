@@ -52,8 +52,6 @@ class PostMapperTest {
             softly.assertThat(responseDto.getTitle()).isEqualTo("Test Title1");
             softly.assertThat(responseDto.getContent()).isEqualTo("Test Content1");
             softly.assertThat(responseDto.getAuthor()).isEqualTo("testUser1");
-            softly.assertThat(responseDto.getCreatedAt()).isEqualTo(LocalDateTime.parse("2023-11-19T10:15:30"));
-            softly.assertThat(responseDto.getUpdatedAt()).isEqualTo(LocalDateTime.parse("2023-11-19T10:15:30"));
         });
     }
 
@@ -71,8 +69,6 @@ class PostMapperTest {
             softly.assertThat(responseDto.getTitle()).isEqualTo("Test Title1");
             softly.assertThat(responseDto.getContent()).isEqualTo("Test Content1");
             softly.assertThat(responseDto.getAuthor()).isEqualTo("testUser1");
-            softly.assertThat(responseDto.getCreatedAt()).isEqualTo(LocalDateTime.parse("2023-11-19T10:15:30"));
-            softly.assertThat(responseDto.getUpdatedAt()).isEqualTo(LocalDateTime.parse("2023-11-19T10:15:30"));
         });
     }
 
@@ -90,8 +86,6 @@ class PostMapperTest {
             softly.assertThat(responseDto.getTitle()).isEqualTo("Test Title1");
             softly.assertThat(responseDto.getContent()).isEqualTo("Test Content1");
             softly.assertThat(responseDto.getAuthor()).isEqualTo("testUser1");
-            softly.assertThat(responseDto.getCreatedAt()).isEqualTo(LocalDateTime.parse("2023-11-19T10:15:30"));
-            softly.assertThat(responseDto.getUpdatedAt()).isEqualTo(LocalDateTime.parse("2023-11-19T10:15:30"));
         });
     }
 
@@ -131,8 +125,6 @@ class PostMapperTest {
                 .postType(postType)
                 .title(title)
                 .content(content)
-                .createdAt(LocalDateTime.parse("2023-11-19T10:15:30"))
-                .updatedAt(LocalDateTime.parse("2023-11-19T10:15:30"))
                 .build();
     }
 }

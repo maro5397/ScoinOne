@@ -10,7 +10,6 @@ import com.scoinone.core.entity.Comment;
 import com.scoinone.core.entity.Post;
 import com.scoinone.core.entity.User;
 import com.scoinone.core.mapper.CommentMapper;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -119,7 +118,6 @@ class CommentMapperTest {
                 .content(content)
                 .user(user)
                 .post(post)
-                .createdAt(LocalDateTime.now())
                 .build();
     }
 }

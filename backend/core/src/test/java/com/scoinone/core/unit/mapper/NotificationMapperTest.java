@@ -99,7 +99,6 @@ class NotificationMapperTest {
 
         return Notification.builder()
                 .id(id)
-                .createdAt(LocalDateTime.now())
                 .expiresAt(LocalDateTime.now().plusDays(1))
                 .user(user)
                 .build();

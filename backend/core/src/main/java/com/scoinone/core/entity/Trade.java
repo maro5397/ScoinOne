@@ -1,10 +1,10 @@
 package com.scoinone.core.entity;
 
+import com.scoinone.core.entity.base.CreatableEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "trades")
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Builder // 수정 및 삭제가 없으므로 Setter를 만들지 않음
-public class Trade {
+public class Trade extends CreatableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,7 +31,4 @@ public class Trade {
 
     private BigDecimal quantity;
     private BigDecimal price;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createdAt;
 }

@@ -189,7 +189,6 @@ class OrderMapperTest {
                 .quantity(BigDecimal.valueOf(10))
                 .price(BigDecimal.valueOf(100))
                 .status(OrderStatus.PENDING)
-                .createdAt(LocalDateTime.now())
                 .tradeTime(LocalDateTime.now())
                 .build();
     }
@@ -210,7 +209,6 @@ class OrderMapperTest {
                 .quantity(BigDecimal.valueOf(10))
                 .price(BigDecimal.valueOf(100))
                 .status(OrderStatus.PENDING)
-                .createdAt(LocalDateTime.now())
                 .tradeTime(LocalDateTime.now())
                 .build();
     }
