@@ -14,7 +14,7 @@ public interface UserService extends UserDetailsService {
 
     void deleteUser(Long id);
 
-    List<Notification> getCommentsFromLast30DaysByUserId(Long userId);
+    List<Notification> getNotificationsFromLast30DaysByUserId(Long userId);
 
     List<OwnedVirtualAsset> getOwnedVirtualAssetsByUserId(Long userId);
 

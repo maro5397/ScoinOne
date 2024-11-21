@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Notification> getCommentsFromLast30DaysByUserId(Long userId) {
+    public List<Notification> getNotificationsFromLast30DaysByUserId(Long userId) {
         LocalDateTime thirtyDaysAgo = LocalDateTime.now(clock).minusDays(30);
         return notificationRepository.findByUser_UserIdAndCreatedAtAfter(userId, thirtyDaysAgo)
                 .orElseThrow(() -> new EntityNotFoundException("Notifications not found with userId: " + userId));

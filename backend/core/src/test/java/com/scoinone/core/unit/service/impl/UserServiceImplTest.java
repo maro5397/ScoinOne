@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -70,6 +71,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("사용자 조회 테스트")
     public void testGetUserById_Success() {
         Long userId = 1L;
         User user = User.builder()
@@ -86,6 +88,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("사용자 조회 테스트 실패")
     public void testGetUserById_NotFound() {
         Long userId = 1L;
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
@@ -98,6 +101,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("사용자 생성 (회원가입) 테스트")
     public void testCreateUser_Success() {
         User user = User.builder()
                 .email("test@example.com")
@@ -115,6 +119,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("사용자 생성 (회원가입) 테스트 실패 - 이미 가입한 사용자")
     public void testCreateUser_UserAlreadyExists() {
         User user = User.builder()
                 .email("test@example.com")
@@ -129,6 +134,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("사용자 정보 수정 테스트")
     public void testUpdateUser_Success() {
         Long userId = 1L;
         User existingUser = User.builder()
@@ -151,6 +157,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("사용자 삭제 테스트")
     public void testDeleteUser() {
         Long userId = 1L;
 
@@ -160,6 +167,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("사용자 닉네임(이메일)으로 사용자 조회 테스트 - spring security")
     public void testLoadUserByUsername_Success() {
         String email = "test@example.com";
         User user = User.builder().build();
@@ -174,6 +182,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("사용자 닉네임(이메일)으로 사용자 조회 테스트 실패 - spring security")
     public void testLoadUserByUsername_NotFound() {
         String email = "test@example.com";
         when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
@@ -186,6 +195,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("사용자 알림 30일까지 조회")
     public void testGetCommentsFromLast30DaysByUserId() {
         when(clock.instant()).thenReturn(Instant.parse("2024-11-21T00:00:00Z"));
         when(clock.getZone()).thenReturn(ZoneId.systemDefault());
@@ -196,7 +206,7 @@ class UserServiceImplTest {
         when(notificationRepository.findByUser_UserIdAndCreatedAtAfter(userId, thirtyDaysAgo))
                 .thenReturn(Optional.of(notifications));
 
-        List<Notification> result = userService.getCommentsFromLast30DaysByUserId(userId);
+        List<Notification> result = userService.getNotificationsFromLast30DaysByUserId(userId);
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
@@ -205,6 +215,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("사용자 보유 가상자산 조회")
     public void testGetOwnedVirtualAssetsByUserId() {
         Long userId = 1L;
         List<OwnedVirtualAsset> ownedAssets = new ArrayList<>();
@@ -219,6 +230,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("사용자 구매 주문 조회")
     public void testGetBuyOrderByUserId() {
         Long userId = 1L;
         List<BuyOrder> buyOrders = new ArrayList<>();
@@ -234,6 +246,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("사용자 판매 주문 조회")
     public void testGetSellOrderByUserId() {
         Long userId = 1L;
         List<SellOrder> sellOrders = new ArrayList<>();
@@ -249,6 +262,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("사용자 전체 주문 조회")
     public void testGetOrderByUserId() {
         Long userId = 1L;
         List<BuyOrder> buyOrders = new ArrayList<>();
@@ -269,6 +283,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("사용자 체결 거래 조회")
     public void testGetTradeByUserId() {
         Long userId = 1L;
         List<Trade> buyingTrades = new ArrayList<>();
@@ -287,6 +302,7 @@ class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("사용자 질의 게시글 조회")
     public void testGetQuestionsByUserId() {
         Long userId = 1L;
         List<Post> questions = new ArrayList<>();
