@@ -66,15 +66,16 @@ public class TradeServiceImpl implements TradeService {
             if (buyQuantity.compareTo(sellQuantity) <= 0) {
                 tradeQuantity = buyQuantity;
                 sellOrder.setQuantity(sellQuantity.subtract(buyQuantity));
-                buyOrder.setQuantity(new BigDecimal(0));
+                buyOrder.setQuantity(BigDecimal.ZERO);
                 buyOrder.setStatus(OrderStatus.COMPLETED);
             } else {
                 tradeQuantity = sellQuantity;
                 buyOrder.setQuantity(buyQuantity.subtract(sellQuantity));
-                sellOrder.setQuantity(new BigDecimal(0));
+                sellOrder.setQuantity(BigDecimal.ZERO);
                 sellOrder.setStatus(OrderStatus.COMPLETED);
             }
             trades.add(createTrade(buyOrder, sellOrder, tradeQuantity));
+            buyQuantity = buyOrder.getQuantity();
         }
         return trades;
     }
@@ -94,15 +95,16 @@ public class TradeServiceImpl implements TradeService {
             if (buyQuantity.compareTo(sellQuantity) <= 0) {
                 tradeQuantity = buyQuantity;
                 sellOrder.setQuantity(sellQuantity.subtract(buyQuantity));
-                buyOrder.setQuantity(new BigDecimal(0));
+                buyOrder.setQuantity(BigDecimal.ZERO);
                 buyOrder.setStatus(OrderStatus.COMPLETED);
             } else {
                 tradeQuantity = sellQuantity;
                 buyOrder.setQuantity(buyQuantity.subtract(sellQuantity));
-                sellOrder.setQuantity(new BigDecimal(0));
+                sellOrder.setQuantity(BigDecimal.ZERO);
                 sellOrder.setStatus(OrderStatus.COMPLETED);
             }
             trades.add(createTrade(buyOrder, sellOrder, tradeQuantity));
+            sellQuantity = sellOrder.getQuantity();
         }
         return trades;
     }
