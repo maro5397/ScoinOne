@@ -1,6 +1,7 @@
 package com.scoinone.core.entity;
 
 import com.scoinone.core.common.OrderStatus;
+import com.scoinone.core.entity.base.CreatableEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-public class BuyOrder {
+public class BuyOrder extends CreatableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,7 +36,4 @@ public class BuyOrder {
 
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime tradeTime;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createdAt;
 }

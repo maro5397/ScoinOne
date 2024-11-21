@@ -47,7 +47,6 @@ public class TradeServiceImpl implements TradeService {
                 .virtualAsset(sellOrder.getVirtualAsset())
                 .quantity(tradeQuantity)
                 .price(sellOrder.getPrice())
-                .createdAt(LocalDateTime.now(clock))
                 .build();
         return tradeRepository.save(trade);
     }

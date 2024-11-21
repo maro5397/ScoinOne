@@ -1,9 +1,8 @@
 package com.scoinone.core.entity;
 
+import com.scoinone.core.entity.base.CreatableEntity;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comments")
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-public class Comment {
+public class Comment extends CreatableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,7 +25,4 @@ public class Comment {
     private User user;
 
     private String content;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createdAt;
 }

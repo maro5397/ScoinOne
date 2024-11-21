@@ -1,6 +1,7 @@
 package com.scoinone.core.entity;
 
 import com.scoinone.core.common.NotificationStatus;
+import com.scoinone.core.entity.base.CreatableEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-public class Notification {
+public class Notification extends CreatableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,9 +27,6 @@ public class Notification {
 
     @Enumerated(EnumType.STRING)
     private NotificationStatus status;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createdAt;
 
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime expiresAt;

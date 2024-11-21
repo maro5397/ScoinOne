@@ -8,7 +8,6 @@ import com.scoinone.core.dto.response.virtualasset.GetVirtualAssetResponseDto;
 import com.scoinone.core.dto.response.virtualasset.UpdateVirtualAssetResponseDto;
 import com.scoinone.core.entity.VirtualAsset;
 import com.scoinone.core.mapper.VirtualAssetMapper;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,12 +23,9 @@ class VirtualAssetMapperTest {
     public void setUp() {
         mapper = Mappers.getMapper(VirtualAssetMapper.class);
         virtualAssets = Arrays.asList(
-                createVirtualAsset(1L, "Bitcoin", "BTC", "Bitcoin Description",
-                        LocalDateTime.parse("2023-11-19T10:15:30")),
-                createVirtualAsset(2L, "Ethereum", "ETH", "Ethereum Description",
-                        LocalDateTime.parse("2023-11-19T11:00:00")),
-                createVirtualAsset(3L, "Solana", "SOL", "Solana Description",
-                        LocalDateTime.parse("2023-11-19T12:00:00"))
+                createVirtualAsset(1L, "Bitcoin", "BTC", "Bitcoin Description"),
+                createVirtualAsset(2L, "Ethereum", "ETH", "Ethereum Description"),
+                createVirtualAsset(3L, "Solana", "SOL", "Solana Description")
         );
     }
 
@@ -44,7 +40,6 @@ class VirtualAssetMapperTest {
             softly.assertThat(responseDto.getName()).isEqualTo("Bitcoin");
             softly.assertThat(responseDto.getSymbol()).isEqualTo("BTC");
             softly.assertThat(responseDto.getDescription()).isEqualTo("Bitcoin Description");
-            softly.assertThat(responseDto.getCreatedAt()).isEqualTo("2023-11-19T10:15:30");
         });
     }
 
@@ -61,7 +56,6 @@ class VirtualAssetMapperTest {
             softly.assertThat(responseDto.getName()).isEqualTo("Bitcoin");
             softly.assertThat(responseDto.getSymbol()).isEqualTo("BTC");
             softly.assertThat(responseDto.getDescription()).isEqualTo("Bitcoin Description");
-            softly.assertThat(responseDto.getCreatedAt()).isEqualTo("2023-11-19T10:15:30");
         });
     }
 
@@ -77,7 +71,6 @@ class VirtualAssetMapperTest {
             softly.assertThat(responseDto.getName()).isEqualTo("Bitcoin");
             softly.assertThat(responseDto.getSymbol()).isEqualTo("BTC");
             softly.assertThat(responseDto.getDescription()).isEqualTo("Bitcoin Description");
-            softly.assertThat(responseDto.getCreatedAt()).isEqualTo("2023-11-19T10:15:30");
         });
     }
 
@@ -98,15 +91,13 @@ class VirtualAssetMapperTest {
             Long id,
             String name,
             String symbol,
-            String description,
-            LocalDateTime createdAt
+            String description
     ) {
         return VirtualAsset.builder()
                 .id(id)
                 .name(name)
                 .symbol(symbol)
                 .description(description)
-                .createdAt(createdAt)
                 .build();
     }
 }

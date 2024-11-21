@@ -1,10 +1,10 @@
 package com.scoinone.core.entity;
 
+import com.scoinone.core.entity.base.UpdatableEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "owned_virtual_assets")
@@ -13,8 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-public class OwnedVirtualAsset {
-
+public class OwnedVirtualAsset extends UpdatableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,7 +27,4 @@ public class OwnedVirtualAsset {
     private VirtualAsset virtualAsset;
 
     private BigDecimal amount;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime updatedAt;
 }

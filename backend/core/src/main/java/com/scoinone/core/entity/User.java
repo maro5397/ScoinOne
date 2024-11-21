@@ -1,5 +1,7 @@
 package com.scoinone.core.entity;
 
+import com.scoinone.core.entity.base.CreatableEntity;
+import com.scoinone.core.entity.base.UpdatableEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Builder
-public class User implements UserDetails {
+public class User extends UpdatableEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,12 +27,6 @@ public class User implements UserDetails {
     private String email;
     @Setter
     private String password;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createdAt;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime updatedAt;
 
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime lastLogin;
