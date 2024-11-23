@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface TradeRepository extends JpaRepository<Trade, Long> {
-    Optional<List<Trade>> findByBuyOrder_Buyer_UserId(Long buyerId);
-    Optional<List<Trade>> findBySellOrder_Seller_UserId(Long sellerId);
+    Optional<List<Trade>> findByBuyOrder_Buyer_Id(Long buyerId);
+    Optional<List<Trade>> findBySellOrder_Seller_Id(Long sellerId);
 }

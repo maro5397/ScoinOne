@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface SellOrderRepository extends JpaRepository<SellOrder, Long> {
-    Optional<List<SellOrder>> findBySeller_UserIdAndStatus(Long userId, OrderStatus status);
+    Optional<List<SellOrder>> findBySeller_IdAndStatus(Long userId, OrderStatus status);
 
     @Query("SELECT s " +
             "FROM SellOrder s " +

@@ -10,5 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
-    Optional<List<Notification>> findByUser_UserIdAndCreatedAtAfter(Long userId, LocalDateTime date);
+    Optional<List<Notification>> findByUser_IdAndCreatedAtAfter(Long userId, LocalDateTime date);
 }

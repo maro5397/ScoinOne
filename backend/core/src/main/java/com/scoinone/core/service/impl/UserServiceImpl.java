@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -65,25 +64,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Notification> getNotificationsFromLast30DaysByUserId(Long userId) {
         LocalDateTime thirtyDaysAgo = LocalDateTime.now(clock).minusDays(30);
-        return notificationRepository.findByUser_UserIdAndCreatedAtAfter(userId, thirtyDaysAgo)
+        return notificationRepository.findByUser_IdAndCreatedAtAfter(userId, thirtyDaysAgo)
                 .orElseThrow(() -> new EntityNotFoundException("Notifications not found with userId: " + userId));
     }
 
     @Override
     public List<OwnedVirtualAsset> getOwnedVirtualAssetsByUserId(Long userId) {
-        return ownedVirtualAssetRepository.findByUser_UserId(userId)
+        return ownedVirtualAssetRepository.findByUser_Id(userId)
                 .orElseThrow(() -> new EntityNotFoundException("OwnedVirtualAssets not found with userId: " + userId));
     }
 
     @Override
     public List<BuyOrder> getBuyOrderByUserId(Long userId) {
-        return buyOrderRepository.findByBuyer_UserIdAndStatus(userId, OrderStatus.PENDING)
+        return buyOrderRepository.findByBuyer_IdAndStatus(userId, OrderStatus.PENDING)
                 .orElseThrow(() -> new EntityNotFoundException("BuyOrder not found with userId: " + userId));
     }
 
     @Override
     public List<SellOrder> getSellOrderByUserId(Long userId) {
-        return sellOrderRepository.findBySeller_UserIdAndStatus(userId, OrderStatus.PENDING)
+        return sellOrderRepository.findBySeller_IdAndStatus(userId, OrderStatus.PENDING)
                 .orElseThrow(() -> new EntityNotFoundException("SellOrder not found with userId: " + userId));
     }
 
@@ -111,9 +110,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Trade> getTradeByUserId(Long userId) {
-        List<Trade> buyingTrades = tradeRepository.findByBuyOrder_Buyer_UserId(userId)
+        List<Trade> buyingTrades = tradeRepository.findByBuyOrder_Buyer_Id(userId)
                 .orElseThrow(() -> new EntityNotFoundException("BuyingTrade not found with userId: " + userId));
-        List<Trade> sellingTrades = tradeRepository.findBySellOrder_Seller_UserId(userId)
+        List<Trade> sellingTrades = tradeRepository.findBySellOrder_Seller_Id(userId)
                 .orElseThrow(() -> new EntityNotFoundException("SellingTrade not found with userId: " + userId));
 
         List<Trade> allTrades = new CopyOnWriteArrayList<>();
@@ -126,7 +125,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Post> getQuestionsByUserId(Long userId) {
-        return postRepository.findByUser_UserIdAndPostType(userId, PostType.QNA)
+        return postRepository.findByUser_IdAndPostType(userId, PostType.QNA)
                 .orElseThrow(() -> new EntityNotFoundException("Questions not found with userId: " + userId));
     }
 }

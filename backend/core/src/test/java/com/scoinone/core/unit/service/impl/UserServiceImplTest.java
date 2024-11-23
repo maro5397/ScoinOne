@@ -203,14 +203,14 @@ class UserServiceImplTest {
         Long userId = 1L;
         LocalDateTime thirtyDaysAgo = LocalDateTime.now(clock).minusDays(30);
         List<Notification> notifications = new ArrayList<>();
-        when(notificationRepository.findByUser_UserIdAndCreatedAtAfter(userId, thirtyDaysAgo))
+        when(notificationRepository.findByUser_IdAndCreatedAtAfter(userId, thirtyDaysAgo))
                 .thenReturn(Optional.of(notifications));
 
         List<Notification> result = userService.getNotificationsFromLast30DaysByUserId(userId);
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
-            verify(notificationRepository).findByUser_UserIdAndCreatedAtAfter(userId, thirtyDaysAgo);
+            verify(notificationRepository).findByUser_IdAndCreatedAtAfter(userId, thirtyDaysAgo);
         });
     }
 
@@ -219,13 +219,13 @@ class UserServiceImplTest {
     public void testGetOwnedVirtualAssetsByUserId() {
         Long userId = 1L;
         List<OwnedVirtualAsset> ownedAssets = new ArrayList<>();
-        when(ownedVirtualAssetRepository.findByUser_UserId(userId)).thenReturn(Optional.of(ownedAssets));
+        when(ownedVirtualAssetRepository.findByUser_Id(userId)).thenReturn(Optional.of(ownedAssets));
 
         List<OwnedVirtualAsset> result = userService.getOwnedVirtualAssetsByUserId(userId);
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
-            verify(ownedVirtualAssetRepository).findByUser_UserId(userId);
+            verify(ownedVirtualAssetRepository).findByUser_Id(userId);
         });
     }
 
@@ -234,14 +234,14 @@ class UserServiceImplTest {
     public void testGetBuyOrderByUserId() {
         Long userId = 1L;
         List<BuyOrder> buyOrders = new ArrayList<>();
-        when(buyOrderRepository.findByBuyer_UserIdAndStatus(userId, OrderStatus.PENDING))
+        when(buyOrderRepository.findByBuyer_IdAndStatus(userId, OrderStatus.PENDING))
                 .thenReturn(Optional.of(buyOrders));
 
         List<BuyOrder> result = userService.getBuyOrderByUserId(userId);
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
-            verify(buyOrderRepository).findByBuyer_UserIdAndStatus(userId, OrderStatus.PENDING);
+            verify(buyOrderRepository).findByBuyer_IdAndStatus(userId, OrderStatus.PENDING);
         });
     }
 
@@ -250,14 +250,14 @@ class UserServiceImplTest {
     public void testGetSellOrderByUserId() {
         Long userId = 1L;
         List<SellOrder> sellOrders = new ArrayList<>();
-        when(sellOrderRepository.findBySeller_UserIdAndStatus(userId, OrderStatus.PENDING))
+        when(sellOrderRepository.findBySeller_IdAndStatus(userId, OrderStatus.PENDING))
                 .thenReturn(Optional.of(sellOrders));
 
         List<SellOrder> result = userService.getSellOrderByUserId(userId);
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
-            verify(sellOrderRepository).findBySeller_UserIdAndStatus(userId, OrderStatus.PENDING);
+            verify(sellOrderRepository).findBySeller_IdAndStatus(userId, OrderStatus.PENDING);
         });
     }
 
@@ -267,9 +267,9 @@ class UserServiceImplTest {
         Long userId = 1L;
         List<BuyOrder> buyOrders = new ArrayList<>();
         List<SellOrder> sellOrders = new ArrayList<>();
-        when(buyOrderRepository.findByBuyer_UserIdAndStatus(userId, OrderStatus.PENDING)).thenReturn(
+        when(buyOrderRepository.findByBuyer_IdAndStatus(userId, OrderStatus.PENDING)).thenReturn(
                 Optional.of(buyOrders));
-        when(sellOrderRepository.findBySeller_UserIdAndStatus(userId, OrderStatus.PENDING)).thenReturn(
+        when(sellOrderRepository.findBySeller_IdAndStatus(userId, OrderStatus.PENDING)).thenReturn(
                 Optional.of(sellOrders));
 
         List<Object> result = userService.getOrderByUserId(userId);
@@ -277,8 +277,8 @@ class UserServiceImplTest {
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
             softly.assertThat(result.size()).isEqualTo(buyOrders.size() + sellOrders.size());
-            verify(buyOrderRepository).findByBuyer_UserIdAndStatus(userId, OrderStatus.PENDING);
-            verify(sellOrderRepository).findBySeller_UserIdAndStatus(userId, OrderStatus.PENDING);
+            verify(buyOrderRepository).findByBuyer_IdAndStatus(userId, OrderStatus.PENDING);
+            verify(sellOrderRepository).findBySeller_IdAndStatus(userId, OrderStatus.PENDING);
         });
     }
 
@@ -288,16 +288,16 @@ class UserServiceImplTest {
         Long userId = 1L;
         List<Trade> buyingTrades = new ArrayList<>();
         List<Trade> sellingTrades = new ArrayList<>();
-        when(tradeRepository.findByBuyOrder_Buyer_UserId(userId)).thenReturn(Optional.of(buyingTrades));
-        when(tradeRepository.findBySellOrder_Seller_UserId(userId)).thenReturn(Optional.of(sellingTrades));
+        when(tradeRepository.findByBuyOrder_Buyer_Id(userId)).thenReturn(Optional.of(buyingTrades));
+        when(tradeRepository.findBySellOrder_Seller_Id(userId)).thenReturn(Optional.of(sellingTrades));
 
         List<Trade> result = userService.getTradeByUserId(userId);
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
             softly.assertThat(result.size()).isEqualTo(buyingTrades.size() + sellingTrades.size());
-            verify(tradeRepository).findByBuyOrder_Buyer_UserId(userId);
-            verify(tradeRepository).findBySellOrder_Seller_UserId(userId);
+            verify(tradeRepository).findByBuyOrder_Buyer_Id(userId);
+            verify(tradeRepository).findBySellOrder_Seller_Id(userId);
         });
     }
 
@@ -306,14 +306,14 @@ class UserServiceImplTest {
     public void testGetQuestionsByUserId() {
         Long userId = 1L;
         List<Post> questions = new ArrayList<>();
-        when(postRepository.findByUser_UserIdAndPostType(userId, PostType.QNA)).thenReturn(Optional.of(questions));
+        when(postRepository.findByUser_IdAndPostType(userId, PostType.QNA)).thenReturn(Optional.of(questions));
 
         List<Post> result = userService.getQuestionsByUserId(userId);
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
             softly.assertThat(result.size()).isEqualTo(questions.size());
-            verify(postRepository).findByUser_UserIdAndPostType(userId, PostType.QNA);
+            verify(postRepository).findByUser_IdAndPostType(userId, PostType.QNA);
         });
     }
 }
