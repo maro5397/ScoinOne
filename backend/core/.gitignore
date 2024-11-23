@@ -18,7 +18,8 @@ mountDB
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
-application-*
+application-local.*
+application-prod.*
 
 ### IntelliJ IDEA ###
 .idea
