@@ -39,27 +39,13 @@ class PostServiceImplTest {
     public void testGetPosts_Success() {
         Pageable pageable = Pageable.unpaged();
         PostType postType = PostType.QNA;
-        when(postRepository.findByPostType(pageable, postType)).thenReturn(Optional.of(page));
+        when(postRepository.findByPostType(pageable, postType)).thenReturn(page);
 
         Page<Post> result = postService.getPosts(pageable, postType);
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
             verify(postRepository).findByPostType(pageable, postType);
-        });
-    }
-
-    @Test
-    @DisplayName("게시글 페이지 가져오기 실패")
-    public void testGetPosts_NotFound() {
-        Pageable pageable = Pageable.unpaged();
-        PostType postType = PostType.QNA;
-        when(postRepository.findByPostType(pageable, postType)).thenReturn(Optional.empty());
-
-        assertSoftly(softly -> {
-            softly.assertThatThrownBy(() -> postService.getPosts(pageable, postType))
-                    .isInstanceOf(EntityNotFoundException.class)
-                    .hasMessageContaining("Page<Post> not found");
         });
     }
 
