@@ -201,15 +201,14 @@ class UserServiceImplTest {
         when(clock.getZone()).thenReturn(ZoneId.systemDefault());
 
         Long userId = 1L;
-        LocalDateTime thirtyDaysAgo = LocalDateTime.now(clock).minusDays(30);
         List<Notification> notifications = Collections.singletonList(Notification.builder().build());
-        when(notificationRepository.findByUser_IdAndCreatedAtAfter(userId, thirtyDaysAgo)).thenReturn(notifications);
+        when(notificationRepository.findByUserIdAndLast30Days(userId)).thenReturn(notifications);
 
         List<Notification> result = userService.getNotificationsFromLast30DaysByUserId(userId);
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
-            verify(notificationRepository).findByUser_IdAndCreatedAtAfter(userId, thirtyDaysAgo);
+            verify(notificationRepository).findByUserIdAndLast30Days(userId);
         });
     }
 
