@@ -94,8 +94,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<SellOrder> getSellOrderByUserId(Long userId) {
-        return sellOrderRepository.findBySeller_IdAndStatus(userId, OrderStatus.PENDING)
-                .orElseThrow(() -> new EntityNotFoundException("SellOrder not found with userId: " + userId));
+        List<SellOrder> sellOrders = sellOrderRepository.findBySeller_IdAndStatus(userId, OrderStatus.PENDING);
+        if (sellOrders == null || sellOrders.isEmpty()) {
+            throw new EntityNotFoundException("SellOrder not found with userId: " + userId);
+        }
+        return sellOrders;
     }
 
     @Override

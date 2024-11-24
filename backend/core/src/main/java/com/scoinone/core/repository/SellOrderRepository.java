@@ -13,11 +13,11 @@ import java.util.Optional;
 
 @Repository
 public interface SellOrderRepository extends JpaRepository<SellOrder, Long> {
-    Optional<List<SellOrder>> findBySeller_IdAndStatus(Long userId, OrderStatus status);
+    List<SellOrder> findBySeller_IdAndStatus(Long userId, OrderStatus status);
 
     @Query("SELECT s " +
             "FROM SellOrder s " +
             "WHERE s.price <= :buyPrice AND s.status = 'PENDING' " +
             "ORDER BY s.price DESC, s.createdAt ASC")
-    Optional<List<SellOrder>> findMatchableSellOrders(@Param("buyPrice") BigDecimal buyPrice);
+    List<SellOrder> findMatchableSellOrders(@Param("buyPrice") BigDecimal buyPrice);
 }
