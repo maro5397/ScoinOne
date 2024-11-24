@@ -87,8 +87,10 @@ public class TradeServiceImpl implements TradeService {
         BigDecimal sellPrice = sellOrder.getPrice();
         BigDecimal tradeQuantity;
 
-        List<BuyOrder> availableBuyOrders = buyOrderRepository.findMatchableBuyOrders(sellPrice)
-                .orElseThrow(() -> new EntityNotFoundException("BuyOrders not found with sellPrice: " + sellPrice));
+        List<BuyOrder> availableBuyOrders = buyOrderRepository.findMatchableBuyOrders(sellPrice);
+        if (availableBuyOrders == null || availableBuyOrders.isEmpty()) {
+            throw new EntityNotFoundException("BuyOrders not found with sellPrice: " + sellPrice);
+        }
 
         for (BuyOrder buyOrder : availableBuyOrders) {
             BigDecimal buyQuantity = buyOrder.getQuantity();

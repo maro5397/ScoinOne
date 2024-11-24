@@ -163,7 +163,7 @@ class TradeServiceImplTest {
                 .build();
 
         List<BuyOrder> buyOrders = List.of(buyOrder1, buyOrder2);
-        when(buyOrderRepository.findMatchableBuyOrders(sellOrder.getPrice())).thenReturn(Optional.of(buyOrders));
+        when(buyOrderRepository.findMatchableBuyOrders(sellOrder.getPrice())).thenReturn(buyOrders);
 
         List<Trade> trades = tradeService.processSellOrderTrade(sellOrder);
 

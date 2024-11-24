@@ -76,8 +76,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<BuyOrder> getBuyOrderByUserId(Long userId) {
-        return buyOrderRepository.findByBuyer_IdAndStatus(userId, OrderStatus.PENDING)
-                .orElseThrow(() -> new EntityNotFoundException("BuyOrder not found with userId: " + userId));
+        List<BuyOrder> buyOrders = buyOrderRepository.findByBuyer_IdAndStatus(userId, OrderStatus.PENDING);
+        if (buyOrders == null || buyOrders.isEmpty()) {
+            throw new EntityNotFoundException("BuyOrder not found with userId: " + userId);
+        }
+        return buyOrders;
     }
 
     @Override

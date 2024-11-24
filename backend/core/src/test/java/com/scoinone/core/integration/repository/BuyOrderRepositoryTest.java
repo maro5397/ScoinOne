@@ -100,32 +100,26 @@ class BuyOrderRepositoryTest {
     @Test
     @DisplayName("구매자 ID와 구매 주문 상태로 구매 주문 조회")
     void testFindByBuyerUserIdAndStatus() {
-        Optional<List<BuyOrder>> result = buyOrderRepository.findByBuyer_IdAndStatus(
+        List<BuyOrder> result = buyOrderRepository.findByBuyer_IdAndStatus(
                 buyer.getId(),
                 OrderStatus.PENDING
         );
 
         assertSoftly(softly -> {
-            softly.assertThat(result).isPresent();
-            result.ifPresent(buyOrders -> {
-                softly.assertThat(buyOrders).hasSize(3);
-                buyOrders.forEach(buyOrder -> softly.assertThat(buyOrder.getStatus()).isEqualTo(OrderStatus.PENDING));
-            });
+            softly.assertThat(result).hasSize(3);
+            result.forEach(buyOrder -> softly.assertThat(buyOrder.getStatus()).isEqualTo(OrderStatus.PENDING));
         });
     }
 
     @Test
     @DisplayName("판매가에 따른 구매 가능 주문 조회")
     void testFindMatchableBuyOrders() {
-        Optional<List<BuyOrder>> result = buyOrderRepository.findMatchableBuyOrders(BigDecimal.valueOf(100.00));
+        List<BuyOrder> result = buyOrderRepository.findMatchableBuyOrders(BigDecimal.valueOf(100.00));
 
         assertSoftly(softly -> {
-            softly.assertThat(result).isPresent();
-            result.ifPresent(buyOrders -> {
-                softly.assertThat(buyOrders).hasSize(2);
-                softly.assertThat(buyOrders.get(0).getPrice()).isEqualByComparingTo(BigDecimal.valueOf(150.00));
-                softly.assertThat(buyOrders.get(1).getPrice()).isEqualByComparingTo(BigDecimal.valueOf(200.00));
-            });
+            softly.assertThat(result).hasSize(2);
+            softly.assertThat(result.get(0).getPrice()).isEqualByComparingTo(BigDecimal.valueOf(150.00));
+            softly.assertThat(result.get(1).getPrice()).isEqualByComparingTo(BigDecimal.valueOf(200.00));
         });
     }
 }

@@ -234,8 +234,7 @@ class UserServiceImplTest {
     public void testGetBuyOrderByUserId() {
         Long userId = 1L;
         List<BuyOrder> buyOrders = new ArrayList<>();
-        when(buyOrderRepository.findByBuyer_IdAndStatus(userId, OrderStatus.PENDING))
-                .thenReturn(Optional.of(buyOrders));
+        when(buyOrderRepository.findByBuyer_IdAndStatus(userId, OrderStatus.PENDING)).thenReturn(buyOrders);
 
         List<BuyOrder> result = userService.getBuyOrderByUserId(userId);
 
@@ -267,8 +266,7 @@ class UserServiceImplTest {
         Long userId = 1L;
         List<BuyOrder> buyOrders = new ArrayList<>();
         List<SellOrder> sellOrders = new ArrayList<>();
-        when(buyOrderRepository.findByBuyer_IdAndStatus(userId, OrderStatus.PENDING)).thenReturn(
-                Optional.of(buyOrders));
+        when(buyOrderRepository.findByBuyer_IdAndStatus(userId, OrderStatus.PENDING)).thenReturn(buyOrders);
         when(sellOrderRepository.findBySeller_IdAndStatus(userId, OrderStatus.PENDING)).thenReturn(
                 Optional.of(sellOrders));
 
