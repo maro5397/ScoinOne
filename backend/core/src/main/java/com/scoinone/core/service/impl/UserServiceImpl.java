@@ -111,14 +111,14 @@ public class UserServiceImpl implements UserService {
         allOrders.addAll(sellOrders);
 
         allOrders.sort(Comparator.comparing(order -> {
+            LocalDateTime createdAt = null;
             if (order instanceof BuyOrder) {
-                return ((BuyOrder) order).getCreatedAt();
+                createdAt = ((BuyOrder) order).getCreatedAt();
             } else if (order instanceof SellOrder) {
-                return ((SellOrder) order).getCreatedAt();
-            } else {
-                throw new NoSuchElementException("Unknown Instance Not BuyOrder, SellOrder");
+                createdAt = ((SellOrder) order).getCreatedAt();
             }
-        }));
+            return createdAt;
+        }, Comparator.nullsLast(Comparator.naturalOrder())));
 
         return allOrders;
     }
@@ -138,7 +138,7 @@ public class UserServiceImpl implements UserService {
         allTrades.addAll(buyingTrades);
         allTrades.addAll(sellingTrades);
 
-        allTrades.sort(Comparator.comparing(Trade::getCreatedAt));
+        allTrades.sort(Comparator.comparing(Trade::getCreatedAt, Comparator.nullsLast(Comparator.naturalOrder())));
         return allTrades;
     }
 
