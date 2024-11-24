@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -52,7 +53,7 @@ class BuyOrderRepositoryTest {
     }
 
     @BeforeEach
-    void setTestData() {
+    void setUp() {
         buyer = User.builder()
                 .username("buyerUser")
                 .email("buyer@example.com")
@@ -79,7 +80,7 @@ class BuyOrderRepositoryTest {
     }
 
     @AfterEach
-    void clearTestData() {
+    void tearDown() {
         buyOrderRepository.deleteAll();
         userRepository.deleteAll();
         virtualAssetRepository.deleteAll();
@@ -97,6 +98,7 @@ class BuyOrderRepositoryTest {
     }
 
     @Test
+    @DisplayName("구매자 ID와 구매 주문 상태로 구매 주문 조회")
     void testFindByBuyerUserIdAndStatus() {
         Optional<List<BuyOrder>> result = buyOrderRepository.findByBuyer_IdAndStatus(
                 buyer.getId(),
@@ -113,6 +115,7 @@ class BuyOrderRepositoryTest {
     }
 
     @Test
+    @DisplayName("판매가에 따른 구매 가능 주문 조회")
     void testFindMatchableBuyOrders() {
         Optional<List<BuyOrder>> result = buyOrderRepository.findMatchableBuyOrders(BigDecimal.valueOf(100.00));
 
