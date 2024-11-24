@@ -12,6 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    Optional<List<Post>> findByUser_IdAndPostType(Long userId, PostType postType);
-    Optional<Page<Post>> findByPostType(Pageable pageable, PostType postType);
+    List<Post> findByUser_IdAndPostType(Long userId, PostType postType);
+    Page<Post> findByPostType(Pageable pageable, PostType postType);
 }
