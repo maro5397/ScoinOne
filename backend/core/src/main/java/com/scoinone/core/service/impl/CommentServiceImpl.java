@@ -17,8 +17,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Page<Comment> getCommentsByPostId(Pageable pageable, Long postId) {
-        return commentRepository.findByPost_Id(pageable, postId)
-                .orElseThrow(() -> new EntityNotFoundException("Comments not found with postId: " + postId));
+        return commentRepository.findByPost_Id(pageable, postId);
     }
 
     @Override

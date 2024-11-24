@@ -38,7 +38,7 @@ class CommentServiceImplTest {
     public void testGetCommentsByPostId_Success() {
         Long postId = 1L;
         Pageable pageable = Pageable.unpaged();
-        when(commentRepository.findByPost_Id(pageable, postId)).thenReturn(Optional.of(page));
+        when(commentRepository.findByPost_Id(pageable, postId)).thenReturn(page);
 
         Page<Comment> result = commentService.getCommentsByPostId(pageable, postId);
 
@@ -53,7 +53,7 @@ class CommentServiceImplTest {
     public void testGetCommentsByPostId_NotFound() {
         Long postId = 1L;
         Pageable pageable = Pageable.unpaged();
-        when(commentRepository.findByPost_Id(pageable, postId)).thenReturn(Optional.empty());
+        when(commentRepository.findByPost_Id(pageable, postId)).thenReturn(page);
 
         assertSoftly(softly -> {
             softly.assertThatThrownBy(() -> commentService.getCommentsByPostId(pageable, postId))
