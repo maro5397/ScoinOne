@@ -12,6 +12,7 @@ import com.scoinone.core.repository.PostRepository;
 import com.scoinone.core.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -94,6 +95,7 @@ class CommentRepositoryTest {
     }
 
     @Test
+    @DisplayName("게시글에 달린 댓글 조회")
     void testFindByPost_Id() {
         Long postId = post.getId();
         Pageable pageable = PageRequest.of(0, 10);
@@ -110,6 +112,7 @@ class CommentRepositoryTest {
     }
 
     @Test
+    @DisplayName("없는 게시글에 달린 댓글 조회")
     void testFindByPost_Id_NoCommentsFound() {
         Long invalidPostId = 999L;
         Pageable pageable = PageRequest.of(0, 10);
