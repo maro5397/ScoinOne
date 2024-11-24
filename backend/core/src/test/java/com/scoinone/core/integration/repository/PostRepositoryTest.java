@@ -9,7 +9,6 @@ import com.scoinone.core.entity.User;
 import com.scoinone.core.repository.PostRepository;
 import com.scoinone.core.repository.UserRepository;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -99,14 +98,11 @@ class PostRepositoryTest {
         Long userId = user.getId();
         PostType postType = PostType.QNA;
 
-        Optional<List<Post>> foundPosts = postRepository.findByUser_IdAndPostType(userId, postType);
+        List<Post> posts = postRepository.findByUser_IdAndPostType(userId, postType);
 
         assertSoftly(softly -> {
-            softly.assertThat(foundPosts).isPresent();
-            foundPosts.ifPresent(posts -> {
-                softly.assertThat(posts).hasSize(2);
-                softly.assertThat(posts.getFirst().getTitle()).isEqualTo("First QNA Post");
-            });
+            softly.assertThat(posts).hasSize(2);
+            softly.assertThat(posts.getFirst().getTitle()).isEqualTo("First QNA Post");
         });
     }
 
@@ -116,15 +112,12 @@ class PostRepositoryTest {
         PostType postType = PostType.QNA;
         Pageable pageable = PageRequest.of(0, 10);
 
-        Optional<Page<Post>> foundPostsPage = postRepository.findByPostType(pageable, postType);
+        Page<Post> postsPage = postRepository.findByPostType(pageable, postType);
 
         assertSoftly(softly -> {
-            softly.assertThat(foundPostsPage).isPresent();
-            foundPostsPage.ifPresent(postsPage -> {
-                softly.assertThat(postsPage.getTotalElements()).isEqualTo(2);;
-                softly.assertThat(postsPage.getContent()).hasSize(2);
-                softly.assertThat(postsPage.getContent().getFirst().getTitle()).isEqualTo("First QNA Post");
-            });
+            softly.assertThat(postsPage.getTotalElements()).isEqualTo(2);
+            softly.assertThat(postsPage.getContent()).hasSize(2);
+            softly.assertThat(postsPage.getContent().getFirst().getTitle()).isEqualTo("First QNA Post");
         });
     }
 }

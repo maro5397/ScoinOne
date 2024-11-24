@@ -16,7 +16,6 @@ import com.scoinone.core.repository.UserRepository;
 import com.scoinone.core.repository.VirtualAssetRepository;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -128,14 +127,11 @@ class TradeRepositoryTest {
     void testFindByBuyOrder_Buyer_Id() {
         Long buyerId = buyer.getId();
 
-        Optional<List<Trade>> trades = tradeRepository.findByBuyOrder_Buyer_Id(buyerId);
+        List<Trade> trades = tradeRepository.findByBuyOrder_Buyer_Id(buyerId);
 
         assertSoftly(softly -> {
-            softly.assertThat(trades).isPresent();
-            trades.ifPresent(trade -> {
-                softly.assertThat(trade).hasSize(1);
-                softly.assertThat(trade.getFirst().getBuyOrder().getBuyer().getId()).isEqualTo(buyerId);
-            });
+            softly.assertThat(trades).hasSize(1);
+            softly.assertThat(trades.getFirst().getBuyOrder().getBuyer().getId()).isEqualTo(buyerId);
         });
     }
 
@@ -144,14 +140,11 @@ class TradeRepositoryTest {
     void testFindBySellOrder_Seller_Id() {
         Long sellerId = seller.getId();
 
-        Optional<List<Trade>> trades = tradeRepository.findBySellOrder_Seller_Id(sellerId);
+        List<Trade> trades = tradeRepository.findBySellOrder_Seller_Id(sellerId);
 
         assertSoftly(softly -> {
-            softly.assertThat(trades).isPresent();
-            trades.ifPresent(trade -> {
-                softly.assertThat(trade).hasSize(1);
-                softly.assertThat(trade.getFirst().getSellOrder().getSeller().getId()).isEqualTo(sellerId);
-            });
+            softly.assertThat(trades).hasSize(1);
+            softly.assertThat(trades.getFirst().getSellOrder().getSeller().getId()).isEqualTo(sellerId);
         });
     }
 }

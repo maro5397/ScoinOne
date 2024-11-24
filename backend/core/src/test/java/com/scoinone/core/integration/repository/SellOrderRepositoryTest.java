@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -100,32 +99,25 @@ class SellOrderRepositoryTest {
     @Test
     @DisplayName("판매자 ID와 판매 주문 상태로 판매 주문 조회")
     void testFindBySellerUserIdAndStatus() {
-        Optional<List<SellOrder>> result = sellOrderRepository.findBySeller_IdAndStatus(
+        List<SellOrder> sellOrders = sellOrderRepository.findBySeller_IdAndStatus(
                 seller.getId(),
                 OrderStatus.PENDING
         );
 
         assertSoftly(softly -> {
-            softly.assertThat(result).isPresent();
-            result.ifPresent(sellOrders -> {
-                softly.assertThat(sellOrders).hasSize(3);
-                sellOrders.forEach(
-                        sellOrder -> softly.assertThat(sellOrder.getStatus()).isEqualTo(OrderStatus.PENDING));
-            });
+            softly.assertThat(sellOrders).hasSize(3);
+            sellOrders.forEach(sellOrder -> softly.assertThat(sellOrder.getStatus()).isEqualTo(OrderStatus.PENDING));
         });
     }
 
     @Test
     @DisplayName("구매가에 따른 판매 가능 주문 조회")
     void testFindMatchableSellOrders() {
-        Optional<List<SellOrder>> result = sellOrderRepository.findMatchableSellOrders(BigDecimal.valueOf(100.00));
+        List<SellOrder> sellOrders = sellOrderRepository.findMatchableSellOrders(BigDecimal.valueOf(100.00));
 
         assertSoftly(softly -> {
-            softly.assertThat(result).isPresent();
-            result.ifPresent(sellOrders -> {
-                softly.assertThat(sellOrders).hasSize(1);
-                softly.assertThat(sellOrders.getFirst().getPrice()).isEqualByComparingTo(BigDecimal.valueOf(50.00));
-            });
+            softly.assertThat(sellOrders).hasSize(1);
+            softly.assertThat(sellOrders.getFirst().getPrice()).isEqualByComparingTo(BigDecimal.valueOf(50.00));
         });
     }
 }
