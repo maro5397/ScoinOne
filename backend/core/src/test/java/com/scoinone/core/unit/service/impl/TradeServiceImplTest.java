@@ -131,7 +131,7 @@ class TradeServiceImplTest {
                 .build();
 
         List<SellOrder> sellOrders = List.of(sellOrder1, sellOrder2);
-        when(sellOrderRepository.findMatchableSellOrders(buyOrder.getPrice())).thenReturn(Optional.of(sellOrders));
+        when(sellOrderRepository.findMatchableSellOrders(buyOrder.getPrice())).thenReturn(sellOrders);
 
         List<Trade> trades = tradeService.processBuyOrderTrade(buyOrder);
 
@@ -163,7 +163,7 @@ class TradeServiceImplTest {
                 .build();
 
         List<BuyOrder> buyOrders = List.of(buyOrder1, buyOrder2);
-        when(buyOrderRepository.findMatchableBuyOrders(sellOrder.getPrice())).thenReturn(Optional.of(buyOrders));
+        when(buyOrderRepository.findMatchableBuyOrders(sellOrder.getPrice())).thenReturn(buyOrders);
 
         List<Trade> trades = tradeService.processSellOrderTrade(sellOrder);
 

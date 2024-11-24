@@ -26,7 +26,7 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -201,16 +201,14 @@ class UserServiceImplTest {
         when(clock.getZone()).thenReturn(ZoneId.systemDefault());
 
         Long userId = 1L;
-        LocalDateTime thirtyDaysAgo = LocalDateTime.now(clock).minusDays(30);
-        List<Notification> notifications = new ArrayList<>();
-        when(notificationRepository.findByUser_IdAndCreatedAtAfter(userId, thirtyDaysAgo))
-                .thenReturn(Optional.of(notifications));
+        List<Notification> notifications = Collections.singletonList(Notification.builder().build());
+        when(notificationRepository.findByUserIdAndLast30Days(userId)).thenReturn(notifications);
 
         List<Notification> result = userService.getNotificationsFromLast30DaysByUserId(userId);
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
-            verify(notificationRepository).findByUser_IdAndCreatedAtAfter(userId, thirtyDaysAgo);
+            verify(notificationRepository).findByUserIdAndLast30Days(userId);
         });
     }
 
@@ -218,8 +216,8 @@ class UserServiceImplTest {
     @DisplayName("사용자 보유 가상자산 조회")
     public void testGetOwnedVirtualAssetsByUserId() {
         Long userId = 1L;
-        List<OwnedVirtualAsset> ownedAssets = new ArrayList<>();
-        when(ownedVirtualAssetRepository.findByUser_Id(userId)).thenReturn(Optional.of(ownedAssets));
+        List<OwnedVirtualAsset> ownedAssets = Collections.singletonList(OwnedVirtualAsset.builder().build());
+        when(ownedVirtualAssetRepository.findByUser_Id(userId)).thenReturn(ownedAssets);
 
         List<OwnedVirtualAsset> result = userService.getOwnedVirtualAssetsByUserId(userId);
 
@@ -233,9 +231,8 @@ class UserServiceImplTest {
     @DisplayName("사용자 구매 주문 조회")
     public void testGetBuyOrderByUserId() {
         Long userId = 1L;
-        List<BuyOrder> buyOrders = new ArrayList<>();
-        when(buyOrderRepository.findByBuyer_IdAndStatus(userId, OrderStatus.PENDING))
-                .thenReturn(Optional.of(buyOrders));
+        List<BuyOrder> buyOrders = Collections.singletonList(BuyOrder.builder().build());
+        when(buyOrderRepository.findByBuyer_IdAndStatus(userId, OrderStatus.PENDING)).thenReturn(buyOrders);
 
         List<BuyOrder> result = userService.getBuyOrderByUserId(userId);
 
@@ -249,9 +246,8 @@ class UserServiceImplTest {
     @DisplayName("사용자 판매 주문 조회")
     public void testGetSellOrderByUserId() {
         Long userId = 1L;
-        List<SellOrder> sellOrders = new ArrayList<>();
-        when(sellOrderRepository.findBySeller_IdAndStatus(userId, OrderStatus.PENDING))
-                .thenReturn(Optional.of(sellOrders));
+        List<SellOrder> sellOrders = Collections.singletonList(SellOrder.builder().build());
+        when(sellOrderRepository.findBySeller_IdAndStatus(userId, OrderStatus.PENDING)).thenReturn(sellOrders);
 
         List<SellOrder> result = userService.getSellOrderByUserId(userId);
 
@@ -265,12 +261,10 @@ class UserServiceImplTest {
     @DisplayName("사용자 전체 주문 조회")
     public void testGetOrderByUserId() {
         Long userId = 1L;
-        List<BuyOrder> buyOrders = new ArrayList<>();
-        List<SellOrder> sellOrders = new ArrayList<>();
-        when(buyOrderRepository.findByBuyer_IdAndStatus(userId, OrderStatus.PENDING)).thenReturn(
-                Optional.of(buyOrders));
-        when(sellOrderRepository.findBySeller_IdAndStatus(userId, OrderStatus.PENDING)).thenReturn(
-                Optional.of(sellOrders));
+        List<BuyOrder> buyOrders = Collections.singletonList(BuyOrder.builder().build());
+        List<SellOrder> sellOrders = Collections.singletonList(SellOrder.builder().build());
+        when(buyOrderRepository.findByBuyer_IdAndStatus(userId, OrderStatus.PENDING)).thenReturn(buyOrders);
+        when(sellOrderRepository.findBySeller_IdAndStatus(userId, OrderStatus.PENDING)).thenReturn(sellOrders);
 
         List<Object> result = userService.getOrderByUserId(userId);
 
@@ -286,10 +280,10 @@ class UserServiceImplTest {
     @DisplayName("사용자 체결 거래 조회")
     public void testGetTradeByUserId() {
         Long userId = 1L;
-        List<Trade> buyingTrades = new ArrayList<>();
-        List<Trade> sellingTrades = new ArrayList<>();
-        when(tradeRepository.findByBuyOrder_Buyer_Id(userId)).thenReturn(Optional.of(buyingTrades));
-        when(tradeRepository.findBySellOrder_Seller_Id(userId)).thenReturn(Optional.of(sellingTrades));
+        List<Trade> buyingTrades = Collections.singletonList(Trade.builder().build());
+        List<Trade> sellingTrades = Collections.singletonList(Trade.builder().build());
+        when(tradeRepository.findByBuyOrder_Buyer_Id(userId)).thenReturn(buyingTrades);
+        when(tradeRepository.findBySellOrder_Seller_Id(userId)).thenReturn(sellingTrades);
 
         List<Trade> result = userService.getTradeByUserId(userId);
 
@@ -305,8 +299,13 @@ class UserServiceImplTest {
     @DisplayName("사용자 질의 게시글 조회")
     public void testGetQuestionsByUserId() {
         Long userId = 1L;
-        List<Post> questions = new ArrayList<>();
-        when(postRepository.findByUser_IdAndPostType(userId, PostType.QNA)).thenReturn(Optional.of(questions));
+        List<Post> questions = Collections.singletonList(
+                Post.builder()
+                        .id(1L)
+                        .postType(PostType.QNA)
+                        .build()
+        );
+        when(postRepository.findByUser_IdAndPostType(userId, PostType.QNA)).thenReturn(questions);
 
         List<Post> result = userService.getQuestionsByUserId(userId);
 

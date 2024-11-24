@@ -5,10 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface TradeRepository extends JpaRepository<Trade, Long> {
-    Optional<List<Trade>> findByBuyOrder_Buyer_Id(Long buyerId);
-    Optional<List<Trade>> findBySellOrder_Seller_Id(Long sellerId);
+    List<Trade> findByBuyOrder_Buyer_Id(Long buyerId);
+    List<Trade> findBySellOrder_Seller_Id(Long sellerId);
 }

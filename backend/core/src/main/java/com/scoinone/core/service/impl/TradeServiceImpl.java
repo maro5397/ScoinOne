@@ -58,8 +58,10 @@ public class TradeServiceImpl implements TradeService {
         BigDecimal buyPrice = buyOrder.getPrice();
         BigDecimal tradeQuantity;
 
-        List<SellOrder> availableSellOrders = sellOrderRepository.findMatchableSellOrders(buyPrice)
-                .orElseThrow(() -> new EntityNotFoundException("SellOrders not found with buyPrice: " + buyPrice));
+        List<SellOrder> availableSellOrders = sellOrderRepository.findMatchableSellOrders(buyPrice);
+        if (availableSellOrders == null || availableSellOrders.isEmpty()) {
+            throw new EntityNotFoundException("SellOrders not found with buyPrice: " + buyPrice);
+        }
 
         for (SellOrder sellOrder : availableSellOrders) {
             BigDecimal sellQuantity = sellOrder.getQuantity();
@@ -87,8 +89,10 @@ public class TradeServiceImpl implements TradeService {
         BigDecimal sellPrice = sellOrder.getPrice();
         BigDecimal tradeQuantity;
 
-        List<BuyOrder> availableBuyOrders = buyOrderRepository.findMatchableBuyOrders(sellPrice)
-                .orElseThrow(() -> new EntityNotFoundException("BuyOrders not found with sellPrice: " + sellPrice));
+        List<BuyOrder> availableBuyOrders = buyOrderRepository.findMatchableBuyOrders(sellPrice);
+        if (availableBuyOrders == null || availableBuyOrders.isEmpty()) {
+            throw new EntityNotFoundException("BuyOrders not found with sellPrice: " + sellPrice);
+        }
 
         for (BuyOrder buyOrder : availableBuyOrders) {
             BigDecimal buyQuantity = buyOrder.getQuantity();

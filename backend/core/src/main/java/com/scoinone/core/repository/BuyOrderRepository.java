@@ -9,15 +9,14 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface BuyOrderRepository extends JpaRepository<BuyOrder, Long> {
-    Optional<List<BuyOrder>> findByBuyer_IdAndStatus(Long userId, OrderStatus status);
+    List<BuyOrder> findByBuyer_IdAndStatus(Long userId, OrderStatus status);
 
     @Query("SELECT b " +
             "FROM BuyOrder b " +
             "WHERE b.price >= :sellPrice AND b.status = 'PENDING' " +
             "ORDER BY b.price ASC, b.createdAt ASC")
-    Optional<List<BuyOrder>> findMatchableBuyOrders(@Param("sellPrice") BigDecimal sellPrice);
+    List<BuyOrder> findMatchableBuyOrders(@Param("sellPrice") BigDecimal sellPrice);
 }

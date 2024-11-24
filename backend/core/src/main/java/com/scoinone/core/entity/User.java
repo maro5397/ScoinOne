@@ -1,6 +1,5 @@
 package com.scoinone.core.entity;
 
-import com.scoinone.core.entity.base.CreatableEntity;
 import com.scoinone.core.entity.base.UpdatableEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,7 +27,6 @@ public class User extends UpdatableEntity implements UserDetails {
     @Setter
     private String password;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime lastLogin;
 
     @ElementCollection(fetch = FetchType.EAGER) // 권한을 Set으로 저장

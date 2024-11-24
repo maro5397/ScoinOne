@@ -18,8 +18,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Page<Post> getPosts(Pageable pageable, PostType postType) {
-        return postRepository.findByPostType(pageable, postType)
-                .orElseThrow(() -> new EntityNotFoundException("Page<Post> not found"));
+        return postRepository.findByPostType(pageable, postType);
     }
 
     @Override

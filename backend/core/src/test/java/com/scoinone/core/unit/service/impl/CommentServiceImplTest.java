@@ -38,27 +38,13 @@ class CommentServiceImplTest {
     public void testGetCommentsByPostId_Success() {
         Long postId = 1L;
         Pageable pageable = Pageable.unpaged();
-        when(commentRepository.findByPost_Id(pageable, postId)).thenReturn(Optional.of(page));
+        when(commentRepository.findByPost_Id(pageable, postId)).thenReturn(page);
 
         Page<Comment> result = commentService.getCommentsByPostId(pageable, postId);
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
             verify(commentRepository).findByPost_Id(pageable, postId);
-        });
-    }
-
-    @Test
-    @DisplayName("게시글에 달린 댓글 조회 실패")
-    public void testGetCommentsByPostId_NotFound() {
-        Long postId = 1L;
-        Pageable pageable = Pageable.unpaged();
-        when(commentRepository.findByPost_Id(pageable, postId)).thenReturn(Optional.empty());
-
-        assertSoftly(softly -> {
-            softly.assertThatThrownBy(() -> commentService.getCommentsByPostId(pageable, postId))
-                    .isInstanceOf(EntityNotFoundException.class)
-                    .hasMessageContaining("Comments not found with postId: " + postId);
         });
     }
 

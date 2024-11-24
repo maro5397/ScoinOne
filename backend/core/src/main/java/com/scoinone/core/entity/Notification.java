@@ -28,6 +28,5 @@ public class Notification extends CreatableEntity {
     @Enumerated(EnumType.STRING)
     private NotificationStatus status;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime expiresAt;
 }

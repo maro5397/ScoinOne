@@ -8,10 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    Optional<List<Post>> findByUser_IdAndPostType(Long userId, PostType postType);
-    Optional<Page<Post>> findByPostType(Pageable pageable, PostType postType);
+    List<Post> findByUser_IdAndPostType(Long userId, PostType postType);
+    Page<Post> findByPostType(Pageable pageable, PostType postType);
 }

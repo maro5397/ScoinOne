@@ -63,27 +63,40 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Notification> getNotificationsFromLast30DaysByUserId(Long userId) {
-        LocalDateTime thirtyDaysAgo = LocalDateTime.now(clock).minusDays(30);
-        return notificationRepository.findByUser_IdAndCreatedAtAfter(userId, thirtyDaysAgo)
-                .orElseThrow(() -> new EntityNotFoundException("Notifications not found with userId: " + userId));
+        List<Notification> verifiableNotifications = notificationRepository.findByUserIdAndLast30Days(
+                userId
+        );
+        if(verifiableNotifications == null || verifiableNotifications.isEmpty()) {
+            throw new EntityNotFoundException("Notifications not found with userId: " + userId);
+        }
+        return verifiableNotifications;
     }
 
     @Override
     public List<OwnedVirtualAsset> getOwnedVirtualAssetsByUserId(Long userId) {
-        return ownedVirtualAssetRepository.findByUser_Id(userId)
-                .orElseThrow(() -> new EntityNotFoundException("OwnedVirtualAssets not found with userId: " + userId));
+        List<OwnedVirtualAsset> ownedVirtualAssets = ownedVirtualAssetRepository.findByUser_Id(userId);
+        if(ownedVirtualAssets == null || ownedVirtualAssets.isEmpty()) {
+            throw new EntityNotFoundException("OwnedVirtualAssets not found with userId: " + userId);
+        }
+        return ownedVirtualAssets;
     }
 
     @Override
     public List<BuyOrder> getBuyOrderByUserId(Long userId) {
-        return buyOrderRepository.findByBuyer_IdAndStatus(userId, OrderStatus.PENDING)
-                .orElseThrow(() -> new EntityNotFoundException("BuyOrder not found with userId: " + userId));
+        List<BuyOrder> buyOrders = buyOrderRepository.findByBuyer_IdAndStatus(userId, OrderStatus.PENDING);
+        if (buyOrders == null || buyOrders.isEmpty()) {
+            throw new EntityNotFoundException("BuyOrder not found with userId: " + userId);
+        }
+        return buyOrders;
     }
 
     @Override
     public List<SellOrder> getSellOrderByUserId(Long userId) {
-        return sellOrderRepository.findBySeller_IdAndStatus(userId, OrderStatus.PENDING)
-                .orElseThrow(() -> new EntityNotFoundException("SellOrder not found with userId: " + userId));
+        List<SellOrder> sellOrders = sellOrderRepository.findBySeller_IdAndStatus(userId, OrderStatus.PENDING);
+        if (sellOrders == null || sellOrders.isEmpty()) {
+            throw new EntityNotFoundException("SellOrder not found with userId: " + userId);
+        }
+        return sellOrders;
     }
 
     @Override
@@ -96,36 +109,43 @@ public class UserServiceImpl implements UserService {
         allOrders.addAll(sellOrders);
 
         allOrders.sort(Comparator.comparing(order -> {
+            LocalDateTime createdAt = null;
             if (order instanceof BuyOrder) {
-                return ((BuyOrder) order).getCreatedAt();
+                createdAt = ((BuyOrder) order).getCreatedAt();
             } else if (order instanceof SellOrder) {
-                return ((SellOrder) order).getCreatedAt();
-            } else {
-                throw new NoSuchElementException("Unknown Instance Not BuyOrder, SellOrder");
+                createdAt = ((SellOrder) order).getCreatedAt();
             }
-        }));
+            return createdAt;
+        }, Comparator.nullsLast(Comparator.naturalOrder())));
 
         return allOrders;
     }
 
     @Override
     public List<Trade> getTradeByUserId(Long userId) {
-        List<Trade> buyingTrades = tradeRepository.findByBuyOrder_Buyer_Id(userId)
-                .orElseThrow(() -> new EntityNotFoundException("BuyingTrade not found with userId: " + userId));
-        List<Trade> sellingTrades = tradeRepository.findBySellOrder_Seller_Id(userId)
-                .orElseThrow(() -> new EntityNotFoundException("SellingTrade not found with userId: " + userId));
+        List<Trade> buyingTrades = tradeRepository.findByBuyOrder_Buyer_Id(userId);
+        if (buyingTrades == null || buyingTrades.isEmpty()) {
+            throw new EntityNotFoundException("Buying trades not found with userId: " + userId);
+        }
+        List<Trade> sellingTrades = tradeRepository.findBySellOrder_Seller_Id(userId);
+        if (sellingTrades == null || sellingTrades.isEmpty()) {
+            throw new EntityNotFoundException("Selling trades not found with userId: " + userId);
+        }
 
         List<Trade> allTrades = new CopyOnWriteArrayList<>();
         allTrades.addAll(buyingTrades);
         allTrades.addAll(sellingTrades);
 
-        allTrades.sort(Comparator.comparing(Trade::getCreatedAt));
+        allTrades.sort(Comparator.comparing(Trade::getCreatedAt, Comparator.nullsLast(Comparator.naturalOrder())));
         return allTrades;
     }
 
     @Override
     public List<Post> getQuestionsByUserId(Long userId) {
-        return postRepository.findByUser_IdAndPostType(userId, PostType.QNA)
-                .orElseThrow(() -> new EntityNotFoundException("Questions not found with userId: " + userId));
+        List<Post> questions = postRepository.findByUser_IdAndPostType(userId, PostType.QNA);
+        if (questions == null || questions.isEmpty()) {
+            throw new EntityNotFoundException("Questions not found with userId: " + userId);
+        }
+        return questions;
     }
 }
