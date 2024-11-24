@@ -34,6 +34,5 @@ public class SellOrder extends CreatableEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime tradeTime;
 }
