@@ -76,8 +76,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<OwnedVirtualAsset> getOwnedVirtualAssetsByUserId(Long userId) {
-        return ownedVirtualAssetRepository.findByUser_Id(userId)
-                .orElseThrow(() -> new EntityNotFoundException("OwnedVirtualAssets not found with userId: " + userId));
+        List<OwnedVirtualAsset> ownedVirtualAssets = ownedVirtualAssetRepository.findByUser_Id(userId);
+        if(ownedVirtualAssets == null || ownedVirtualAssets.isEmpty()) {
+            throw new EntityNotFoundException("OwnedVirtualAssets not found with userId: " + userId);
+        }
+        return ownedVirtualAssets;
     }
 
     @Override

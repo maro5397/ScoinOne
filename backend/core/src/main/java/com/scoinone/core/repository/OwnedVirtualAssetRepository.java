@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface OwnedVirtualAssetRepository extends JpaRepository<OwnedVirtualAsset, Long> {
-    Optional<List<OwnedVirtualAsset>> findByUser_Id(Long userId);
+    List<OwnedVirtualAsset> findByUser_Id(Long userId);
 }
