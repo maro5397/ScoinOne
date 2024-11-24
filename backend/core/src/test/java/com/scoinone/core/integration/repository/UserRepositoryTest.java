@@ -64,8 +64,8 @@ class UserRepositoryTest {
         assertSoftly(softly -> {
             softly.assertThat(foundUser.isPresent()).isTrue();
             foundUser.ifPresent(user -> {
-                softly.assertThat(foundUser.get().getEmail()).isEqualTo(email);
-                softly.assertThat(foundUser.get().getUsername()).isEqualTo("testUser");
+                softly.assertThat(user.getEmail()).isEqualTo(email);
+                softly.assertThat(user.getUsername()).isEqualTo("testUser");
             });
         });
     }
