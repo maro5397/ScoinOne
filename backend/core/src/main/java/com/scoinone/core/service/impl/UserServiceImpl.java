@@ -125,10 +125,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Trade> getTradeByUserId(Long userId) {
-        List<Trade> buyingTrades = tradeRepository.findByBuyOrder_Buyer_Id(userId)
-                .orElseThrow(() -> new EntityNotFoundException("BuyingTrade not found with userId: " + userId));
-        List<Trade> sellingTrades = tradeRepository.findBySellOrder_Seller_Id(userId)
-                .orElseThrow(() -> new EntityNotFoundException("SellingTrade not found with userId: " + userId));
+        List<Trade> buyingTrades = tradeRepository.findByBuyOrder_Buyer_Id(userId);
+        if (buyingTrades == null || buyingTrades.isEmpty()) {
+            throw new EntityNotFoundException("Buying trades not found with userId: " + userId);
+        }
+        List<Trade> sellingTrades = tradeRepository.findBySellOrder_Seller_Id(userId);
+        if (sellingTrades == null || sellingTrades.isEmpty()) {
+            throw new EntityNotFoundException("Selling trades not found with userId: " + userId);
+        }
 
         List<Trade> allTrades = new CopyOnWriteArrayList<>();
         allTrades.addAll(buyingTrades);
