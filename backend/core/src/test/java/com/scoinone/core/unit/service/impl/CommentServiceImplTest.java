@@ -1,17 +1,22 @@
 package com.scoinone.core.unit.service.impl;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.mockito.ArgumentCaptor.forClass;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.scoinone.core.entity.Comment;
+import com.scoinone.core.entity.Post;
+import com.scoinone.core.entity.User;
 import com.scoinone.core.repository.CommentRepository;
+import com.scoinone.core.repository.PostRepository;
 import com.scoinone.core.service.impl.CommentServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -24,6 +29,9 @@ class CommentServiceImplTest {
 
     @Mock
     private CommentRepository commentRepository;
+
+    @Mock
+    private PostRepository postRepository;
 
     @Mock
     private Page<Comment> page;
@@ -82,17 +90,23 @@ class CommentServiceImplTest {
     @Test
     @DisplayName("댓글 생성 테스트")
     public void testCreateComment() {
-        Comment comment = Comment.builder()
-                .content("Test comment")
-                .build();
-        when(commentRepository.save(comment)).thenReturn(comment);
+        Long postId = 1L;
+        String content = "Test comment";
+        User user = User.builder().build();
+        Post post = Post.builder().build();
+        when(postRepository.findById(postId)).thenReturn(Optional.of(post));
 
-        Comment result = commentService.createComment(comment);
+        commentService.createComment(postId, content, user);
+
+        ArgumentCaptor<Comment> commentCaptor = forClass(Comment.class);
+        verify(commentRepository).save(commentCaptor.capture());
+
+        Comment savedComment = commentCaptor.getValue();
 
         assertSoftly(softly -> {
-            softly.assertThat(result).isNotNull();
-            softly.assertThat(result.getContent()).isEqualTo("Test comment");
-            verify(commentRepository).save(comment);
+            softly.assertThat(savedComment).isNotNull();
+            softly.assertThat(savedComment.getContent()).isEqualTo("Test comment");
+            verify(commentRepository).save(savedComment);
         });
     }
 
@@ -105,20 +119,14 @@ class CommentServiceImplTest {
                 .content("Old content")
                 .build();
 
-        Comment updatedComment = Comment.builder()
-                .content("Updated content")
-                .build();
-
         when(commentRepository.findById(commentId)).thenReturn(Optional.of(existingComment));
-        when(commentRepository.save(existingComment)).thenReturn(existingComment);
 
-        Comment result = commentService.updateComment(commentId, updatedComment);
+        Comment result = commentService.updateComment(commentId, "Updated content");
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
             softly.assertThat(result.getContent()).isEqualTo("Updated content");
             verify(commentRepository).findById(commentId);
-            verify(commentRepository).save(existingComment);
         });
     }
 
