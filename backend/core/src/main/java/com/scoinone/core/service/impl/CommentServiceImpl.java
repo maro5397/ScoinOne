@@ -1,7 +1,10 @@
 package com.scoinone.core.service.impl;
 
 import com.scoinone.core.entity.Comment;
+import com.scoinone.core.entity.Post;
+import com.scoinone.core.entity.User;
 import com.scoinone.core.repository.CommentRepository;
+import com.scoinone.core.repository.PostRepository;
 import com.scoinone.core.service.CommentService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
+    private final PostRepository postRepository;
     private final CommentRepository commentRepository;
 
     @Override
@@ -27,19 +31,27 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment createComment(Comment comment) {
+    public Comment createComment(Long PostId, String content, User user) {
+        Post post = postRepository.findById(PostId)
+                .orElseThrow(() -> new EntityNotFoundException("Post not found with id: " + PostId));
+        Comment comment = Comment.builder()
+                .post(post)
+                .user(user)
+                .content(content)
+                .build();
         return commentRepository.save(comment);
     }
 
     @Override
-    public Comment updateComment(Long id, Comment updatedComment) {
+    public Comment updateComment(Long id, String newContent) {
         Comment existedComment = getCommentById(id);
-        existedComment.setContent(updatedComment.getContent());
-        return commentRepository.save(existedComment);
+        existedComment.setContent(newContent);
+        return existedComment;
     }
 
     @Override
-    public void deleteComment(Long id) {
+    public String deleteComment(Long id) {
         commentRepository.deleteById(id);
+        return "Comment deleted successfully";
     }
 }

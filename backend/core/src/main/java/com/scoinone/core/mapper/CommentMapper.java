@@ -40,8 +40,8 @@ public interface CommentMapper {
 
     List<GetCommentResponseDto> commentsToGetCommentsResponseDto(List<Comment> comments);
 
-    default GetCommentListResponseDto pageToGetCommentListResponseDto(Page<Comment> page) {
-        GetCommentListResponseDto responseDto = new GetCommentListResponseDto();
+    default GetCommentsResponseDto pageToGetCommentListResponseDto(Page<Comment> page) {
+        GetCommentsResponseDto responseDto = new GetCommentsResponseDto();
         responseDto.setComments(commentsToGetCommentsResponseDto(page.getContent()));
         responseDto.setPageInfo(PageInfoDto.builder()
                 .totalElements(page.getTotalElements())
