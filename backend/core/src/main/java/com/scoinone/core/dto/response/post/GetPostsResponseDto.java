@@ -8,8 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class GetPostListResponseDto {
+public class GetPostsResponseDto {
     private PageInfoDto pageInfo;
     private List<GetPostResponseDto> posts;
 }
-

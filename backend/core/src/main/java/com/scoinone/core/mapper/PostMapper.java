@@ -43,8 +43,8 @@ public interface PostMapper {
 
     List<GetPostResponseDto> postsToGetPostsResponseDto(List<Post> posts);
 
-    default GetPostListResponseDto pageToGetPostListResponseDto(Page<Post> page) {
-        GetPostListResponseDto responseDto = new GetPostListResponseDto();
+    default GetPostsResponseDto pageToGetPostListResponseDto(Page<Post> page) {
+        GetPostsResponseDto responseDto = new GetPostsResponseDto();
         responseDto.setPosts(postsToGetPostsResponseDto(page.getContent()));
         responseDto.setPageInfo(PageInfoDto.builder()
                 .totalElements(page.getTotalElements())

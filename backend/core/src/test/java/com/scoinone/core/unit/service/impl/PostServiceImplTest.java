@@ -1,11 +1,13 @@
 package com.scoinone.core.unit.service.impl;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.mockito.ArgumentCaptor.forClass;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.scoinone.core.common.PostType;
 import com.scoinone.core.entity.Post;
+import com.scoinone.core.entity.User;
 import com.scoinone.core.repository.PostRepository;
 import com.scoinone.core.service.impl.PostServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
@@ -13,6 +15,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -83,19 +86,22 @@ class PostServiceImplTest {
     @Test
     @DisplayName("게시글 생성 테스트")
     public void testCreatePost() {
-        Post post = Post.builder()
-                .title("Test Title")
-                .content("Test Content")
-                .build();
-        when(postRepository.save(post)).thenReturn(post);
+        String title = "Test Title";
+        String content = "Test Content";
+        User user = User.builder().build();
 
-        Post result = postService.createPost(post);
+        postService.createPost(title, content, user, PostType.QNA);
+
+        ArgumentCaptor<Post> postCaptor = forClass(Post.class);
+        verify(postRepository).save(postCaptor.capture());
+
+        Post savedPost = postCaptor.getValue();
 
         assertSoftly(softly -> {
-            softly.assertThat(result).isNotNull();
-            softly.assertThat(result.getTitle()).isEqualTo("Test Title");
-            softly.assertThat(result.getContent()).isEqualTo("Test Content");
-            verify(postRepository).save(post);
+            softly.assertThat(savedPost).isNotNull();
+            softly.assertThat(savedPost.getTitle()).isEqualTo("Test Title");
+            softly.assertThat(savedPost.getContent()).isEqualTo("Test Content");
+            verify(postRepository).save(savedPost);
         });
     }
 
@@ -103,28 +109,23 @@ class PostServiceImplTest {
     @DisplayName("게시글 수정 테스트")
     public void testUpdatePost() {
         Long postId = 1L;
+        String title = "Test Title";
+        String content = "Test Content";
         Post existingPost = Post.builder()
                 .id(postId)
                 .title("Old Title")
                 .content("Old Content")
                 .build();
 
-        Post updatedPost = Post.builder()
-                .title("Updated Title")
-                .content("Updated Content")
-                .build();
-
         when(postRepository.findById(postId)).thenReturn(Optional.of(existingPost));
-        when(postRepository.save(existingPost)).thenReturn(existingPost);
 
-        Post result = postService.updatePost(postId, updatedPost);
+        Post result = postService.updatePost(postId, title, content);
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
-            softly.assertThat(result.getTitle()).isEqualTo("Updated Title");
-            softly.assertThat(result.getContent()).isEqualTo("Updated Content");
+            softly.assertThat(result.getTitle()).isEqualTo(title);
+            softly.assertThat(result.getContent()).isEqualTo(content);
             verify(postRepository).findById(postId);
-            verify(postRepository).save(existingPost);
         });
     }
 
