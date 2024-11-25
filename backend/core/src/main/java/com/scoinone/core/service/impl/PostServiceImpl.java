@@ -2,6 +2,7 @@ package com.scoinone.core.service.impl;
 
 import com.scoinone.core.common.PostType;
 import com.scoinone.core.entity.Post;
+import com.scoinone.core.entity.User;
 import com.scoinone.core.repository.PostRepository;
 import com.scoinone.core.service.PostService;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,20 +29,28 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post createPost(Post post) {
+    public Post createPost(String title, String content, User user, PostType postType) {
+        Post post = Post.builder()
+                .title(title)
+                .content(content)
+                .user(user)
+                .postType(postType)
+                .viewCount(0)
+                .build();
         return postRepository.save(post);
     }
 
     @Override
-    public Post updatePost(Long id, Post updatedPost) {
+    public Post updatePost(Long id, String title, String content) {
         Post existedPost = getPostById(id);
-        existedPost.setTitle(updatedPost.getTitle());
-        existedPost.setContent(updatedPost.getContent());
-        return postRepository.save(existedPost);
+        existedPost.setTitle(title);
+        existedPost.setContent(content);
+        return existedPost;
     }
 
     @Override
-    public void deletePost(Long id) {
+    public String deletePost(Long id) {
         postRepository.deleteById(id);
+        return "Post deleted successfully";
     }
 }

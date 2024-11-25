@@ -4,13 +4,12 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.scoinone.core.common.PostType;
 import com.scoinone.core.dto.response.post.CreatePostResponseDto;
-import com.scoinone.core.dto.response.post.GetPostListResponseDto;
+import com.scoinone.core.dto.response.post.GetPostsResponseDto;
 import com.scoinone.core.dto.response.post.GetPostResponseDto;
 import com.scoinone.core.dto.response.post.UpdatePostResponseDto;
 import com.scoinone.core.entity.Post;
 import com.scoinone.core.entity.User;
 import com.scoinone.core.mapper.PostMapper;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -94,7 +93,7 @@ class PostMapperTest {
     public void testPageToGetPostListResponseDto() {
         Page<Post> page = new PageImpl<>(posts, PageRequest.of(0, 10), 1);
 
-        GetPostListResponseDto responseDto = mapper.pageToGetPostListResponseDto(page);
+        GetPostsResponseDto responseDto = mapper.pageToGetPostListResponseDto(page);
 
         assertSoftly(softly -> {
             softly.assertThat(responseDto).isNotNull();

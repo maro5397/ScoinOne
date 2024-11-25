@@ -2,6 +2,7 @@ package com.scoinone.core.service;
 
 import com.scoinone.core.common.PostType;
 import com.scoinone.core.entity.Post;
+import com.scoinone.core.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -10,9 +11,9 @@ public interface PostService {
 
     Post getPostById(Long id);
 
-    Post createPost(Post post);
+    Post createPost(String title, String content, User user, PostType postType);
 
-    Post updatePost(Long id, Post updatedPost);
+    Post updatePost(Long id, String title, String content);
 
-    void deletePost(Long id);
+    String deletePost(Long id);
 }
