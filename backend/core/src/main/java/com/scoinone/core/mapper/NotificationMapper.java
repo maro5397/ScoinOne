@@ -9,9 +9,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
+import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface NotificationMapper {
+    NotificationMapper INSTANCE = Mappers.getMapper(NotificationMapper.class);
 
     @Mapping(source = "id", target = "notificationId")
     @Mapping(source = "user.id", target = "userId")
