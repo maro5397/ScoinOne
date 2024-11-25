@@ -29,10 +29,16 @@ public class User extends UpdatableEntity implements UserDetails {
 
     private LocalDateTime lastLogin;
 
-    @ElementCollection(fetch = FetchType.EAGER) // 권한을 Set으로 저장
-    @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "authority")
-    private Set<GrantedAuthority> authorities;
+    @ManyToMany
+    @JoinTable(
+            joinColumns = {
+                    @JoinColumn(name = "user_id", referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "authority_name", referencedColumnName = "authorityName")
+            }
+    )
+    private Set<Authority> authorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

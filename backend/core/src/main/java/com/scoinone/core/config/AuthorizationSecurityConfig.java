@@ -37,7 +37,8 @@ public class AuthorizationSecurityConfig {
                         .requestMatchers(
                                 "/signup",
                                 "/login",
-                                "/reset-password"
+                                "/reset-password",
+                                "/favicon.ico"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
