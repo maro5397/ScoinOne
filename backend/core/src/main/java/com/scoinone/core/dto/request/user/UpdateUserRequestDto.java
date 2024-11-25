@@ -7,5 +7,4 @@ import lombok.Setter;
 @Setter
 public class UpdateUserRequestDto {
     private String username;
-    private String email;
 }

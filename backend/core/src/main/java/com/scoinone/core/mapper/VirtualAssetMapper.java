@@ -9,9 +9,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
+import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface VirtualAssetMapper {
+    VirtualAssetMapper INSTANCE = Mappers.getMapper(VirtualAssetMapper.class);
 
     @Mapping(source = "id", target = "virtualAssetId")
     @Mapping(source = "name", target = "name")

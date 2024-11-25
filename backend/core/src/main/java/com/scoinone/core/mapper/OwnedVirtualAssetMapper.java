@@ -7,9 +7,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
+import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface OwnedVirtualAssetMapper {
+    OwnedVirtualAssetMapper INSTANCE = Mappers.getMapper(OwnedVirtualAssetMapper.class);
 
     @Mapping(source = "ownedVirtualAsset.id", target = "ownedVirtualAssetId")
     @Mapping(source = "user.id", target = "userId")

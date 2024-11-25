@@ -1,6 +1,8 @@
 package com.scoinone.core.unit.service.impl;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.mockito.ArgumentCaptor.forClass;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -24,7 +26,6 @@ import com.scoinone.core.service.impl.UserServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.Clock;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.List;
@@ -32,14 +33,19 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 class UserServiceImplTest {
     @InjectMocks
     private UserServiceImpl userService;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @Mock
     private UserRepository userRepository;
@@ -68,53 +74,62 @@ class UserServiceImplTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        when(clock.instant()).thenReturn(Instant.parse("2024-11-21T00:00:00Z"));
+        when(clock.getZone()).thenReturn(ZoneId.systemDefault());
     }
 
     @Test
     @DisplayName("사용자 조회 테스트")
     public void testGetUserById_Success() {
-        Long userId = 1L;
         User user = User.builder()
-                .id(userId)
+                .id(1L)
+                .email("test@example.com")
                 .build();
-        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
 
-        User result = userService.getUserById(userId);
+        User result = userService.getUserByEmail("test@example.com");
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
-            verify(userRepository).findById(userId);
+            verify(userRepository).findByEmail(user.getEmail());
         });
     }
 
     @Test
     @DisplayName("사용자 조회 테스트 실패")
     public void testGetUserById_NotFound() {
-        Long userId = 1L;
-        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+        String userEmail = "test@example.com";
+        when(userRepository.findByEmail(userEmail)).thenReturn(Optional.empty());
 
         assertSoftly(softly -> {
-            softly.assertThatThrownBy(() -> userService.getUserById(userId))
+            softly.assertThatThrownBy(() -> userService.getUserByEmail(userEmail))
                     .isInstanceOf(EntityNotFoundException.class)
-                    .hasMessageContaining("User not found with id: " + userId);
+                    .hasMessageContaining("User not found with email: " + userEmail);
         });
     }
 
     @Test
     @DisplayName("사용자 생성 (회원가입) 테스트")
     public void testCreateUser_Success() {
-        User user = User.builder()
-                .email("test@example.com")
-                .build();
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
-        when(userRepository.save(user)).thenReturn(user);
+        String email = "test@example.com";
+        String password = "securePassword";
+        String username = "testUser";
 
-        User result = userService.createUser(user);
+        when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
+        when(passwordEncoder.encode(password)).thenReturn("encodedPassword");
 
+        userService.createUser(email, password, username);
+
+        ArgumentCaptor<User> userCaptor = forClass(User.class);
+        verify(userRepository).save(userCaptor.capture());
+
+        User savedUser = userCaptor.getValue();
         assertSoftly(softly -> {
-            softly.assertThat(result).isNotNull();
-            softly.assertThat(result.getEmail()).isEqualTo("test@example.com");
-            verify(userRepository).save(user);
+            softly.assertThat(savedUser).isNotNull();
+            softly.assertThat(savedUser.getEmail()).isEqualTo(email);
+            softly.assertThat(savedUser.getPassword()).isEqualTo("encodedPassword");
+            softly.assertThat(savedUser.getUsername()).isEqualTo(username);
+            softly.assertThat(savedUser.getAuthorities()).hasSize(1);
         });
     }
 
@@ -122,12 +137,18 @@ class UserServiceImplTest {
     @DisplayName("사용자 생성 (회원가입) 테스트 실패 - 이미 가입한 사용자")
     public void testCreateUser_UserAlreadyExists() {
         User user = User.builder()
+                .username("testUser")
                 .email("test@example.com")
+                .password("securePassword")
                 .build();
         when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
 
         assertSoftly(softly -> {
-            softly.assertThatThrownBy(() -> userService.createUser(user))
+            softly.assertThatThrownBy(() -> userService.createUser(
+                            user.getEmail(),
+                            user.getPassword(),
+                            user.getUsername()
+                    ))
                     .isInstanceOf(RuntimeException.class)
                     .hasMessageContaining("User is already Existed!");
         });
@@ -141,13 +162,10 @@ class UserServiceImplTest {
                 .id(userId)
                 .username("OldUsername")
                 .build();
-        User updatedUser = User.builder()
-                .username("NewUsername")
-                .build();
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(existingUser));
 
-        User result = userService.updateUser(userId, updatedUser);
+        User result = userService.updateUser(userId, "NewUsername");
 
         assertSoftly(softly -> {
             softly.assertThat(result).isEqualTo(existingUser);
@@ -197,9 +215,6 @@ class UserServiceImplTest {
     @Test
     @DisplayName("사용자 알림 30일까지 조회")
     public void testGetCommentsFromLast30DaysByUserId() {
-        when(clock.instant()).thenReturn(Instant.parse("2024-11-21T00:00:00Z"));
-        when(clock.getZone()).thenReturn(ZoneId.systemDefault());
-
         Long userId = 1L;
         List<Notification> notifications = Collections.singletonList(Notification.builder().build());
         when(notificationRepository.findByUserIdAndLast30Days(userId)).thenReturn(notifications);

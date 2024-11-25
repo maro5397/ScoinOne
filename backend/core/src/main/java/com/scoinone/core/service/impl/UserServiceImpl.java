@@ -9,6 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.time.Clock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,33 +27,46 @@ public class UserServiceImpl implements UserService {
     private final SellOrderRepository sellOrderRepository;
     private final TradeRepository tradeRepository;
     private final PostRepository postRepository;
+    private final PasswordEncoder passwordEncoder;
 
     private final Clock clock;
 
     @Override
-    public User getUserById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + email));
     }
 
     @Override
-    public User createUser(User user) {
-        if(userRepository.findByEmail(user.getEmail()).isPresent()) {
+    public User createUser(String email, String password, String username) {
+        if (userRepository.findByEmail(email).isPresent()) {
             throw new RuntimeException("User is already Existed!");
         }
+        Authority authority = Authority.builder()
+                .authorityName("ROLE_USER")
+                .build();
+        User user = User.builder()
+                .email(email)
+                .password(passwordEncoder.encode(password))
+                .username(username)
+                .lastLogin(LocalDateTime.now(clock))
+                .authorities(Collections.singleton(authority))
+                .build();
         return userRepository.save(user);
     }
 
     @Override
-    public User updateUser(Long id, User updatedUser) {
-        User existedUser = getUserById(id);
-        existedUser.setUsername(updatedUser.getUsername());
+    public User updateUser(Long id, String newUsername) {
+        User existedUser = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+        existedUser.setUsername(newUsername);
         return existedUser;
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public String deleteUser(Long id) {
         userRepository.deleteById(id);
+        return "User deleted successfully";
     }
 
     @Override
@@ -66,7 +80,7 @@ public class UserServiceImpl implements UserService {
         List<Notification> verifiableNotifications = notificationRepository.findByUserIdAndLast30Days(
                 userId
         );
-        if(verifiableNotifications == null || verifiableNotifications.isEmpty()) {
+        if (verifiableNotifications == null || verifiableNotifications.isEmpty()) {
             throw new EntityNotFoundException("Notifications not found with userId: " + userId);
         }
         return verifiableNotifications;
@@ -75,7 +89,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<OwnedVirtualAsset> getOwnedVirtualAssetsByUserId(Long userId) {
         List<OwnedVirtualAsset> ownedVirtualAssets = ownedVirtualAssetRepository.findByUser_Id(userId);
-        if(ownedVirtualAssets == null || ownedVirtualAssets.isEmpty()) {
+        if (ownedVirtualAssets == null || ownedVirtualAssets.isEmpty()) {
             throw new EntityNotFoundException("OwnedVirtualAssets not found with userId: " + userId);
         }
         return ownedVirtualAssets;
