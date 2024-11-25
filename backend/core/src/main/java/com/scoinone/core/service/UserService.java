@@ -6,13 +6,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
-    User getUserById(Long id);
+    User getUserByEmail(String email);
 
-    User createUser(User user);
+    User createUser(String email, String password, String username);
 
-    User updateUser(Long id, User updatedUser);
+    User updateUser(Long id, String newUsername);
 
-    void deleteUser(Long id);
+    String deleteUser(Long id);
 
     List<Notification> getNotificationsFromLast30DaysByUserId(Long userId);
 
