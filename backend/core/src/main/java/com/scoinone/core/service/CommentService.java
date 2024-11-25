@@ -1,6 +1,7 @@
 package com.scoinone.core.service;
 
 import com.scoinone.core.entity.Comment;
+import com.scoinone.core.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -11,9 +12,9 @@ public interface CommentService {
 
     Comment getCommentById(Long id);
 
-    Comment createComment(Comment comment);
+    Comment createComment(Long PostId, String content, User user);
 
-    Comment updateComment(Long id, Comment updatedComment);
+    Comment updateComment(Long id, String newContent);
 
-    void deleteComment(Long id);
+    String deleteComment(Long id);
 }
