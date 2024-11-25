@@ -1,5 +1,8 @@
 package com.scoinone.core.config;
 
+import com.scoinone.core.auth.JwtAccessDeniedHandler;
+import com.scoinone.core.auth.JwtAuthenticationEntryPoint;
+import com.scoinone.core.auth.JwtTokenProvider;
 import com.scoinone.core.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -27,50 +31,25 @@ import java.io.IOException;
 @Order(2)
 public class AuthenticationSecurityConfig {
 
-    private final UserService userService;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
     public SecurityFilterChain authenticationSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-                .formLogin((form) -> form
-                        .loginPage("/login")
-                        .usernameParameter("email")
-                        .passwordParameter("password")
-                        .defaultSuccessUrl("/")
-                        .failureUrl("/login?error=true")
-                        .loginProcessingUrl("/api/user/login")
-                        .successHandler(new AuthenticationSuccessHandler() {
-                            @Override
-                            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                                RequestCache requestCache = new HttpSessionRequestCache();
-                                SavedRequest savedRequest = requestCache.getRequest(request, response);
-                                String redirectUrl = savedRequest.getRedirectUrl();
-                                response.sendRedirect(redirectUrl);
-                            }
-                        })
-                )
+                .exceptionHandling((exception) -> {
+                    exception.authenticationEntryPoint(jwtAuthenticationEntryPoint);
+                    exception.accessDeniedHandler(jwtAccessDeniedHandler);
+                })
                 .logout((logout) -> logout
                         .logoutUrl("/api/user/logout")
                         .logoutSuccessUrl("/")
                         .deleteCookies("remember")
                 )
-                .rememberMe((rememberMe) -> rememberMe
-                        .rememberMeParameter("remember")
-                        .tokenValiditySeconds(3600)
-                        .alwaysRemember(false)
-                        .userDetailsService(userService)
-                )
-                .sessionManagement((session) -> session
-                        .maximumSessions(1)
-                        .expiredUrl("/login?expired=true")
-                )
-                .exceptionHandling((exception) -> exception
-                        .authenticationEntryPoint(new AuthenticationEntryPoint() {
-                            @Override
-                            public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-                                response.sendRedirect("/login");
-                            }
-                        }));
+                .sessionManagement((sessionManagement) -> {
+                    sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                });
         return http.build();
     }
 }
