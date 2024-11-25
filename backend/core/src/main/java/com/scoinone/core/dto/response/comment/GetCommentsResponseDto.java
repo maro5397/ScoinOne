@@ -8,9 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class GetCommentListResponseDto {
+public class GetCommentsResponseDto {
     private PageInfoDto pageInfo;
     private List<GetCommentResponseDto> comments;
 }
-
-

@@ -3,7 +3,7 @@ package com.scoinone.core.unit.mapper;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.scoinone.core.dto.response.comment.CreateCommentResponseDto;
-import com.scoinone.core.dto.response.comment.GetCommentListResponseDto;
+import com.scoinone.core.dto.response.comment.GetCommentsResponseDto;
 import com.scoinone.core.dto.response.comment.GetCommentResponseDto;
 import com.scoinone.core.dto.response.comment.UpdateCommentResponseDto;
 import com.scoinone.core.entity.Comment;
@@ -81,7 +81,7 @@ class CommentMapperTest {
         Comment comment = comments.getFirst();
         Page<Comment> page = new PageImpl<>(Collections.singletonList(comment), Pageable.ofSize(1), 1);
 
-        GetCommentListResponseDto responseDto = commentMapper.pageToGetCommentListResponseDto(page);
+        GetCommentsResponseDto responseDto = commentMapper.pageToGetCommentListResponseDto(page);
 
         assertSoftly(softly -> {
             softly.assertThat(responseDto.getComments().size()).isEqualTo(1);
