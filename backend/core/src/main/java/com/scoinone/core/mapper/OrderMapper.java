@@ -49,24 +49,6 @@ public interface OrderMapper {
     @Mapping(source = "status", target = "status")
     GetSellOrderResponseDto sellOrderToGetSellOrderResponseDto(SellOrder sellOrder);
 
-    @Mapping(source = "id", target = "orderId")
-    @Mapping(source = "buyer.id", target = "buyerId")
-    @Mapping(source = "virtualAsset.id", target = "virtualAssetId")
-    @Mapping(source = "tradeTime", target = "tradeTime", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
-    @Mapping(source = "quantity", target = "quantity")
-    @Mapping(source = "price", target = "price")
-    @Mapping(source = "status", target = "status")
-    UpdateBuyOrderResponseDto buyOrderToUpdateBuyOrderResponseDto(BuyOrder buyOrder);
-
-    @Mapping(source = "id", target = "orderId")
-    @Mapping(source = "seller.id", target = "sellerId")
-    @Mapping(source = "virtualAsset.id", target = "virtualAssetId")
-    @Mapping(source = "tradeTime", target = "tradeTime", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
-    @Mapping(source = "quantity", target = "quantity")
-    @Mapping(source = "price", target = "price")
-    @Mapping(source = "status", target = "status")
-    UpdateSellOrderResponseDto sellOrderToUpdateSellOrderResponseDto(SellOrder sellOrder);
-
     List<GetBuyOrderResponseDto> buyOrdersToGetBuyOrdersResponseDto(List<BuyOrder> buyOrders);
 
     default GetBuyOrderListResponseDto listToGetBuyOrderListResponseDto(List<BuyOrder> buyOrders) {
