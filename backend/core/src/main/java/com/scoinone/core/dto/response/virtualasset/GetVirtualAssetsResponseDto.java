@@ -7,6 +7,6 @@ import java.util.List;
 
 @Getter
 @Setter
-public class GetVirtualAssetListResponseDto {
+public class GetVirtualAssetsResponseDto {
     private List<GetVirtualAssetResponseDto> virtualAssets;
 }

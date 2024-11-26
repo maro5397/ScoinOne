@@ -1,7 +1,7 @@
 package com.scoinone.core.mapper;
 
 import com.scoinone.core.dto.response.virtualasset.CreateVirtualAssetResponseDto;
-import com.scoinone.core.dto.response.virtualasset.GetVirtualAssetListResponseDto;
+import com.scoinone.core.dto.response.virtualasset.GetVirtualAssetsResponseDto;
 import com.scoinone.core.dto.response.virtualasset.GetVirtualAssetResponseDto;
 import com.scoinone.core.dto.response.virtualasset.UpdateVirtualAssetResponseDto;
 import com.scoinone.core.entity.VirtualAsset;
@@ -38,8 +38,8 @@ public interface VirtualAssetMapper {
 
     List<GetVirtualAssetResponseDto> virtualAssetsToGetVirtualAssetsResponseDto(List<VirtualAsset> virtualAssets);
 
-    default GetVirtualAssetListResponseDto listToGetVirtualAssetListResponseDto(List<VirtualAsset> virtualAssets) {
-        GetVirtualAssetListResponseDto responseDto = new GetVirtualAssetListResponseDto();
+    default GetVirtualAssetsResponseDto listToGetVirtualAssetListResponseDto(List<VirtualAsset> virtualAssets) {
+        GetVirtualAssetsResponseDto responseDto = new GetVirtualAssetsResponseDto();
         responseDto.setVirtualAssets(virtualAssetsToGetVirtualAssetsResponseDto(virtualAssets));
         return responseDto;
     }

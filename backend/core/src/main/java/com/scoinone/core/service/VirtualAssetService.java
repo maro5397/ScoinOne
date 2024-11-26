@@ -9,9 +9,9 @@ public interface VirtualAssetService {
 
     VirtualAsset getVirtualAssetById(Long id);
 
-    VirtualAsset createVirtualAsset(VirtualAsset virtualAsset);
+    VirtualAsset createVirtualAsset(String name, String symbol, String description);
 
-    VirtualAsset updateVirtualAsset(Long id, VirtualAsset updatedVirtualAsset);
+    VirtualAsset updateVirtualAsset(Long id, String name, String symbol, String description);
 
-    void deleteVirtualAsset(Long id);
+    String deleteVirtualAsset(Long id);
 }

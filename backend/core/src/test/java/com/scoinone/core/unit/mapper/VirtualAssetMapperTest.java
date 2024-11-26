@@ -3,7 +3,7 @@ package com.scoinone.core.unit.mapper;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.scoinone.core.dto.response.virtualasset.CreateVirtualAssetResponseDto;
-import com.scoinone.core.dto.response.virtualasset.GetVirtualAssetListResponseDto;
+import com.scoinone.core.dto.response.virtualasset.GetVirtualAssetsResponseDto;
 import com.scoinone.core.dto.response.virtualasset.GetVirtualAssetResponseDto;
 import com.scoinone.core.dto.response.virtualasset.UpdateVirtualAssetResponseDto;
 import com.scoinone.core.entity.VirtualAsset;
@@ -77,7 +77,7 @@ class VirtualAssetMapperTest {
     @Test
     @DisplayName("다수의 가상자산 엔티티 객체들을 조회용 응답 DTO로 매핑")
     public void testListToGetVirtualAssetListResponseDto() {
-        GetVirtualAssetListResponseDto responseDto = mapper.listToGetVirtualAssetListResponseDto(virtualAssets);
+        GetVirtualAssetsResponseDto responseDto = mapper.listToGetVirtualAssetListResponseDto(virtualAssets);
         assertSoftly(softly -> {
             softly.assertThat(responseDto).isNotNull();
             softly.assertThat(responseDto.getVirtualAssets()).hasSize(3);
