@@ -11,7 +11,6 @@ import com.scoinone.core.service.TradeService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,11 +42,6 @@ public class SellOrderServiceImpl implements SellOrderService {
         entityManager.persist(sellOrder);
         tradeService.processSellOrderTrade(sellOrder);
         return sellOrderRepository.save(sellOrder);
-    }
-
-    @Override
-    public List<SellOrder> getSellOrders(User user) {
-        return sellOrderRepository.findBySeller_IdAndStatus(user.getId(), OrderStatus.PENDING);
     }
 
     @Override
