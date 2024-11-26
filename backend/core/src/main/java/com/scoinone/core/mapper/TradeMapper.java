@@ -1,6 +1,6 @@
 package com.scoinone.core.mapper;
 
-import com.scoinone.core.dto.response.trade.GetTradeListResponseDto;
+import com.scoinone.core.dto.response.trade.GetTradesResponseDto;
 import com.scoinone.core.dto.response.trade.GetTradeResponseDto;
 import com.scoinone.core.entity.Trade;
 import org.mapstruct.Mapper;
@@ -23,8 +23,8 @@ public interface TradeMapper {
 
     List<GetTradeResponseDto> tradesToGetTradesResponseDto(List<Trade> trades);
 
-    default GetTradeListResponseDto listToGetTradeListResponseDto(List<Trade> trades) {
-        GetTradeListResponseDto responseDto = new GetTradeListResponseDto();
+    default GetTradesResponseDto listToGetTradeListResponseDto(List<Trade> trades) {
+        GetTradesResponseDto responseDto = new GetTradesResponseDto();
         responseDto.setTrades(tradesToGetTradesResponseDto(trades));
         return responseDto;
     }
