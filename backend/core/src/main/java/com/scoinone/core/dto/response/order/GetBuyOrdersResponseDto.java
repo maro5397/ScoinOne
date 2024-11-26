@@ -7,6 +7,6 @@ import java.util.List;
 
 @Getter
 @Setter
-public class GetSellOrderListResponseDto {
-    private List<GetSellOrderResponseDto> sellOrders;
+public class GetBuyOrdersResponseDto {
+    private List<GetBuyOrderResponseDto> buyOrders;
 }

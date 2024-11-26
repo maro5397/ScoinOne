@@ -5,12 +5,10 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import com.scoinone.core.common.OrderStatus;
 import com.scoinone.core.dto.response.order.CreateBuyOrderResponseDto;
 import com.scoinone.core.dto.response.order.CreateSellOrderResponseDto;
-import com.scoinone.core.dto.response.order.GetBuyOrderListResponseDto;
+import com.scoinone.core.dto.response.order.GetBuyOrdersResponseDto;
 import com.scoinone.core.dto.response.order.GetBuyOrderResponseDto;
-import com.scoinone.core.dto.response.order.GetSellOrderListResponseDto;
+import com.scoinone.core.dto.response.order.GetSellOrdersResponseDto;
 import com.scoinone.core.dto.response.order.GetSellOrderResponseDto;
-import com.scoinone.core.dto.response.order.UpdateBuyOrderResponseDto;
-import com.scoinone.core.dto.response.order.UpdateSellOrderResponseDto;
 import com.scoinone.core.entity.BuyOrder;
 import com.scoinone.core.entity.SellOrder;
 import com.scoinone.core.entity.User;
@@ -114,43 +112,9 @@ class OrderMapperTest {
     }
 
     @Test
-    @DisplayName("구매주문 엔티티 객체를 구매주문 수정용 응답 DTO로 매핑")
-    public void testBuyOrderToUpdateBuyOrderResponseDto() {
-        BuyOrder buyOrder = buyOrders.getFirst();
-        UpdateBuyOrderResponseDto responseDto = orderMapper.buyOrderToUpdateBuyOrderResponseDto(buyOrder);
-
-        assertSoftly(softly -> {
-            softly.assertThat(responseDto.getOrderId()).isEqualTo(buyOrder.getId());
-            softly.assertThat(responseDto.getBuyerId()).isEqualTo(buyOrder.getBuyer().getId());
-            softly.assertThat(responseDto.getVirtualAssetId()).isEqualTo(buyOrder.getVirtualAsset().getId());
-            softly.assertThat(responseDto.getTradeTime()).isEqualTo(buyOrder.getTradeTime());
-            softly.assertThat(responseDto.getQuantity()).isEqualTo(buyOrder.getQuantity());
-            softly.assertThat(responseDto.getPrice()).isEqualTo(buyOrder.getPrice());
-            softly.assertThat(responseDto.getStatus()).isEqualTo(buyOrder.getStatus());
-        });
-    }
-
-    @Test
-    @DisplayName("판매주문 엔티티 객체를 판매주문 수정용 응답 DTO로 매핑")
-    public void testSellOrderToUpdateSellOrderResponseDto() {
-        SellOrder sellOrder = sellOrders.getFirst();
-        UpdateSellOrderResponseDto responseDto = orderMapper.sellOrderToUpdateSellOrderResponseDto(sellOrder);
-
-        assertSoftly(softly -> {
-            softly.assertThat(responseDto.getOrderId()).isEqualTo(sellOrder.getId());
-            softly.assertThat(responseDto.getSellerId()).isEqualTo(sellOrder.getSeller().getId());
-            softly.assertThat(responseDto.getVirtualAssetId()).isEqualTo(sellOrder.getVirtualAsset().getId());
-            softly.assertThat(responseDto.getTradeTime()).isEqualTo(sellOrder.getTradeTime());
-            softly.assertThat(responseDto.getQuantity()).isEqualTo(sellOrder.getQuantity());
-            softly.assertThat(responseDto.getPrice()).isEqualTo(sellOrder.getPrice());
-            softly.assertThat(responseDto.getStatus()).isEqualTo(sellOrder.getStatus());
-        });
-    }
-
-    @Test
     @DisplayName("구매주문 엔티티 객체를 구매주문 리스트 조회용 응답 DTO로 매핑")
     public void testListToGetBuyOrderListResponseDto() {
-        GetBuyOrderListResponseDto responseDto = orderMapper.listToGetBuyOrderListResponseDto(buyOrders);
+        GetBuyOrdersResponseDto responseDto = orderMapper.listToGetBuyOrderListResponseDto(buyOrders);
 
         assertSoftly(softly -> {
             softly.assertThat(responseDto.getBuyOrders()).hasSize(buyOrders.size());
@@ -163,7 +127,7 @@ class OrderMapperTest {
     @Test
     @DisplayName("판매주문 엔티티 객체를 판매주문 리스트 조회용 응답 DTO로 매핑")
     public void testListToGetSellOrderListResponseDto() {
-        GetSellOrderListResponseDto responseDto = orderMapper.listToGetSellOrderListResponseDto(sellOrders);
+        GetSellOrdersResponseDto responseDto = orderMapper.listToGetSellOrderListResponseDto(sellOrders);
 
         assertSoftly(softly -> {
             softly.assertThat(responseDto.getSellOrders()).hasSize(sellOrders.size());
