@@ -51,16 +51,16 @@ public interface OrderMapper {
 
     List<GetBuyOrderResponseDto> buyOrdersToGetBuyOrdersResponseDto(List<BuyOrder> buyOrders);
 
-    default GetBuyOrderListResponseDto listToGetBuyOrderListResponseDto(List<BuyOrder> buyOrders) {
-        GetBuyOrderListResponseDto responseDto = new GetBuyOrderListResponseDto();
+    default GetBuyOrdersResponseDto listToGetBuyOrderListResponseDto(List<BuyOrder> buyOrders) {
+        GetBuyOrdersResponseDto responseDto = new GetBuyOrdersResponseDto();
         responseDto.setBuyOrders(buyOrdersToGetBuyOrdersResponseDto(buyOrders));
         return responseDto;
     }
 
     List<GetSellOrderResponseDto> sellOrdersToGetSellOrdersResponseDto(List<SellOrder> sellOrders);
 
-    default GetSellOrderListResponseDto listToGetSellOrderListResponseDto(List<SellOrder> sellOrders) {
-        GetSellOrderListResponseDto responseDto = new GetSellOrderListResponseDto();
+    default GetSellOrdersResponseDto listToGetSellOrderListResponseDto(List<SellOrder> sellOrders) {
+        GetSellOrdersResponseDto responseDto = new GetSellOrdersResponseDto();
         responseDto.setSellOrders(sellOrdersToGetSellOrdersResponseDto(sellOrders));
         return responseDto;
     }

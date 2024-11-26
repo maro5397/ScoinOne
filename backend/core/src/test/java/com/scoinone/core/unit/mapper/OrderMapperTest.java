@@ -5,9 +5,9 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import com.scoinone.core.common.OrderStatus;
 import com.scoinone.core.dto.response.order.CreateBuyOrderResponseDto;
 import com.scoinone.core.dto.response.order.CreateSellOrderResponseDto;
-import com.scoinone.core.dto.response.order.GetBuyOrderListResponseDto;
+import com.scoinone.core.dto.response.order.GetBuyOrdersResponseDto;
 import com.scoinone.core.dto.response.order.GetBuyOrderResponseDto;
-import com.scoinone.core.dto.response.order.GetSellOrderListResponseDto;
+import com.scoinone.core.dto.response.order.GetSellOrdersResponseDto;
 import com.scoinone.core.dto.response.order.GetSellOrderResponseDto;
 import com.scoinone.core.entity.BuyOrder;
 import com.scoinone.core.entity.SellOrder;
@@ -114,7 +114,7 @@ class OrderMapperTest {
     @Test
     @DisplayName("구매주문 엔티티 객체를 구매주문 리스트 조회용 응답 DTO로 매핑")
     public void testListToGetBuyOrderListResponseDto() {
-        GetBuyOrderListResponseDto responseDto = orderMapper.listToGetBuyOrderListResponseDto(buyOrders);
+        GetBuyOrdersResponseDto responseDto = orderMapper.listToGetBuyOrderListResponseDto(buyOrders);
 
         assertSoftly(softly -> {
             softly.assertThat(responseDto.getBuyOrders()).hasSize(buyOrders.size());
@@ -127,7 +127,7 @@ class OrderMapperTest {
     @Test
     @DisplayName("판매주문 엔티티 객체를 판매주문 리스트 조회용 응답 DTO로 매핑")
     public void testListToGetSellOrderListResponseDto() {
-        GetSellOrderListResponseDto responseDto = orderMapper.listToGetSellOrderListResponseDto(sellOrders);
+        GetSellOrdersResponseDto responseDto = orderMapper.listToGetSellOrderListResponseDto(sellOrders);
 
         assertSoftly(softly -> {
             softly.assertThat(responseDto.getSellOrders()).hasSize(sellOrders.size());
