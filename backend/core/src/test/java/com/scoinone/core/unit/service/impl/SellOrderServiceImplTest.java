@@ -4,14 +4,21 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.scoinone.core.entity.BuyOrder;
 import com.scoinone.core.entity.SellOrder;
+import com.scoinone.core.entity.User;
+import com.scoinone.core.entity.VirtualAsset;
 import com.scoinone.core.repository.SellOrderRepository;
+import com.scoinone.core.repository.VirtualAssetRepository;
 import com.scoinone.core.service.TradeService;
 import com.scoinone.core.service.impl.SellOrderServiceImpl;
 import jakarta.persistence.EntityManager;
+import java.math.BigDecimal;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -27,6 +34,9 @@ class SellOrderServiceImplTest {
     private SellOrderRepository sellOrderRepository;
 
     @Mock
+    private VirtualAssetRepository virtualAssetRepository;
+
+    @Mock
     private TradeService tradeService;
 
     @BeforeEach
@@ -37,14 +47,22 @@ class SellOrderServiceImplTest {
     @Test
     @DisplayName("판매 주문 생성 테스트")
     public void testCreateSellOrder() {
-        SellOrder sellOrder = SellOrder.builder()
-                .id(1L)
-                .build();
+        Long assetId = 1L;
+        BigDecimal quantity = BigDecimal.valueOf(2);
+        BigDecimal price = BigDecimal.valueOf(300);
+        VirtualAsset virtualAsset = VirtualAsset.builder().build();
+        User user = User.builder().build();
+        when(virtualAssetRepository.findById(assetId)).thenReturn(Optional.of(virtualAsset));
 
-        when(sellOrderRepository.save(sellOrder)).thenReturn(sellOrder);
-        sellOrderService.createSellOrder(sellOrder);
+        sellOrderService.createSellOrder(assetId, quantity, price, user);
+
+        ArgumentCaptor<SellOrder> sellOrderCaptor = ArgumentCaptor.forClass(SellOrder.class);
+        verify(sellOrderRepository).save(sellOrderCaptor.capture());
+
+        SellOrder sellOrder = sellOrderCaptor.getValue();
 
         assertSoftly(softly -> {
+            softly.assertThat(sellOrder).isNotNull();
             verify(entityManager).persist(sellOrder);
             verify(tradeService).processSellOrderTrade(sellOrder);
             verify(sellOrderRepository).save(sellOrder);
