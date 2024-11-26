@@ -46,7 +46,7 @@ public class BuyOrderController {
     }
 
     @GetMapping
-    public ResponseEntity<GetBuyOrdersResponseDto> getBuyOrder(
+    public ResponseEntity<GetBuyOrdersResponseDto> getBuyOrders(
             @LoginUser User user
     ) {
         List<BuyOrder> buyOrders = buyOrderService.getBuyOrders(user);

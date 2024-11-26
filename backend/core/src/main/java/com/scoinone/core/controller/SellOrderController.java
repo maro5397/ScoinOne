@@ -46,7 +46,7 @@ public class SellOrderController {
     }
 
     @GetMapping
-    public ResponseEntity<GetSellOrdersResponseDto> getSellOrder(
+    public ResponseEntity<GetSellOrdersResponseDto> getSellOrders(
             @LoginUser User user
     ) {
         List<SellOrder> SellOrders = sellOrderService.getSellOrders(user);
