@@ -9,6 +9,7 @@ import com.scoinone.core.entity.SellOrder;
 import com.scoinone.core.entity.User;
 import com.scoinone.core.mapper.OrderMapper;
 import com.scoinone.core.service.SellOrderService;
+import com.scoinone.core.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class SellOrderController {
     private final SellOrderService sellOrderService;
+    private final UserService userService;
 
     @PostMapping("/{virtualAssetId}")
     public ResponseEntity<CreateSellOrderResponseDto> createSellOrder(
@@ -49,7 +51,7 @@ public class SellOrderController {
     public ResponseEntity<GetSellOrdersResponseDto> getSellOrders(
             @LoginUser User user
     ) {
-        List<SellOrder> SellOrders = sellOrderService.getSellOrders(user);
+        List<SellOrder> SellOrders = userService.getSellOrderByUserId(user.getId());
         return new ResponseEntity<>(OrderMapper.INSTANCE.listToGetSellOrderListResponseDto(SellOrders), HttpStatus.OK);
     }
 

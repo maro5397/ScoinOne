@@ -9,6 +9,7 @@ import com.scoinone.core.entity.BuyOrder;
 import com.scoinone.core.entity.User;
 import com.scoinone.core.mapper.OrderMapper;
 import com.scoinone.core.service.BuyOrderService;
+import com.scoinone.core.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class BuyOrderController {
     private final BuyOrderService buyOrderService;
+    private final UserService userService;
 
     @PostMapping("/{virtualAssetId}")
     public ResponseEntity<CreateBuyOrderResponseDto> createBuyOrder(
@@ -49,7 +51,7 @@ public class BuyOrderController {
     public ResponseEntity<GetBuyOrdersResponseDto> getBuyOrders(
             @LoginUser User user
     ) {
-        List<BuyOrder> buyOrders = buyOrderService.getBuyOrders(user);
+        List<BuyOrder> buyOrders = userService.getBuyOrderByUserId(user.getId());
         return new ResponseEntity<>(OrderMapper.INSTANCE.listToGetBuyOrderListResponseDto(buyOrders), HttpStatus.OK);
     }
 
