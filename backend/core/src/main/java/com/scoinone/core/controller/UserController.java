@@ -5,14 +5,20 @@ import com.scoinone.core.dto.common.DeleteResponseDto;
 import com.scoinone.core.dto.request.user.CreateUserRequestDto;
 import com.scoinone.core.dto.request.user.UpdateUserRequestDto;
 import com.scoinone.core.dto.response.notification.GetNotificationsResponseDto;
+import com.scoinone.core.dto.response.post.GetPostsResponseDto;
 import com.scoinone.core.dto.response.trade.GetTradesResponseDto;
 import com.scoinone.core.dto.response.user.CreateUserResponseDto;
+import com.scoinone.core.dto.response.user.GetOwnedAssetsResponseDto;
 import com.scoinone.core.dto.response.user.GetUserResponseDto;
 import com.scoinone.core.dto.response.user.UpdateUserResponseDto;
 import com.scoinone.core.entity.Notification;
+import com.scoinone.core.entity.OwnedVirtualAsset;
+import com.scoinone.core.entity.Post;
 import com.scoinone.core.entity.Trade;
 import com.scoinone.core.entity.User;
 import com.scoinone.core.mapper.NotificationMapper;
+import com.scoinone.core.mapper.OwnedVirtualAssetMapper;
+import com.scoinone.core.mapper.PostMapper;
 import com.scoinone.core.mapper.TradeMapper;
 import com.scoinone.core.mapper.UserMapper;
 import com.scoinone.core.service.UserService;
@@ -78,6 +84,24 @@ public class UserController {
         List<Trade> tradeByUserId = userService.getTradeByUserId(user.getId());
         return new ResponseEntity<>(
                 TradeMapper.INSTANCE.listToGetTradeListResponseDto(tradeByUserId),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/question")
+    public ResponseEntity<GetPostsResponseDto> getQuestionPosts(@Valid @LoginUser User user) {
+        List<Post> questionsByUserId = userService.getQuestionsByUserId(user.getId());
+        return new ResponseEntity<>(
+                PostMapper.INSTANCE.listToGetPostListResponseDto(questionsByUserId),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/asset")
+    public ResponseEntity<GetOwnedAssetsResponseDto> getVirtualAssets(@Valid @LoginUser User user) {
+        List<OwnedVirtualAsset> ownedVirtualAssets = userService.getOwnedVirtualAssetsByUserId(user.getId());
+        return new ResponseEntity<>(
+                OwnedVirtualAssetMapper.INSTANCE.listToGetOwnedAssetListResponseDto(ownedVirtualAssets),
                 HttpStatus.OK
         );
     }
