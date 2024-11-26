@@ -89,7 +89,7 @@ class PostMapperTest {
     }
 
     @Test
-    @DisplayName("다수의 게시글 엔티티 객체들을 조회용 응답 DTO로 매핑")
+    @DisplayName("게시글 페이지 엔티티 객체들을 조회용 응답 DTO로 매핑")
     public void testPageToGetPostListResponseDto() {
         Page<Post> page = new PageImpl<>(posts, PageRequest.of(0, 10), 1);
 
@@ -101,6 +101,20 @@ class PostMapperTest {
             softly.assertThat(responseDto.getPosts().getFirst().getPostId()).isEqualTo(1L);
             softly.assertThat(responseDto.getPageInfo().getTotalElements()).isEqualTo(2);
             softly.assertThat(responseDto.getPageInfo().getTotalPages()).isEqualTo(1);
+        });
+
+    }
+
+    @Test
+    @DisplayName("게시글 리스트 엔티티 객체들을 조회용 응답 DTO로 매핑")
+    public void testListToGetPostListResponseDto() {
+        GetPostsResponseDto responseDto = mapper.listToGetPostListResponseDto(posts);
+
+        assertSoftly(softly -> {
+            softly.assertThat(responseDto).isNotNull();
+            softly.assertThat(responseDto.getPosts()).hasSize(2);
+            softly.assertThat(responseDto.getPosts().get(0).getPostId()).isEqualTo(1L);
+            softly.assertThat(responseDto.getPosts().get(1).getPostId()).isEqualTo(2L);
         });
 
     }
