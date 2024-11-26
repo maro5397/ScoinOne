@@ -3,7 +3,7 @@ package com.scoinone.core.unit.mapper;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.scoinone.core.dto.response.user.GetOwnedAssetListResponseDto;
+import com.scoinone.core.dto.response.user.GetOwnedAssetsResponseDto;
 import com.scoinone.core.dto.response.user.GetOwnedAssetResponseDto;
 import com.scoinone.core.entity.OwnedVirtualAsset;
 import com.scoinone.core.entity.User;
@@ -48,7 +48,7 @@ class OwnedVirtualAssetMapperTest {
     @Test
     @DisplayName("보유 가상자산 엔티티 객체를 리스트 조회용 응답 DTO로 매핑")
     public void testListToGetOwnedAssetListResponseDto() {
-        GetOwnedAssetListResponseDto responseDto = mapper.listToGetOwnedAssetListResponseDto(ownedVirtualAssets);
+        GetOwnedAssetsResponseDto responseDto = mapper.listToGetOwnedAssetListResponseDto(ownedVirtualAssets);
 
         assertEquals(2, responseDto.getOwnedAssets().size());
         assertEquals(1L, responseDto.getOwnedAssets().get(0).getOwnedVirtualAssetId());
