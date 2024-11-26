@@ -1,9 +1,11 @@
 package com.scoinone.core.unit.service.impl;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.mockito.ArgumentCaptor.forClass;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.scoinone.core.entity.Comment;
 import com.scoinone.core.entity.VirtualAsset;
 import com.scoinone.core.repository.VirtualAssetRepository;
 import com.scoinone.core.service.impl.VirtualAssetServiceImpl;
@@ -14,6 +16,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -78,20 +81,21 @@ class VirtualAssetServiceImplTest {
     @Test
     @DisplayName("가상자산 생성 테스트")
     public void testCreateVirtualAsset() {
-        VirtualAsset virtualAsset = VirtualAsset.builder()
-                .name("Bitcoin")
-                .description("Digital currency")
-                .symbol("BTC")
-                .build();
+        String name = "Bitcoin";
+        String symbol = "BTC";
+        String description = "Digital currency";
 
-        when(virtualAssetRepository.save(virtualAsset)).thenReturn(virtualAsset);
+        virtualAssetService.createVirtualAsset(name, symbol, description);
 
-        VirtualAsset result = virtualAssetService.createVirtualAsset(virtualAsset);
+        ArgumentCaptor<VirtualAsset> virtualAssetCaptor = forClass(VirtualAsset.class);
+        verify(virtualAssetRepository).save(virtualAssetCaptor.capture());
+
+        VirtualAsset virtualAsset = virtualAssetCaptor.getValue();
 
         assertSoftly(softly -> {
-            softly.assertThat(result).isNotNull();
-            softly.assertThat(result.getName()).isEqualTo("Bitcoin");
-            softly.assertThat(result.getSymbol()).isEqualTo("BTC");
+            softly.assertThat(virtualAsset).isNotNull();
+            softly.assertThat(virtualAsset.getName()).isEqualTo("Bitcoin");
+            softly.assertThat(virtualAsset.getSymbol()).isEqualTo("BTC");
             verify(virtualAssetRepository).save(virtualAsset);
         });
     }
@@ -106,23 +110,20 @@ class VirtualAssetServiceImplTest {
                 .symbol("OLD")
                 .build();
 
-        VirtualAsset updatedAsset = VirtualAsset.builder()
-                .name("New Name")
-                .description("New Description")
-                .symbol("NEW")
-                .build();
-
         when(virtualAssetRepository.findById(assetId)).thenReturn(Optional.of(existingAsset));
-        when(virtualAssetRepository.save(existingAsset)).thenReturn(existingAsset);
 
-        VirtualAsset result = virtualAssetService.updateVirtualAsset(assetId, updatedAsset);
+        VirtualAsset result = virtualAssetService.updateVirtualAsset(
+                assetId,
+                "New Name",
+                "NEW",
+                "New Description"
+        );
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
             softly.assertThat(result.getName()).isEqualTo("New Name");
             softly.assertThat(result.getSymbol()).isEqualTo("NEW");
             verify(virtualAssetRepository).findById(assetId);
-            verify(virtualAssetRepository).save(existingAsset);
         });
     }
 
