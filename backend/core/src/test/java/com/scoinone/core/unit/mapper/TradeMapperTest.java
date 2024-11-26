@@ -2,7 +2,7 @@ package com.scoinone.core.unit.mapper;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import com.scoinone.core.dto.response.trade.GetTradeListResponseDto;
+import com.scoinone.core.dto.response.trade.GetTradesResponseDto;
 import com.scoinone.core.dto.response.trade.GetTradeResponseDto;
 import com.scoinone.core.entity.BuyOrder;
 import com.scoinone.core.entity.SellOrder;
@@ -51,7 +51,7 @@ class TradeMapperTest {
     @Test
     @DisplayName("다수의 거래 엔티티 객체들을 조회용 응답 DTO로 매핑")
     public void testListToGetTradeListResponseDto() {
-        GetTradeListResponseDto responseDto = mapper.listToGetTradeListResponseDto(trades);
+        GetTradesResponseDto responseDto = mapper.listToGetTradeListResponseDto(trades);
 
         assertSoftly(softly -> {
             softly.assertThat(responseDto).isNotNull();

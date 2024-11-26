@@ -4,14 +4,16 @@ import com.scoinone.core.auth.LoginUser;
 import com.scoinone.core.dto.common.DeleteResponseDto;
 import com.scoinone.core.dto.request.user.CreateUserRequestDto;
 import com.scoinone.core.dto.request.user.UpdateUserRequestDto;
-import com.scoinone.core.dto.response.notification.GetNotificationResponseDto;
 import com.scoinone.core.dto.response.notification.GetNotificationsResponseDto;
+import com.scoinone.core.dto.response.trade.GetTradesResponseDto;
 import com.scoinone.core.dto.response.user.CreateUserResponseDto;
 import com.scoinone.core.dto.response.user.GetUserResponseDto;
 import com.scoinone.core.dto.response.user.UpdateUserResponseDto;
 import com.scoinone.core.entity.Notification;
+import com.scoinone.core.entity.Trade;
 import com.scoinone.core.entity.User;
 import com.scoinone.core.mapper.NotificationMapper;
+import com.scoinone.core.mapper.TradeMapper;
 import com.scoinone.core.mapper.UserMapper;
 import com.scoinone.core.service.UserService;
 import jakarta.validation.Valid;
@@ -67,7 +69,16 @@ public class UserController {
         );
         return new ResponseEntity<>(
                 NotificationMapper.INSTANCE.listToGetNotificationListResponseDto(notificationsFromLast30Days),
-                HttpStatus.FOUND
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/trade")
+    public ResponseEntity<GetTradesResponseDto> getTrades(@Valid @LoginUser User user) {
+        List<Trade> tradeByUserId = userService.getTradeByUserId(user.getId());
+        return new ResponseEntity<>(
+                TradeMapper.INSTANCE.listToGetTradeListResponseDto(tradeByUserId),
+                HttpStatus.OK
         );
     }
 }
