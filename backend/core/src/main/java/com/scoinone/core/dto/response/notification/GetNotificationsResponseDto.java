@@ -7,6 +7,6 @@ import java.util.List;
 
 @Getter
 @Setter
-public class GetNotificationListResponseDto {
+public class GetNotificationsResponseDto {
     private List<GetNotificationResponseDto> notifications;
 }

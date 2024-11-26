@@ -3,7 +3,7 @@ package com.scoinone.core.unit.mapper;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.scoinone.core.dto.response.notification.CreateNotificationResponseDto;
-import com.scoinone.core.dto.response.notification.GetNotificationListResponseDto;
+import com.scoinone.core.dto.response.notification.GetNotificationsResponseDto;
 import com.scoinone.core.dto.response.notification.GetNotificationResponseDto;
 import com.scoinone.core.entity.Notification;
 import com.scoinone.core.entity.User;
@@ -62,7 +62,7 @@ class NotificationMapperTest {
     @Test
     @DisplayName("알람 엔티티 객체를 리스트를 통해 조회용 응답 DTO로 매핑")
     public void testListToGetNotificationListResponseDto() {
-        GetNotificationListResponseDto responseDto = notificationMapper.listToGetNotificationListResponseDto(
+        GetNotificationsResponseDto responseDto = notificationMapper.listToGetNotificationListResponseDto(
                 notifications
         );
 
