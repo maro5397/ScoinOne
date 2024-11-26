@@ -3,7 +3,6 @@ package com.scoinone.core.mapper;
 import com.scoinone.core.dto.response.notification.CreateNotificationResponseDto;
 import com.scoinone.core.dto.response.notification.GetNotificationListResponseDto;
 import com.scoinone.core.dto.response.notification.GetNotificationResponseDto;
-import com.scoinone.core.dto.response.notification.UpdateNotificationResponseDto;
 import com.scoinone.core.entity.Notification;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,11 +23,6 @@ public interface NotificationMapper {
     @Mapping(source = "createdAt", target = "createdAt")
     @Mapping(source = "expiresAt", target = "expiresAt")
     GetNotificationResponseDto notificationToGetNotificationResponseDto(Notification notification);
-
-    @Mapping(source = "id", target = "notificationId")
-    @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "expiresAt", target = "expiresAt")
-    UpdateNotificationResponseDto notificationToUpdateNotificationResponseDto(Notification notification);
 
     List<GetNotificationResponseDto> notificationsToGetNotificationsResponseDto(List<Notification> notifications);
 

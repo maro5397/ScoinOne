@@ -5,7 +5,6 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import com.scoinone.core.dto.response.notification.CreateNotificationResponseDto;
 import com.scoinone.core.dto.response.notification.GetNotificationListResponseDto;
 import com.scoinone.core.dto.response.notification.GetNotificationResponseDto;
-import com.scoinone.core.dto.response.notification.UpdateNotificationResponseDto;
 import com.scoinone.core.entity.Notification;
 import com.scoinone.core.entity.User;
 import com.scoinone.core.mapper.NotificationMapper;
@@ -56,20 +55,6 @@ class NotificationMapperTest {
             softly.assertThat(responseDto.getNotificationId()).isEqualTo(notification.getId());
             softly.assertThat(responseDto.getUserId()).isEqualTo(notification.getUser().getId());
             softly.assertThat(responseDto.getCreatedAt()).isEqualTo(notification.getCreatedAt());
-            softly.assertThat(responseDto.getExpiresAt()).isEqualTo(notification.getExpiresAt());
-        });
-    }
-
-    @Test
-    @DisplayName("알람 엔티티 객체를 수정용 응답 DTO로 매핑")
-    public void testNotificationToUpdateNotificationResponseDto() {
-        Notification notification = notifications.getFirst();
-        UpdateNotificationResponseDto responseDto = notificationMapper.notificationToUpdateNotificationResponseDto(
-                notification
-        );
-        assertSoftly(softly -> {
-            softly.assertThat(responseDto.getNotificationId()).isEqualTo(notification.getId());
-            softly.assertThat(responseDto.getUserId()).isEqualTo(notification.getUser().getId());
             softly.assertThat(responseDto.getExpiresAt()).isEqualTo(notification.getExpiresAt());
         });
     }
