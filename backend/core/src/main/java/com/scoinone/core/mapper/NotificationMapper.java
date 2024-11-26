@@ -1,7 +1,7 @@
 package com.scoinone.core.mapper;
 
 import com.scoinone.core.dto.response.notification.CreateNotificationResponseDto;
-import com.scoinone.core.dto.response.notification.GetNotificationListResponseDto;
+import com.scoinone.core.dto.response.notification.GetNotificationsResponseDto;
 import com.scoinone.core.dto.response.notification.GetNotificationResponseDto;
 import com.scoinone.core.entity.Notification;
 import org.mapstruct.Mapper;
@@ -26,8 +26,8 @@ public interface NotificationMapper {
 
     List<GetNotificationResponseDto> notificationsToGetNotificationsResponseDto(List<Notification> notifications);
 
-    default GetNotificationListResponseDto listToGetNotificationListResponseDto(List<Notification> notifications) {
-        GetNotificationListResponseDto responseDto = new GetNotificationListResponseDto();
+    default GetNotificationsResponseDto listToGetNotificationListResponseDto(List<Notification> notifications) {
+        GetNotificationsResponseDto responseDto = new GetNotificationsResponseDto();
         responseDto.setNotifications(notificationsToGetNotificationsResponseDto(notifications));
         return responseDto;
     }

@@ -4,14 +4,20 @@ import com.scoinone.core.auth.LoginUser;
 import com.scoinone.core.dto.common.DeleteResponseDto;
 import com.scoinone.core.dto.request.user.CreateUserRequestDto;
 import com.scoinone.core.dto.request.user.UpdateUserRequestDto;
+import com.scoinone.core.dto.response.notification.GetNotificationResponseDto;
+import com.scoinone.core.dto.response.notification.GetNotificationsResponseDto;
 import com.scoinone.core.dto.response.user.CreateUserResponseDto;
 import com.scoinone.core.dto.response.user.GetUserResponseDto;
 import com.scoinone.core.dto.response.user.UpdateUserResponseDto;
+import com.scoinone.core.entity.Notification;
 import com.scoinone.core.entity.User;
+import com.scoinone.core.mapper.NotificationMapper;
 import com.scoinone.core.mapper.UserMapper;
 import com.scoinone.core.service.UserService;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,5 +58,16 @@ public class UserController {
         String result = userService.deleteUser(user.getId());
         DeleteResponseDto response = new DeleteResponseDto(result);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/notification")
+    public ResponseEntity<GetNotificationsResponseDto> getNotifications(@Valid @LoginUser User user) {
+        List<Notification> notificationsFromLast30Days = userService.getNotificationsFromLast30DaysByUserId(
+                user.getId()
+        );
+        return new ResponseEntity<>(
+                NotificationMapper.INSTANCE.listToGetNotificationListResponseDto(notificationsFromLast30Days),
+                HttpStatus.FOUND
+        );
     }
 }

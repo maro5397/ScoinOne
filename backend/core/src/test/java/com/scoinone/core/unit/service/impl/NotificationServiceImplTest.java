@@ -5,13 +5,18 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.scoinone.core.entity.Notification;
+import com.scoinone.core.entity.User;
 import com.scoinone.core.repository.NotificationRepository;
+import com.scoinone.core.repository.UserRepository;
 import com.scoinone.core.service.impl.NotificationServiceImpl;
-import jakarta.persistence.EntityNotFoundException;
+import java.time.Clock;
+import java.time.ZoneId;
+import java.time.Instant;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -23,82 +28,38 @@ class NotificationServiceImplTest {
     @Mock
     private NotificationRepository notificationRepository;
 
+    @Mock
+    private UserRepository userRepository;
+
+    @Mock
+    private Clock clock;
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-    }
-
-    @Test
-    @DisplayName("인덱스로 알람 조회하기")
-    public void testGetNotificationById_Success() {
-        Long notificationId = 1L;
-        Notification notification = Notification.builder()
-                .id(notificationId)
-                .build();
-        when(notificationRepository.findById(notificationId)).thenReturn(Optional.of(notification));
-
-        Notification result = notificationService.getNotificationById(notificationId);
-
-        assertSoftly(softly -> {
-            softly.assertThat(result).isNotNull();
-            softly.assertThat(result.getId()).isEqualTo(notificationId);
-            verify(notificationRepository).findById(notificationId);
-        });
-    }
-
-    @Test
-    @DisplayName("인덱스로 알람 조회하기 실패")
-    public void testGetNotificationById_NotFound() {
-        Long notificationId = 1L;
-        when(notificationRepository.findById(notificationId)).thenReturn(Optional.empty());
-
-        assertSoftly(softly -> {
-            softly.assertThatThrownBy(() -> notificationService.getNotificationById(notificationId))
-                    .isInstanceOf(EntityNotFoundException.class)
-                    .hasMessageContaining("Notification not found with id: " + notificationId);
-        });
+        when(clock.instant()).thenReturn(Instant.parse("2024-11-21T00:00:00Z"));
+        when(clock.getZone()).thenReturn(ZoneId.systemDefault());
     }
 
     @Test
     @DisplayName("알람 생성하기 테스트")
     public void testCreateNotification() {
-        Notification notification = Notification.builder()
-                .content("Test notification")
-                .build();
-        when(notificationRepository.save(notification)).thenReturn(notification);
+        String email = "test@example.com";
+        String content = "Test notification";
+        User user = User.builder().build();
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
 
-        Notification result = notificationService.createNotification(notification);
+        notificationService.createNotification(email, content);
+
+        ArgumentCaptor<Notification> notificationCaptor = ArgumentCaptor.forClass(Notification.class);
+        verify(notificationRepository).save(notificationCaptor.capture());
+
+        Notification notification = notificationCaptor.getValue();
 
         assertSoftly(softly -> {
-            softly.assertThat(result).isNotNull();
-            softly.assertThat(result.getContent()).isEqualTo("Test notification");
+            softly.assertThat(notification).isNotNull();
+            softly.assertThat(notification.getContent()).isEqualTo("Test notification");
             verify(notificationRepository).save(notification);
-        });
-    }
-
-    @Test
-    @DisplayName("알람 수정하기 테스트")
-    public void testUpdateNotification() {
-        Long notificationId = 1L;
-        Notification existingNotification = Notification.builder()
-                .id(notificationId)
-                .content("Old content")
-                .build();
-
-        Notification updatedNotification = Notification.builder()
-                .content("Updated content")
-                .build();
-
-        when(notificationRepository.findById(notificationId)).thenReturn(Optional.of(existingNotification));
-        when(notificationRepository.save(existingNotification)).thenReturn(existingNotification);
-
-        Notification result = notificationService.updateNotification(notificationId, updatedNotification);
-
-        assertSoftly(softly -> {
-            softly.assertThat(result).isNotNull();
-            softly.assertThat(result.getContent()).isEqualTo("Updated content");
-            verify(notificationRepository).findById(notificationId);
-            verify(notificationRepository).save(existingNotification);
         });
     }
 
