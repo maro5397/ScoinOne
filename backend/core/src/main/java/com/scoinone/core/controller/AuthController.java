@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthService authService;
 
-    @PostMapping("/login")
+    @PostMapping("/signin")
     public ResponseEntity<LoginResponseDto> signIn(@Valid @RequestBody LoginRequestDto requestDto) {
         String jwt = authService.authenticate(requestDto.getEmail(), requestDto.getPassword());
 
