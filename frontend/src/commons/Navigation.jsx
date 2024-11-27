@@ -1,234 +1,135 @@
+// 다크모드 구현 예정
 import { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import PropTypes from "prop-types";
-import {
-  Box,
-  AppBar,
-  Toolbar,
-  Button,
-  Container,
-  Divider,
-  Typography,
-  MenuItem,
-  Drawer,
-  TextField,
-  Badge,
-  IconButton,
-  Link,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import ToggleColorMode from "./ToggleColorMode";
+import { XMarkIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-const logoStyle = {
-  width: "140px",
-  height: "auto",
-  cursor: "pointer",
-  marginRight: "10px",
-  marginLeft: "10px",
-};
+const menuItems = [
+  { name: "거래소", href: "#" },
+  { name: "내 자산", href: "#" },
+];
 
-export default function Navigation({ mode, toggleColorMode }) {
-  const [open, setOpen] = useState(false);
-
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-  };
+export default function Navigation2() {
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
-    <div>
-      <AppBar
-        position="fixed"
-        sx={{
-          boxShadow: 0,
-          bgcolor: "transparent",
-          backgroundImage: "none",
-          mt: 2,
-        }}
-      >
-        <Container maxWidth="lg">
-          <Toolbar
-            variant="regular"
-            sx={(theme) => ({
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              flexShrink: 0,
-              borderRadius: "999px",
-              bgcolor:
-                theme.palette.mode === "light"
-                  ? "rgba(255, 255, 255, 0.4)"
-                  : "rgba(0, 0, 0, 0.4)",
-              backdropFilter: "blur(24px)",
-              maxHeight: 40,
-              border: "1px solid",
-              borderColor: "divider",
-              boxShadow:
-                theme.palette.mode === "light"
-                  ? `0 0 1px rgba(85, 166, 246, 0.1), 1px 1.5px 2px -1px rgba(85, 166, 246, 0.15), 4px 4px 12px -2.5px rgba(85, 166, 246, 0.15)`
-                  : "0 0 1px rgba(2, 31, 59, 0.7), 1px 1.5px 2px -1px rgba(2, 31, 59, 0.65), 4px 4px 12px -2.5px rgba(2, 31, 59, 0.65)",
-            })}
-          >
-            <Box
-              sx={{
-                flexGrow: 1,
-                display: "flex",
-                alignItems: "center",
-                ml: "-18px",
-                px: 0,
-              }}
-            >
-              <Link component={RouterLink} to="/">
-                <img src={"/logo.png"} style={logoStyle} alt="ScoinOne" />
-              </Link>
-              <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                <TextField
-                  id="outlined-basic"
-                  hiddenLabel
-                  size="small"
-                  variant="outlined"
-                  aria-label="검색하고 싶은 가상자산 입력"
+    <>
+      <Banner />
+      <nav className="w-full border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center">
+              <div className="flex items-center mr-8">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="#2563eb"
+                  className="size-6 mr-1"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z"
+                  />
+                </svg>
+                <div className="w-32">
+                  <span className="text-2xl font-semibold text-[#2563eb]">
+                    ScoinOne
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex space-x-8">
+                {menuItems.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="text-gray-600 hover:text-[#2563eb] text-md font-bold transition-colors"
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex-1 flex justify-end mr-10">
+              <div className="w-80 max-w-md relative">
+                <MagnifyingGlassIcon className="size-5 absolute left-3 top-1/2 -translate-y-1/2 text-[#2563eb]" />
+                <input
+                  type="text"
                   placeholder="가상자산 검색"
-                  autoComplete="off"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 rounded-md border border-gray-200 
+                focus:outline-none focus:ring-2 focus:ring-[#2563eb]/20 
+                focus:border-[#2563eb] bg-gray-50 
+                hover:bg-white transition-colors
+                placeholder:text-gray-400 text-gray-900 font-bold"
                 />
-                <MenuItem sx={{ py: "6px", px: "12px" }}>
-                  <Link component={RouterLink} to="/auction">
-                    <Typography variant="body2" color="text.primary">
-                      거래소
-                    </Typography>
-                  </Link>
-                </MenuItem>
-                <MenuItem sx={{ py: "6px", px: "12px" }}>
-                  <Link component={RouterLink} to="/mypage/assetinfo">
-                    <Typography variant="body2" color="text.primary">
-                      내 자산
-                    </Typography>
-                  </Link>
-                </MenuItem>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                display: { xs: "none", md: "flex" },
-                gap: 0.5,
-                alignItems: "center",
-              }}
-            >
-              <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
-              <IconButton
-                component={RouterLink}
-                to="/mypage/alarm"
-                color="primary"
-              >
-                <Badge badgeContent={1} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-              <Button
-                color="primary"
-                variant="text"
-                size="small"
-                component={RouterLink}
-                to="/login"
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-4">
+              <a
+                href="#"
+                className="text-gray-600 hover:text-[#2563eb] text-md font-bold transition-colors"
               >
                 로그인
-              </Button>
-              <Button
-                color="primary"
-                variant="contained"
-                size="small"
-                component={RouterLink}
-                to="/register"
+              </a>
+              <a
+                href="#"
+                className="text-white bg-[#2563eb] hover:bg-[#1d4ed8] 
+                px-3 py-1.5 rounded-md text-md font-bold transition-colors"
               >
                 회원가입
-              </Button>
-            </Box>
-            <Box sx={{ display: { sm: "", md: "none" } }}>
-              <Button
-                variant="text"
-                color="primary"
-                aria-label="menu"
-                onClick={toggleDrawer(true)}
-                sx={{ minWidth: "30px", p: "4px" }}
-              >
-                <MenuIcon />
-              </Button>
-              <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
-                <Box
-                  sx={{
-                    minWidth: "60dvw",
-                    p: 2,
-                    backgroundColor: "background.paper",
-                    flexGrow: 1,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "end",
-                      flexGrow: 1,
-                    }}
-                  >
-                    <ToggleColorMode
-                      mode={mode}
-                      toggleColorMode={toggleColorMode}
-                    />
-                  </Box>
-                  <MenuItem>
-                    <Link component={RouterLink} to="/auction">
-                      거래소
-                    </Link>
-                  </MenuItem>
-                  <MenuItem>
-                    <Link component={RouterLink} to="/mypage/assetinfo">
-                      내 자산
-                    </Link>
-                  </MenuItem>
-                  <MenuItem>
-                    <Link component={RouterLink} to="/board/announce">
-                      공지사항
-                    </Link>
-                  </MenuItem>
-                  <MenuItem>
-                    <Link component={RouterLink} to="/board/questions">
-                      질의사항
-                    </Link>
-                  </MenuItem>
-                  <Divider />
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      component={RouterLink}
-                      to="/register"
-                      sx={{ width: "100%" }}
-                    >
-                      회원가입
-                    </Button>
-                  </MenuItem>
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="outlined"
-                      component={RouterLink}
-                      to="/login"
-                      sx={{ width: "100%" }}
-                    >
-                      로그인
-                    </Button>
-                  </MenuItem>
-                </Box>
-              </Drawer>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-    </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </>
   );
 }
 
-Navigation.propTypes = {
-  mode: PropTypes.oneOf(["dark", "light"]).isRequired,
-  toggleColorMode: PropTypes.func.isRequired,
+const Banner = () => {
+  return (
+    <div className="relative isolate flex items-center gap-x-6 overflow-hidden bg-[#60a5fa] px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
+      <div
+        aria-hidden="true"
+        className="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
+      ></div>
+      <div
+        aria-hidden="true"
+        className="absolute left-[max(45rem,calc(50%+8rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
+      ></div>
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <p className="text-sm/6 text-gray-900">
+          <strong className="font-semibold">오픈 이벤트</strong>
+          <svg
+            viewBox="0 0 2 2"
+            aria-hidden="true"
+            className="mx-2 inline size-0.5 fill-current"
+          >
+            <circle r={1} cx={1} cy={1} />
+          </svg>
+          신규 회원은 일주일 동안 거래 수수료 무료!
+        </p>
+        <a
+          href="#"
+          className="flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+        >
+          지금 당장 가입하기 <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+      <div className="flex flex-1 justify-end">
+        {/* <button
+          type="button"
+          className="-m-3 p-3 focus-visible:outline-offset-[-4px]"
+        >
+          <span className="sr-only">Dismiss</span>
+          <XMarkIcon aria-hidden="true" className="size-5 text-gray-900" />
+        </button> */}
+      </div>
+    </div>
+  );
 };
