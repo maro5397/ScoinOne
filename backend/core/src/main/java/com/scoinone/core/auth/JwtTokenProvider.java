@@ -42,6 +42,9 @@ public class JwtTokenProvider implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
+        if (secret.length() < 88) {
+            throw new IllegalArgumentException("JWT 비밀 키는 최소 512비트(88문자) 이상이어야 합니다.");
+        }
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
