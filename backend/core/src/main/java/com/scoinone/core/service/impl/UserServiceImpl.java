@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final SellOrderRepository sellOrderRepository;
     private final TradeRepository tradeRepository;
     private final PostRepository postRepository;
+    private final AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
 
     private final Clock clock;
@@ -42,16 +43,24 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByEmail(email).isPresent()) {
             throw new RuntimeException("User is already Existed!");
         }
-        Authority authority = Authority.builder()
-                .authorityName("ROLE_USER")
-                .build();
+
         User user = User.builder()
+                .username(username)
                 .email(email)
                 .password(passwordEncoder.encode(password))
-                .username(username)
-                .lastLogin(LocalDateTime.now(clock))
-                .authorities(Collections.singleton(authority))
+                .lastLogin(LocalDateTime.now())
                 .build();
+
+        Authority authority = authorityRepository.findByAuthorityName("ROLE_USER")
+                .orElseThrow(() -> new RuntimeException("Authority not found!"));
+
+        UserAuthority userAuthority = UserAuthority.builder()
+                .user(user)
+                .authority(authority)
+                .build();
+
+        user.setUserAuthorities(Set.of(userAuthority));
+
         return userRepository.save(user);
     }
 
