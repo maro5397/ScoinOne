@@ -32,21 +32,19 @@ import java.io.IOException;
 public class AuthenticationSecurityConfig {
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
     public SecurityFilterChain authenticationSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-                .exceptionHandling((exception) -> {
-                    exception.authenticationEntryPoint(jwtAuthenticationEntryPoint);
-                    exception.accessDeniedHandler(jwtAccessDeniedHandler);
-                })
                 .logout((logout) -> logout
                         .logoutUrl("/api/user/logout")
                         .logoutSuccessUrl("/")
                 )
                 .sessionManagement((sessionManagement) -> {
                     sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                })
+                .exceptionHandling((exception) -> {
+                    exception.authenticationEntryPoint(jwtAuthenticationEntryPoint);
                 });
         return http.build();
     }

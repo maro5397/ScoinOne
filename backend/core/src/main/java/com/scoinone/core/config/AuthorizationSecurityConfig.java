@@ -1,8 +1,10 @@
 package com.scoinone.core.config;
 
+import com.scoinone.core.auth.JwtAccessDeniedHandler;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,8 +24,10 @@ import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 @Order(1)
 public class AuthorizationSecurityConfig {
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
     public WebSecurityCustomizer ignoringCustomizer() {
@@ -35,20 +39,15 @@ public class AuthorizationSecurityConfig {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(
-                                "/signup",
-                                "/login",
-                                "/reset-password",
+                                "/api/user/signup",
+                                "/api/auth/signin",
                                 "/favicon.ico"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
-                .exceptionHandling((exception) -> exception
-                        .accessDeniedHandler(new AccessDeniedHandler() {
-                            @Override
-                            public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-                                response.sendRedirect("/denied");
-                            }
-                        }));
+                .exceptionHandling((exception) -> {
+                    exception.accessDeniedHandler(jwtAccessDeniedHandler);
+                });
         return http.build();
     }
 
