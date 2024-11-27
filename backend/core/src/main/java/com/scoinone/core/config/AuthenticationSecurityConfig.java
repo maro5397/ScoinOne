@@ -31,7 +31,6 @@ import java.io.IOException;
 @Order(2)
 public class AuthenticationSecurityConfig {
 
-    private final JwtTokenProvider jwtTokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
@@ -45,7 +44,6 @@ public class AuthenticationSecurityConfig {
                 .logout((logout) -> logout
                         .logoutUrl("/api/user/logout")
                         .logoutSuccessUrl("/")
-                        .deleteCookies("remember")
                 )
                 .sessionManagement((sessionManagement) -> {
                     sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
