@@ -2,6 +2,7 @@ package com.scoinone.core.entity;
 
 import com.scoinone.core.entity.base.UpdatableEntity;
 import jakarta.persistence.*;
+import java.util.stream.Collectors;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,19 +30,12 @@ public class User extends UpdatableEntity implements UserDetails {
 
     private LocalDateTime lastLogin;
 
-    @ManyToMany
-    @JoinTable(
-            joinColumns = {
-                    @JoinColumn(name = "user_id", referencedColumnName = "id")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "authority_name", referencedColumnName = "authorityName")
-            }
-    )
-    private Set<Authority> authorities;
+    @Setter
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<UserAuthority> userAuthorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return userAuthorities.stream().map(UserAuthority::getAuthority).collect(Collectors.toSet());
     }
 }
