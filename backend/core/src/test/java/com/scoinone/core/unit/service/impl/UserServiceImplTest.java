@@ -40,6 +40,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 class UserServiceImplTest {
@@ -214,7 +215,7 @@ class UserServiceImplTest {
 
         assertSoftly(softly -> {
             softly.assertThatThrownBy(() -> userService.loadUserByUsername(email))
-                    .isInstanceOf(EntityNotFoundException.class)
+                    .isInstanceOf(UsernameNotFoundException.class)
                     .hasMessageContaining("User not found with email: " + email);
         });
     }
