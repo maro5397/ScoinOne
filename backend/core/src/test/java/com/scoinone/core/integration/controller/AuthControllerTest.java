@@ -7,6 +7,7 @@ import com.scoinone.core.dto.request.auth.LoginRequestDto;
 import com.scoinone.core.dto.response.auth.LoginResponseDto;
 import com.scoinone.core.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,6 +32,7 @@ class AuthControllerTest {
     }
 
     @Test
+    @DisplayName("로그인 시도 후 JWT 토큰 수신 테스트")
     void signIn_shouldReturnJwtAndHttpStatusOk() {
         LoginRequestDto requestDto = new LoginRequestDto();
         requestDto.setEmail("test@example.com");
