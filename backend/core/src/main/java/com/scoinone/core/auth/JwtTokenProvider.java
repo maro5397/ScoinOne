@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenProvider implements InitializingBean {
     private final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
-    private static final String AUTHORITIES_KEY = "authorities";
+    private final String AUTHORITIES_KEY = "authorities";
     private final String secret;
     private final long tokenValidityInMilliseconds;
     private Key key;
