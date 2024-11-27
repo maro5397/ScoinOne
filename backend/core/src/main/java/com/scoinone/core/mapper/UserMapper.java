@@ -13,20 +13,20 @@ public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     @Mapping(source = "id", target = "userId")
-    @Mapping(source = "username", target = "username")
+    @Mapping(source = "customUsername", target = "username")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     CreateUserResponseDto userToCreateUserResponseDto(User user);
 
     @Mapping(source = "id", target = "userId")
-    @Mapping(source = "username", target = "username")
+    @Mapping(source = "customUsername", target = "username")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     GetUserResponseDto userToGetUserResponseDto(User user);
 
     @Mapping(source = "id", target = "userId")
-    @Mapping(source = "username", target = "username")
+    @Mapping(source = "customUsername", target = "username")
     @Mapping(source = "email", target = "email")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     UpdateUserResponseDto userToUpdateUserResponseDto(User user);

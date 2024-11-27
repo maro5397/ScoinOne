@@ -15,19 +15,25 @@ import java.util.Set;
 @Table(name = "users")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
 @Builder
 public class User extends UpdatableEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
     @Setter
     private String username;
+
+    @Getter
     private String email;
+
     @Setter
+    @Getter
     private String password;
 
+    @Setter
+    @Getter
     private LocalDateTime lastLogin;
 
     @Setter
@@ -37,5 +43,14 @@ public class User extends UpdatableEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return userAuthorities.stream().map(UserAuthority::getAuthority).collect(Collectors.toSet());
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    public String getCustomUsername() {
+        return username;
     }
 }

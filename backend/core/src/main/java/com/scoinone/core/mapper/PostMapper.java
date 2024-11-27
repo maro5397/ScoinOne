@@ -18,7 +18,7 @@ public interface PostMapper {
     @Mapping(source = "postType", target = "postType")
     @Mapping(source = "title", target = "title")
     @Mapping(source = "content", target = "content")
-    @Mapping(source = "user.username", target = "author")
+    @Mapping(source = "user.customUsername", target = "author")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     CreatePostResponseDto postToCreatePostResponseDto(Post post);
@@ -27,7 +27,7 @@ public interface PostMapper {
     @Mapping(source = "postType", target = "postType")
     @Mapping(source = "title", target = "title")
     @Mapping(source = "content", target = "content")
-    @Mapping(source = "user.username", target = "author")
+    @Mapping(source = "user.customUsername", target = "author")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     GetPostResponseDto postToGetPostResponseDto(Post post);
@@ -36,7 +36,7 @@ public interface PostMapper {
     @Mapping(source = "postType", target = "postType")
     @Mapping(source = "title", target = "title")
     @Mapping(source = "content", target = "content")
-    @Mapping(source = "user.username", target = "author")
+    @Mapping(source = "user.customUsername", target = "author")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     UpdatePostResponseDto postToUpdatePostResponseDto(Post post);

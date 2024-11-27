@@ -135,7 +135,7 @@ class UserServiceImplTest {
             softly.assertThat(savedUser).isNotNull();
             softly.assertThat(savedUser.getEmail()).isEqualTo(email);
             softly.assertThat(savedUser.getPassword()).isEqualTo("encodedPassword");
-            softly.assertThat(savedUser.getUsername()).isEqualTo(username);
+            softly.assertThat(savedUser.getCustomUsername()).isEqualTo(username);
             softly.assertThat(savedUser.getAuthorities()).hasSize(1);
         });
     }
@@ -154,7 +154,7 @@ class UserServiceImplTest {
             softly.assertThatThrownBy(() -> userService.createUser(
                             user.getEmail(),
                             user.getPassword(),
-                            user.getUsername()
+                            user.getCustomUsername()
                     ))
                     .isInstanceOf(RuntimeException.class)
                     .hasMessageContaining("User is already Existed!");
@@ -176,7 +176,7 @@ class UserServiceImplTest {
 
         assertSoftly(softly -> {
             softly.assertThat(result).isEqualTo(existingUser);
-            softly.assertThat(existingUser.getUsername()).isEqualTo("NewUsername");
+            softly.assertThat(existingUser.getCustomUsername()).isEqualTo("NewUsername");
             verify(userRepository).findById(userId);
         });
     }
