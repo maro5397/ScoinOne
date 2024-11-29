@@ -13,11 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import({TestContainerConfig.class})
+@ActiveProfiles("dev")
 class AuthControllerTest {
 
     @Autowired
@@ -38,9 +42,10 @@ class AuthControllerTest {
         requestDto.setEmail("test@example.com");
         requestDto.setPassword("password");
 
-        ResponseEntity<LoginResponseDto> response = restTemplate.postForEntity(
+        ResponseEntity<LoginResponseDto> response = restTemplate.exchange(
                 "/api/auth/signin",
-                requestDto,
+                HttpMethod.POST,
+                new HttpEntity<>(requestDto),
                 LoginResponseDto.class
         );
 
