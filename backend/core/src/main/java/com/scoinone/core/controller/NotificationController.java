@@ -41,7 +41,7 @@ public class NotificationController {
     @DeleteMapping("/{notificationId}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<DeleteResponseDto> deleteNotification(
-            @PathVariable Long notificationId
+            @PathVariable("notificationId") Long notificationId
     ) {
         String result = notificationService.deleteNotification(notificationId);
         DeleteResponseDto responseDto = new DeleteResponseDto(result);

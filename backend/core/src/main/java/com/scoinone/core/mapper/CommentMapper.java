@@ -17,7 +17,7 @@ public interface CommentMapper {
     @Mapping(source = "id", target = "commentId")
     @Mapping(source = "post.id", target = "postId")
     @Mapping(source = "content", target = "content")
-    @Mapping(source = "user.username", target = "author")
+    @Mapping(source = "user.customUsername", target = "author")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "createdAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     CreateCommentResponseDto commentToCreateCommentResponseDto(Comment comment);
@@ -25,7 +25,7 @@ public interface CommentMapper {
     @Mapping(source = "id", target = "commentId")
     @Mapping(source = "post.id", target = "postId")
     @Mapping(source = "content", target = "content")
-    @Mapping(source = "user.username", target = "author")
+    @Mapping(source = "user.customUsername", target = "author")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "createdAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     GetCommentResponseDto commentToGetCommentResponseDto(Comment comment);
@@ -33,7 +33,7 @@ public interface CommentMapper {
     @Mapping(source = "id", target = "commentId")
     @Mapping(source = "post.id", target = "postId")
     @Mapping(source = "content", target = "content")
-    @Mapping(source = "user.username", target = "author")
+    @Mapping(source = "user.customUsername", target = "author")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "createdAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     UpdateCommentResponseDto commentToUpdateCommentResponseDto(Comment comment);

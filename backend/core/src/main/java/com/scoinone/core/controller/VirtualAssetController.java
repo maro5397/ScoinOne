@@ -56,7 +56,7 @@ public class VirtualAssetController {
 
     @GetMapping("/{virtualAssetId}")
     public ResponseEntity<GetVirtualAssetResponseDto> getVirtualAsset(
-            @PathVariable Long virtualAssetId
+            @PathVariable("virtualAssetId") Long virtualAssetId
     ) {
         VirtualAsset virtualAssetById = virtualAssetService.getVirtualAssetById(virtualAssetId);
         return new ResponseEntity<>(
@@ -67,8 +67,8 @@ public class VirtualAssetController {
 
     @PatchMapping("/{virtualAssetId}")
     public ResponseEntity<UpdateVirtualAssetResponseDto> updateVirtualAsset(
-            @RequestBody UpdateVirtualAssetRequestDto requestDto,
-            @PathVariable Long virtualAssetId
+            @PathVariable("virtualAssetId") Long virtualAssetId,
+            @RequestBody UpdateVirtualAssetRequestDto requestDto
     ) {
         VirtualAsset updatedVirtualAsset = virtualAssetService.updateVirtualAsset(
                 virtualAssetId,
@@ -84,7 +84,7 @@ public class VirtualAssetController {
 
     @DeleteMapping("/{virtualAssetId}")
     public ResponseEntity<DeleteResponseDto> deleteVirtualAsset(
-            @PathVariable Long virtualAssetId
+            @PathVariable("virtualAssetId") Long virtualAssetId
     ) {
         String result = virtualAssetService.deleteVirtualAsset(virtualAssetId);
         DeleteResponseDto deleteResponseDto = new DeleteResponseDto(result);

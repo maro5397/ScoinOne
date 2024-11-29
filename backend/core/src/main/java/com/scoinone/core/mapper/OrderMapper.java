@@ -18,7 +18,7 @@ public interface OrderMapper {
     @Mapping(source = "virtualAsset.id", target = "virtualAssetId")
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "price", target = "price")
-    @Mapping(source = "status", target = "status")
+    @Mapping(source = "status.value", target = "status")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     CreateBuyOrderResponseDto buyOrderToCreateBuyOrderResponseDto(BuyOrder buyOrder);
 
@@ -27,7 +27,7 @@ public interface OrderMapper {
     @Mapping(source = "virtualAsset.id", target = "virtualAssetId")
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "price", target = "price")
-    @Mapping(source = "status", target = "status")
+    @Mapping(source = "status.value", target = "status")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     CreateSellOrderResponseDto sellOrderToCreateSellOrderResponseDto(SellOrder sellOrder);
 
@@ -37,7 +37,7 @@ public interface OrderMapper {
     @Mapping(source = "tradeTime", target = "tradeTime", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "price", target = "price")
-    @Mapping(source = "status", target = "status")
+    @Mapping(source = "status.value", target = "status")
     GetBuyOrderResponseDto buyOrderToGetBuyOrderResponseDto(BuyOrder buyOrder);
 
     @Mapping(source = "id", target = "orderId")
@@ -46,7 +46,7 @@ public interface OrderMapper {
     @Mapping(source = "tradeTime", target = "tradeTime", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "price", target = "price")
-    @Mapping(source = "status", target = "status")
+    @Mapping(source = "status.value", target = "status")
     GetSellOrderResponseDto sellOrderToGetSellOrderResponseDto(SellOrder sellOrder);
 
     List<GetBuyOrderResponseDto> buyOrdersToGetBuyOrdersResponseDto(List<BuyOrder> buyOrders);

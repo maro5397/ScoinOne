@@ -2,6 +2,7 @@ package com.scoinone.core.entity;
 
 import com.scoinone.core.entity.base.UpdatableEntity;
 import jakarta.persistence.*;
+import java.util.stream.Collectors;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,34 +15,42 @@ import java.util.Set;
 @Table(name = "users")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
 @Builder
 public class User extends UpdatableEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
     @Setter
     private String username;
+
+    @Getter
     private String email;
+
     @Setter
+    @Getter
     private String password;
 
+    @Setter
+    @Getter
     private LocalDateTime lastLogin;
 
-    @ManyToMany
-    @JoinTable(
-            joinColumns = {
-                    @JoinColumn(name = "user_id", referencedColumnName = "id")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "authority_name", referencedColumnName = "authorityName")
-            }
-    )
-    private Set<Authority> authorities;
+    @Setter
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<UserAuthority> userAuthorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return userAuthorities.stream().map(UserAuthority::getAuthority).collect(Collectors.toSet());
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    public String getCustomUsername() {
+        return username;
     }
 }
