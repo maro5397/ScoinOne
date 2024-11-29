@@ -69,7 +69,7 @@ class CommentControllerTest {
         savedPost = postService.createPost("testTitle", "test Content", savedUser, PostType.QNA);
         savedComment = commentService.createComment(savedPost.getId(), "test Comment Content", savedUser);
 
-        String jwtToken = authService.authenticate("test@example.com", "securePassword");
+        String jwtToken = authService.authenticate("user@example.com", "password");
 
         headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + jwtToken);

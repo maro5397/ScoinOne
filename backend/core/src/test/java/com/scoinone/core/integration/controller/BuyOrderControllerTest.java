@@ -69,7 +69,7 @@ class BuyOrderControllerTest {
                 user
         );
 
-        String jwtToken = authService.authenticate("test@example.com", "securePassword");
+        String jwtToken = authService.authenticate("user@example.com", "password");
 
         headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + jwtToken);
