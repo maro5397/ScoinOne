@@ -36,8 +36,8 @@ public class PostController {
 
     @PostMapping("/{postType}")
     public ResponseEntity<CreatePostResponseDto> createPost(
-            @Valid @LoginUser User user,
             @PathVariable("postType") PostType postType,
+            @Valid @LoginUser User user,
             @RequestBody CreatePostRequestDto requestDto
     ) {
         Post post = postService.createPost(requestDto.getTitle(), requestDto.getContent(), user, postType);
@@ -46,8 +46,8 @@ public class PostController {
 
     @GetMapping("/{postType}")
     public ResponseEntity<GetPostsResponseDto> getPosts(
-            Pageable pageable,
-            @PathVariable("postType") PostType postType
+            @PathVariable("postType") PostType postType,
+            Pageable pageable
     ) {
         Page<Post> posts = postService.getPosts(pageable, postType);
         return new ResponseEntity<>(PostMapper.INSTANCE.pageToGetPostListResponseDto(posts), HttpStatus.OK);
