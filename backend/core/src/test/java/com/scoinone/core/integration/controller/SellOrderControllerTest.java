@@ -39,7 +39,6 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import({TestContainerConfig.class})
 @ActiveProfiles("dev")
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class SellOrderControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
