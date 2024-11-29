@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface NotificationService {
-    Notification createNotification(String email, String message);
+    Notification createNotification(String email, String content);
 
     String deleteNotification(Long id);
 }

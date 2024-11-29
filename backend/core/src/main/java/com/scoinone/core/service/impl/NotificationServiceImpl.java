@@ -22,11 +22,11 @@ public class NotificationServiceImpl implements NotificationService {
     private final Clock clock;
 
     @Override
-    public Notification createNotification(String email, String message) {
+    public Notification createNotification(String email, String content) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + email));
         Notification notification = Notification.builder()
-                .content(message)
+                .content(content)
                 .user(user)
                 .status(NotificationStatus.UNREAD)
                 .expiresAt(LocalDateTime.now(clock).plusDays(7))
