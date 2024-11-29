@@ -37,7 +37,7 @@ public class User extends UpdatableEntity implements UserDetails {
     private LocalDateTime lastLogin;
 
     @Setter
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<UserAuthority> userAuthorities;
 
     @Override
