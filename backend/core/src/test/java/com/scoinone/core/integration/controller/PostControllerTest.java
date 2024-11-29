@@ -43,9 +43,6 @@ class PostControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Autowired
-    private PostRepository postRepository;
-
     private Post savedPost;
     private HttpHeaders headers;
 
@@ -66,7 +63,7 @@ class PostControllerTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown(@Autowired PostRepository postRepository) {
         postRepository.deleteAll();
     }
 

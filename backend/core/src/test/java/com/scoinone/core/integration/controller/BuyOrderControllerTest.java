@@ -41,12 +41,6 @@ class BuyOrderControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Autowired
-    private VirtualAssetRepository virtualAssetRepository;
-
-    @Autowired
-    private BuyOrderRepository buyOrderRepository;
-
     private VirtualAsset savedVirtualAsset;
     private BuyOrder savedBuyOrder;
     private HttpHeaders headers;
@@ -77,7 +71,10 @@ class BuyOrderControllerTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown(
+            @Autowired VirtualAssetRepository virtualAssetRepository,
+            @Autowired BuyOrderRepository buyOrderRepository
+    ) {
         buyOrderRepository.deleteAll();
         virtualAssetRepository.deleteAll();
     }

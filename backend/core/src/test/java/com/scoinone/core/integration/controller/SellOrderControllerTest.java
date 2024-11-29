@@ -43,15 +43,6 @@ class SellOrderControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Autowired
-    private VirtualAssetRepository virtualAssetRepository;
-
-    @Autowired
-    private SellOrderRepository sellOrderRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
     private VirtualAsset savedVirtualAsset;
 
     private SellOrder savedSellOrder;
@@ -84,7 +75,11 @@ class SellOrderControllerTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown(
+            @Autowired VirtualAssetRepository virtualAssetRepository,
+            @Autowired SellOrderRepository sellOrderRepository,
+            @Autowired UserRepository userRepository
+    ) {
         sellOrderRepository.deleteAll();
         userRepository.deleteAll();
         virtualAssetRepository.deleteAll();

@@ -36,9 +36,6 @@ class NotificationControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Autowired
-    private NotificationRepository notificationRepository;
-
     private Notification savedNotification;
     private User savedUser;
     private HttpHeaders headers;
@@ -61,7 +58,7 @@ class NotificationControllerTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown(@Autowired NotificationRepository notificationRepository) {
         notificationRepository.deleteAll();
     }
 

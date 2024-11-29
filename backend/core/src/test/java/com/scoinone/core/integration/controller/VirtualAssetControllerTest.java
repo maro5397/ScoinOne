@@ -38,9 +38,6 @@ class VirtualAssetControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Autowired
-    private VirtualAssetRepository virtualAssetRepository;
-
     private VirtualAsset savedVirtualAsset;
     private HttpHeaders headers;
 
@@ -59,7 +56,7 @@ class VirtualAssetControllerTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown(@Autowired VirtualAssetRepository virtualAssetRepository) {
         virtualAssetRepository.deleteAll();
     }
 

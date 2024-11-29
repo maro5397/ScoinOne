@@ -46,12 +46,6 @@ class CommentControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Autowired
-    private CommentRepository commentRepository;
-
-    @Autowired
-    private PostRepository postRepository;
-
     private Post savedPost;
     private Comment savedComment;
     private HttpHeaders headers;
@@ -77,7 +71,10 @@ class CommentControllerTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown(
+            @Autowired CommentRepository commentRepository,
+            @Autowired PostRepository postRepository
+    ) {
         commentRepository.deleteAll();
         postRepository.deleteAll();
     }
