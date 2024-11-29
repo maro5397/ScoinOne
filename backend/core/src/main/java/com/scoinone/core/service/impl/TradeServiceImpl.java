@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,9 +58,6 @@ public class TradeServiceImpl implements TradeService {
         BigDecimal tradeQuantity;
 
         List<SellOrder> availableSellOrders = sellOrderRepository.findMatchableSellOrders(buyPrice);
-        if (availableSellOrders == null || availableSellOrders.isEmpty()) {
-            throw new EntityNotFoundException("SellOrders not found with buyPrice: " + buyPrice);
-        }
 
         for (SellOrder sellOrder : availableSellOrders) {
             BigDecimal sellQuantity = sellOrder.getQuantity();
@@ -90,9 +86,6 @@ public class TradeServiceImpl implements TradeService {
         BigDecimal tradeQuantity;
 
         List<BuyOrder> availableBuyOrders = buyOrderRepository.findMatchableBuyOrders(sellPrice);
-        if (availableBuyOrders == null || availableBuyOrders.isEmpty()) {
-            throw new EntityNotFoundException("BuyOrders not found with sellPrice: " + sellPrice);
-        }
 
         for (BuyOrder buyOrder : availableBuyOrders) {
             BigDecimal buyQuantity = buyOrder.getQuantity();
