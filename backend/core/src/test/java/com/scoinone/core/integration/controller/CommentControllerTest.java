@@ -15,18 +15,16 @@ import com.scoinone.core.entity.Post;
 import com.scoinone.core.entity.User;
 import com.scoinone.core.repository.CommentRepository;
 import com.scoinone.core.repository.PostRepository;
-import com.scoinone.core.repository.UserRepository;
 import com.scoinone.core.service.AuthService;
 import com.scoinone.core.service.CommentService;
 import com.scoinone.core.service.PostService;
 import com.scoinone.core.service.UserService;
+import com.scoinone.core.util.UserDataInitializer;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -42,9 +40,8 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Import({TestContainerConfig.class})
+@Import({TestContainerConfig.class, UserDataInitializer.class})
 @ActiveProfiles("dev")
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CommentControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
@@ -54,9 +51,6 @@ class CommentControllerTest {
 
     @Autowired
     private PostRepository postRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     private Post savedPost;
     private Comment savedComment;
@@ -70,7 +64,7 @@ class CommentControllerTest {
             @Autowired AuthService authService
     ) {
         restTemplate.getRestTemplate().setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-        User savedUser = userService.createUser("test@example.com", "securePassword", "testUser");
+        User savedUser = userService.getUserByEmail("user@example.com");
 
         savedPost = postService.createPost("testTitle", "test Content", savedUser, PostType.QNA);
         savedComment = commentService.createComment(savedPost.getId(), "test Comment Content", savedUser);
@@ -86,7 +80,6 @@ class CommentControllerTest {
     void tearDown() {
         commentRepository.deleteAll();
         postRepository.deleteAll();
-        userRepository.deleteAll();
     }
 
     @Test

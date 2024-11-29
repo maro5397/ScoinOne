@@ -11,20 +11,18 @@ import com.scoinone.core.entity.BuyOrder;
 import com.scoinone.core.entity.User;
 import com.scoinone.core.entity.VirtualAsset;
 import com.scoinone.core.repository.BuyOrderRepository;
-import com.scoinone.core.repository.UserRepository;
 import com.scoinone.core.repository.VirtualAssetRepository;
 import com.scoinone.core.service.AuthService;
 import com.scoinone.core.service.BuyOrderService;
 import com.scoinone.core.service.UserService;
 import com.scoinone.core.service.VirtualAssetService;
+import com.scoinone.core.util.UserDataInitializer;
 import java.math.BigDecimal;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -37,9 +35,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Import({TestContainerConfig.class})
+@Import({TestContainerConfig.class, UserDataInitializer.class})
 @ActiveProfiles("dev")
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class BuyOrderControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
@@ -50,13 +47,8 @@ class BuyOrderControllerTest {
     @Autowired
     private BuyOrderRepository buyOrderRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
     private VirtualAsset savedVirtualAsset;
-
     private BuyOrder savedBuyOrder;
-
     private HttpHeaders headers;
 
     @BeforeEach
@@ -68,7 +60,7 @@ class BuyOrderControllerTest {
     ) {
         savedVirtualAsset = virtualAssetService.createVirtualAsset("Bitcoin", "BTC", "Digital currency");
 
-        User user = userService.createUser("test@example.com", "securePassword", "testUser");
+        User user = userService.getUserByEmail("user@example.com");
 
         savedBuyOrder = buyOrderService.createBuyOrder(
                 savedVirtualAsset.getId(),
@@ -87,7 +79,6 @@ class BuyOrderControllerTest {
     @AfterEach
     void tearDown() {
         buyOrderRepository.deleteAll();
-        userRepository.deleteAll();
         virtualAssetRepository.deleteAll();
     }
 
