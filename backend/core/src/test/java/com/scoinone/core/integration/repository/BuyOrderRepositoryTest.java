@@ -30,6 +30,7 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("dev")
 class BuyOrderRepositoryTest {
     private User buyer;
+    private BuyOrder buyOrder;
 
     @Autowired
     private BuyOrderRepository buyOrderRepository;
@@ -63,6 +64,9 @@ class BuyOrderRepositoryTest {
                 createBuyOrder(20L, 200L, OrderStatus.PENDING, buyer, virtualAsset)
         );
         buyOrderRepository.saveAll(buyOrders);
+
+        buyOrder = createBuyOrder(1L, 10L, OrderStatus.PENDING, buyer, virtualAsset);
+        buyOrderRepository.save(buyOrder);
     }
 
     @AfterEach
@@ -92,7 +96,7 @@ class BuyOrderRepositoryTest {
         );
 
         assertSoftly(softly -> {
-            softly.assertThat(result).hasSize(3);
+            softly.assertThat(result).hasSize(4);
             result.forEach(buyOrder -> softly.assertThat(buyOrder.getStatus()).isEqualTo(OrderStatus.PENDING));
         });
     }
@@ -106,6 +110,16 @@ class BuyOrderRepositoryTest {
             softly.assertThat(result).hasSize(2);
             softly.assertThat(result.get(0).getPrice()).isEqualByComparingTo(BigDecimal.valueOf(150.00));
             softly.assertThat(result.get(1).getPrice()).isEqualByComparingTo(BigDecimal.valueOf(200.00));
+        });
+    }
+
+    @Test
+    @DisplayName("판매 주문 ID 및 판매자 ID에 따른 주문 삭제")
+    void testDeleteByOrderIdAndBuyerId() {
+        Long count = buyOrderRepository.deleteByIdAndBuyer_Id(buyOrder.getId(), buyer.getId());
+
+        assertSoftly(softly -> {
+            softly.assertThat(count).isEqualTo(1);
         });
     }
 }
