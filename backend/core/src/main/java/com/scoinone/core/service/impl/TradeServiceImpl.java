@@ -11,20 +11,20 @@ import com.scoinone.core.repository.BuyOrderRepository;
 import com.scoinone.core.repository.OwnedVirtualAssetRepository;
 import com.scoinone.core.repository.SellOrderRepository;
 import com.scoinone.core.repository.TradeRepository;
-import com.scoinone.core.repository.UserRepository;
 import com.scoinone.core.service.TradeService;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.Clock;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TradeServiceImpl implements TradeService {
 
     private final TradeRepository tradeRepository;

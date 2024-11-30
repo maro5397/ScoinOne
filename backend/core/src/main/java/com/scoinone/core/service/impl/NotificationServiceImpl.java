@@ -11,9 +11,11 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationRepository notificationRepository;
