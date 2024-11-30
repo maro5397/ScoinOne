@@ -7,9 +7,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.scoinone.core.entity.BuyOrder;
+import com.scoinone.core.entity.OwnedVirtualAsset;
 import com.scoinone.core.entity.SellOrder;
 import com.scoinone.core.entity.Trade;
+import com.scoinone.core.entity.User;
+import com.scoinone.core.entity.VirtualAsset;
 import com.scoinone.core.repository.BuyOrderRepository;
+import com.scoinone.core.repository.OwnedVirtualAssetRepository;
 import com.scoinone.core.repository.SellOrderRepository;
 import com.scoinone.core.repository.TradeRepository;
 import com.scoinone.core.service.impl.TradeServiceImpl;
@@ -38,9 +42,25 @@ class TradeServiceImplTest {
     @Mock
     private BuyOrderRepository buyOrderRepository;
 
+    @Mock
+    private OwnedVirtualAssetRepository ownedVirtualAssetRepository;
+
+    private User user;
+    private VirtualAsset virtualAsset;
+    private OwnedVirtualAsset ownedVirtualAsset;
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        user = User.builder()
+                .id(1L)
+                .build();
+        virtualAsset = VirtualAsset.builder()
+                .id(1L)
+                .build();
+        ownedVirtualAsset = OwnedVirtualAsset.builder()
+                .amount(BigDecimal.TEN)
+                .build();
     }
 
     @Test
@@ -91,8 +111,14 @@ class TradeServiceImplTest {
     @Test
     @DisplayName("거래 생성 테스트")
     public void testCreateTrade() {
-        BuyOrder buyOrder = BuyOrder.builder().build();
-        SellOrder sellOrder = SellOrder.builder().build();
+        BuyOrder buyOrder = BuyOrder.builder()
+                .buyer(user)
+                .virtualAsset(virtualAsset)
+                .build();
+        SellOrder sellOrder = SellOrder.builder()
+                .seller(user)
+                .virtualAsset(virtualAsset)
+                .build();
         BigDecimal tradeQuantity = new BigDecimal("10.0");
         Trade trade = Trade.builder()
                 .buyOrder(buyOrder)
@@ -102,6 +128,8 @@ class TradeServiceImplTest {
                 .build();
 
         when(tradeRepository.save(any(Trade.class))).thenReturn(trade);
+        when(ownedVirtualAssetRepository.findByUser_IdAndVirtualAsset_Id(user.getId(), virtualAsset.getId()))
+                .thenReturn(Optional.of(ownedVirtualAsset));
 
         Trade result = tradeService.createTrade(buyOrder, sellOrder, tradeQuantity);
 
@@ -116,22 +144,30 @@ class TradeServiceImplTest {
     @DisplayName("구매 주문 거래 체결 프로세스 테스트")
     public void testProcessBuyOrderTrade() {
         BuyOrder buyOrder = BuyOrder.builder()
+                .buyer(user)
+                .virtualAsset(virtualAsset)
                 .quantity(BigDecimal.valueOf(20.0))
                 .price(BigDecimal.valueOf(100.0))
                 .build();
 
         SellOrder sellOrder1 = SellOrder.builder()
+                .seller(user)
+                .virtualAsset(virtualAsset)
                 .quantity(BigDecimal.valueOf(10.0))
                 .price(BigDecimal.valueOf(100.0))
                 .build();
 
         SellOrder sellOrder2 = SellOrder.builder()
+                .seller(user)
+                .virtualAsset(virtualAsset)
                 .quantity(BigDecimal.valueOf(15.0))
                 .price(BigDecimal.valueOf(100.0))
                 .build();
 
         List<SellOrder> sellOrders = List.of(sellOrder1, sellOrder2);
         when(sellOrderRepository.findMatchableSellOrders(buyOrder.getPrice())).thenReturn(sellOrders);
+        when(ownedVirtualAssetRepository.findByUser_IdAndVirtualAsset_Id(user.getId(), virtualAsset.getId()))
+                .thenReturn(Optional.of(ownedVirtualAsset));
 
         List<Trade> trades = tradeService.processBuyOrderTrade(buyOrder);
 
@@ -148,22 +184,30 @@ class TradeServiceImplTest {
     @DisplayName("판매 주문 거래 체결 프로세스 테스트")
     public void testProcessSellOrderTrade() {
         SellOrder sellOrder = SellOrder.builder()
+                .seller(user)
+                .virtualAsset(virtualAsset)
                 .quantity(BigDecimal.valueOf(20.0))
                 .price(BigDecimal.valueOf(100.0))
                 .build();
 
         BuyOrder buyOrder1 = BuyOrder.builder()
+                .buyer(user)
+                .virtualAsset(virtualAsset)
                 .quantity(BigDecimal.valueOf(10.0))
                 .price(BigDecimal.valueOf(100.0))
                 .build();
 
         BuyOrder buyOrder2 = BuyOrder.builder()
+                .buyer(user)
+                .virtualAsset(virtualAsset)
                 .quantity(BigDecimal.valueOf(15.0))
                 .price(BigDecimal.valueOf(100.0))
                 .build();
 
         List<BuyOrder> buyOrders = List.of(buyOrder1, buyOrder2);
         when(buyOrderRepository.findMatchableBuyOrders(sellOrder.getPrice())).thenReturn(buyOrders);
+        when(ownedVirtualAssetRepository.findByUser_IdAndVirtualAsset_Id(user.getId(), virtualAsset.getId()))
+                .thenReturn(Optional.of(ownedVirtualAsset));
 
         List<Trade> trades = tradeService.processSellOrderTrade(sellOrder);
 

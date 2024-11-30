@@ -55,7 +55,7 @@ class OrderMapperTest {
             softly.assertThat(responseDto.getVirtualAssetId()).isEqualTo(buyOrder.getVirtualAsset().getId());
             softly.assertThat(responseDto.getQuantity()).isEqualTo(buyOrder.getQuantity());
             softly.assertThat(responseDto.getPrice()).isEqualTo(buyOrder.getPrice());
-            softly.assertThat(responseDto.getStatus()).isEqualTo(buyOrder.getStatus());
+            softly.assertThat(responseDto.getStatus()).isEqualTo(buyOrder.getStatus().getValue());
             softly.assertThat(responseDto.getCreatedAt()).isEqualTo(buyOrder.getCreatedAt());
         });
     }
@@ -72,7 +72,7 @@ class OrderMapperTest {
             softly.assertThat(responseDto.getVirtualAssetId()).isEqualTo(sellOrder.getVirtualAsset().getId());
             softly.assertThat(responseDto.getQuantity()).isEqualTo(sellOrder.getQuantity());
             softly.assertThat(responseDto.getPrice()).isEqualTo(sellOrder.getPrice());
-            softly.assertThat(responseDto.getStatus()).isEqualTo(sellOrder.getStatus());
+            softly.assertThat(responseDto.getStatus()).isEqualTo(sellOrder.getStatus().getValue());
             softly.assertThat(responseDto.getCreatedAt()).isEqualTo(sellOrder.getCreatedAt());
         });
     }
@@ -90,7 +90,7 @@ class OrderMapperTest {
             softly.assertThat(responseDto.getTradeTime()).isEqualTo(buyOrder.getTradeTime());
             softly.assertThat(responseDto.getQuantity()).isEqualTo(buyOrder.getQuantity());
             softly.assertThat(responseDto.getPrice()).isEqualTo(buyOrder.getPrice());
-            softly.assertThat(responseDto.getStatus()).isEqualTo(buyOrder.getStatus());
+            softly.assertThat(responseDto.getStatus()).isEqualTo(buyOrder.getStatus().getValue());
         });
     }
 
@@ -107,7 +107,7 @@ class OrderMapperTest {
             softly.assertThat(responseDto.getTradeTime()).isEqualTo(sellOrder.getTradeTime());
             softly.assertThat(responseDto.getQuantity()).isEqualTo(sellOrder.getQuantity());
             softly.assertThat(responseDto.getPrice()).isEqualTo(sellOrder.getPrice());
-            softly.assertThat(responseDto.getStatus()).isEqualTo(sellOrder.getStatus());
+            softly.assertThat(responseDto.getStatus()).isEqualTo(sellOrder.getStatus().getValue());
         });
     }
 

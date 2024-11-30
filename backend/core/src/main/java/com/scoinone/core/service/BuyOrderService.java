@@ -9,5 +9,5 @@ import java.math.BigDecimal;
 public interface BuyOrderService {
     BuyOrder createBuyOrder(Long assetId, BigDecimal quantity, BigDecimal price, User user);
 
-    String deleteBuyOrder(Long id);
+    String deleteBuyOrder(Long id, Long userId);
 }

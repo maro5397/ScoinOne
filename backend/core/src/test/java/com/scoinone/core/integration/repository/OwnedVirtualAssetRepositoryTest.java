@@ -2,7 +2,6 @@ package com.scoinone.core.integration.repository;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import com.scoinone.core.CoreApplication;
 import com.scoinone.core.config.TestContainerConfig;
 import com.scoinone.core.entity.OwnedVirtualAsset;
 import com.scoinone.core.entity.User;
@@ -12,6 +11,7 @@ import com.scoinone.core.repository.UserRepository;
 import com.scoinone.core.repository.VirtualAssetRepository;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,14 +19,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(TestContainerConfig.class)
+@ActiveProfiles("dev")
 class OwnedVirtualAssetRepositoryTest {
     private User user;
+    private VirtualAsset virtualAsset;
 
     @Autowired
     private OwnedVirtualAssetRepository ownedVirtualAssetRepository;
@@ -46,7 +48,7 @@ class OwnedVirtualAssetRepositoryTest {
                 .build();
         userRepository.save(user);
 
-        VirtualAsset virtualAsset = VirtualAsset.builder()
+        virtualAsset = VirtualAsset.builder()
                 .name("Ethereum")
                 .symbol("ETH")
                 .description("A decentralized platform for applications")
@@ -80,6 +82,27 @@ class OwnedVirtualAssetRepositoryTest {
             softly.assertThat(ownedAssets.getFirst().getUser().getId()).isEqualTo(userId);
             softly.assertThat(ownedAssets.getFirst().getVirtualAsset().getName()).isEqualTo("Ethereum");
             softly.assertThat(ownedAssets.getFirst().getAmount()).isEqualByComparingTo(BigDecimal.valueOf(10));
+        });
+    }
+
+    @Test
+    @DisplayName("사용자 ID와 가상자산 ID로 보유 가상 자산 조회")
+    void testFindByUser_IdAndVirtualAsset_Id() {
+        Long userId = user.getId();
+        Long virtualAssetId = virtualAsset.getId();
+
+        Optional<OwnedVirtualAsset> foundOwnedVirtualAsset = ownedVirtualAssetRepository
+                .findByUser_IdAndVirtualAsset_Id(
+                        userId,
+                        virtualAssetId
+                );
+
+        assertSoftly(softly -> {
+            softly.assertThat(foundOwnedVirtualAsset.isPresent()).isTrue();
+            foundOwnedVirtualAsset.ifPresent(ownedVirtualAsset -> {
+                softly.assertThat(ownedVirtualAsset.getVirtualAsset().getId()).isEqualTo(virtualAssetId);
+                softly.assertThat(ownedVirtualAsset.getUser().getId()).isEqualTo(userId);
+            });
         });
     }
 

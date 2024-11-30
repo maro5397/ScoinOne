@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping
+    @PostMapping("/signup")
     public ResponseEntity<CreateUserResponseDto> createUser(@Valid @RequestBody CreateUserRequestDto requestDto) {
         User user = userService.createUser(requestDto.getEmail(), requestDto.getPassword(), requestDto.getUsername());
         return ResponseEntity.ok(UserMapper.INSTANCE.userToCreateUserResponseDto(user));

@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import com.scoinone.core.common.OrderStatus;
 import com.scoinone.core.common.PostType;
+import com.scoinone.core.entity.Authority;
 import com.scoinone.core.entity.BuyOrder;
 import com.scoinone.core.entity.Notification;
 import com.scoinone.core.entity.OwnedVirtualAsset;
@@ -15,6 +16,7 @@ import com.scoinone.core.entity.Post;
 import com.scoinone.core.entity.SellOrder;
 import com.scoinone.core.entity.Trade;
 import com.scoinone.core.entity.User;
+import com.scoinone.core.repository.AuthorityRepository;
 import com.scoinone.core.repository.BuyOrderRepository;
 import com.scoinone.core.repository.NotificationRepository;
 import com.scoinone.core.repository.OwnedVirtualAssetRepository;
@@ -38,6 +40,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 class UserServiceImplTest {
@@ -67,6 +70,9 @@ class UserServiceImplTest {
 
     @Mock
     private PostRepository postRepository;
+
+    @Mock
+    private AuthorityRepository authorityRepository;
 
     @Mock
     private Clock clock;
@@ -117,6 +123,8 @@ class UserServiceImplTest {
 
         when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
         when(passwordEncoder.encode(password)).thenReturn("encodedPassword");
+        when(authorityRepository.findByAuthorityName("ROLE_USER"))
+                .thenReturn(Optional.of(Authority.builder().authorityName("ROLE_USER").build()));
 
         userService.createUser(email, password, username);
 
@@ -128,7 +136,7 @@ class UserServiceImplTest {
             softly.assertThat(savedUser).isNotNull();
             softly.assertThat(savedUser.getEmail()).isEqualTo(email);
             softly.assertThat(savedUser.getPassword()).isEqualTo("encodedPassword");
-            softly.assertThat(savedUser.getUsername()).isEqualTo(username);
+            softly.assertThat(savedUser.getCustomUsername()).isEqualTo(username);
             softly.assertThat(savedUser.getAuthorities()).hasSize(1);
         });
     }
@@ -147,7 +155,7 @@ class UserServiceImplTest {
             softly.assertThatThrownBy(() -> userService.createUser(
                             user.getEmail(),
                             user.getPassword(),
-                            user.getUsername()
+                            user.getCustomUsername()
                     ))
                     .isInstanceOf(RuntimeException.class)
                     .hasMessageContaining("User is already Existed!");
@@ -169,7 +177,7 @@ class UserServiceImplTest {
 
         assertSoftly(softly -> {
             softly.assertThat(result).isEqualTo(existingUser);
-            softly.assertThat(existingUser.getUsername()).isEqualTo("NewUsername");
+            softly.assertThat(existingUser.getCustomUsername()).isEqualTo("NewUsername");
             verify(userRepository).findById(userId);
         });
     }
@@ -207,7 +215,7 @@ class UserServiceImplTest {
 
         assertSoftly(softly -> {
             softly.assertThatThrownBy(() -> userService.loadUserByUsername(email))
-                    .isInstanceOf(EntityNotFoundException.class)
+                    .isInstanceOf(UsernameNotFoundException.class)
                     .hasMessageContaining("User not found with email: " + email);
         });
     }

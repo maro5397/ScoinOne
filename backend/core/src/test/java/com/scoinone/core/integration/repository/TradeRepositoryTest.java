@@ -2,7 +2,6 @@ package com.scoinone.core.integration.repository;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import com.scoinone.core.CoreApplication;
 import com.scoinone.core.common.OrderStatus;
 import com.scoinone.core.config.TestContainerConfig;
 import com.scoinone.core.entity.BuyOrder;
@@ -24,12 +23,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(TestContainerConfig.class)
+@ActiveProfiles("dev")
 class TradeRepositoryTest {
     private User buyer;
     private User seller;

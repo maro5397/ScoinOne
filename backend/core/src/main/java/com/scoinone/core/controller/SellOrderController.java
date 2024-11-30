@@ -31,7 +31,7 @@ public class SellOrderController {
 
     @PostMapping("/{virtualAssetId}")
     public ResponseEntity<CreateSellOrderResponseDto> createSellOrder(
-            @PathVariable Long virtualAssetId,
+            @PathVariable("virtualAssetId") Long virtualAssetId,
             @RequestBody CreateSellOrderRequestDto requestDto,
             @LoginUser User user
     ) {
@@ -57,7 +57,7 @@ public class SellOrderController {
 
     @DeleteMapping("/{orderId}")
     public ResponseEntity<DeleteResponseDto> deleteSellOrder(
-            @PathVariable Long orderId
+            @PathVariable("orderId") Long orderId
     ) {
         String result = sellOrderService.deleteSellOrder(orderId);
         DeleteResponseDto deleteResponseDto = new DeleteResponseDto(result);

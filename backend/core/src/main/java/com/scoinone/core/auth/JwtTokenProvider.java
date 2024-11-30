@@ -1,5 +1,7 @@
 package com.scoinone.core.auth;
 
+import com.scoinone.core.entity.User;
+import com.scoinone.core.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -8,6 +10,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.persistence.EntityNotFoundException;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,32 +24,38 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JwtTokenProvider implements InitializingBean {
+
+    private final UserRepository userRepository;
+
     private final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
-    private static final String AUTHORITIES_KEY = "authorities";
+    private final String AUTHORITIES_KEY = "authorities";
     private final String secret;
     private final long tokenValidityInMilliseconds;
     private Key key;
 
     public JwtTokenProvider(
-            @Value("${jwt.secret}") String secret,
+            UserRepository userRepository, @Value("${jwt.secret}") String secret,
             @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds
     ) {
+        this.userRepository = userRepository;
         this.secret = secret;
         this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
     }
 
     @Override
     public void afterPropertiesSet() {
+        if (secret.length() < 88) {
+            throw new IllegalArgumentException("JWT 비밀 키는 최소 512비트(88문자) 이상이어야 합니다.");
+        }
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(Authentication authentication) {
+    public String createToken(Authentication authentication, Long userId, String username) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -56,6 +65,8 @@ public class JwtTokenProvider implements InitializingBean {
 
         return Jwts.builder()
                 .setSubject(authentication.getName())
+                .claim("id", userId.toString())
+                .claim("username", username)
                 .claim(AUTHORITIES_KEY, authorities)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setExpiration(validity)
@@ -75,9 +86,11 @@ public class JwtTokenProvider implements InitializingBean {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        User principal = new User(claims.getSubject(), "", authorities);
+        Long userId = Long.parseLong(claims.get("id").toString());
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with userId: " + userId));
 
-        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+        return new UsernamePasswordAuthenticationToken(user, token, authorities);
     }
 
     public boolean validateToken(String token) {

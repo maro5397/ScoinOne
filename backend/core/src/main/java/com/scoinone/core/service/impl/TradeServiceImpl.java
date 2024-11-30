@@ -2,19 +2,24 @@ package com.scoinone.core.service.impl;
 
 import com.scoinone.core.common.OrderStatus;
 import com.scoinone.core.entity.BuyOrder;
+import com.scoinone.core.entity.OwnedVirtualAsset;
 import com.scoinone.core.entity.SellOrder;
 import com.scoinone.core.entity.Trade;
+import com.scoinone.core.entity.User;
+import com.scoinone.core.entity.VirtualAsset;
 import com.scoinone.core.repository.BuyOrderRepository;
+import com.scoinone.core.repository.OwnedVirtualAssetRepository;
 import com.scoinone.core.repository.SellOrderRepository;
 import com.scoinone.core.repository.TradeRepository;
+import com.scoinone.core.repository.UserRepository;
 import com.scoinone.core.service.TradeService;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.Clock;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +30,7 @@ public class TradeServiceImpl implements TradeService {
     private final TradeRepository tradeRepository;
     private final SellOrderRepository sellOrderRepository;
     private final BuyOrderRepository buyOrderRepository;
+    private final OwnedVirtualAssetRepository ownedVirtualAssetRepository;
 
     private final Clock clock;
 
@@ -48,6 +54,9 @@ public class TradeServiceImpl implements TradeService {
                 .quantity(tradeQuantity)
                 .price(sellOrder.getPrice())
                 .build();
+
+        updateOwnedVirtualAsset(trade);
+
         return tradeRepository.save(trade);
     }
 
@@ -59,9 +68,6 @@ public class TradeServiceImpl implements TradeService {
         BigDecimal tradeQuantity;
 
         List<SellOrder> availableSellOrders = sellOrderRepository.findMatchableSellOrders(buyPrice);
-        if (availableSellOrders == null || availableSellOrders.isEmpty()) {
-            throw new EntityNotFoundException("SellOrders not found with buyPrice: " + buyPrice);
-        }
 
         for (SellOrder sellOrder : availableSellOrders) {
             BigDecimal sellQuantity = sellOrder.getQuantity();
@@ -90,9 +96,6 @@ public class TradeServiceImpl implements TradeService {
         BigDecimal tradeQuantity;
 
         List<BuyOrder> availableBuyOrders = buyOrderRepository.findMatchableBuyOrders(sellPrice);
-        if (availableBuyOrders == null || availableBuyOrders.isEmpty()) {
-            throw new EntityNotFoundException("BuyOrders not found with sellPrice: " + sellPrice);
-        }
 
         for (BuyOrder buyOrder : availableBuyOrders) {
             BigDecimal buyQuantity = buyOrder.getQuantity();
@@ -111,5 +114,33 @@ public class TradeServiceImpl implements TradeService {
             sellQuantity = sellOrder.getQuantity();
         }
         return trades;
+    }
+
+    private void updateOwnedVirtualAsset(Trade trade) {
+        OwnedVirtualAsset buyerOwnedVirtualAsset = getOwnedVirtualAsset(
+                trade.getBuyOrder().getBuyer(),
+                trade.getVirtualAsset()
+        );
+
+        buyerOwnedVirtualAsset.setAmount(buyerOwnedVirtualAsset.getAmount().add(trade.getQuantity()));
+        ownedVirtualAssetRepository.save(buyerOwnedVirtualAsset);
+
+        OwnedVirtualAsset sellerOwnedVirtualAsset = getOwnedVirtualAsset(
+                trade.getSellOrder().getSeller(),
+                trade.getVirtualAsset()
+        );
+
+        sellerOwnedVirtualAsset.setAmount(sellerOwnedVirtualAsset.getAmount().subtract(trade.getQuantity()));
+        ownedVirtualAssetRepository.save(buyerOwnedVirtualAsset);
+    }
+
+    private OwnedVirtualAsset getOwnedVirtualAsset(User user, VirtualAsset virtualAsset) {
+        return ownedVirtualAssetRepository.findByUser_IdAndVirtualAsset_Id(user.getId(), virtualAsset.getId())
+                .orElseGet(() -> OwnedVirtualAsset.builder()
+                        .user(user)
+                        .virtualAsset(virtualAsset)
+                        .amount(BigDecimal.ZERO)
+                        .build()
+                );
     }
 }
