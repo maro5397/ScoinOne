@@ -1,87 +1,84 @@
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  Typography,
-  Box,
-  Container,
-} from "@mui/material";
-
-const Announcement = [
+const posts = [
   {
-    name: "Remy Sharp",
-    occupation: "Senior Engineer",
-    testimonial:
-      "I absolutely love how versatile this product is! Whether I'm tackling work projects or indulging in my favorite hobbies, it seamlessly adapts to my changing needs. Its intuitive design has truly enhanced my daily routine, making tasks more efficient and enjoyable.",
+    id: 1,
+    title: "Boost your conversion rate",
+    href: "#",
+    description:
+      "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
+    date: "Mar 16, 2020",
+    datetime: "2020-03-16",
+    category: { title: "Marketing", href: "#" },
+    author: {
+      name: "Michael Foster",
+      role: "Co-Founder / CTO",
+      href: "#",
+      imageUrl:
+        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    },
   },
-  {
-    name: "Travis Howard",
-    occupation: "Lead Product Designer",
-    testimonial:
-      "One of the standout features of this product is the exceptional customer support. In my experience, the team behind this product has been quick to respond and incredibly helpful. It's reassuring to know that they stand firmly behind their product.",
-  },
-  {
-    name: "Cindy Baker",
-    occupation: "CTO",
-    testimonial:
-      "The level of simplicity and user-friendliness in this product has significantly simplified my life. I appreciate the creators for delivering a solution that not only meets but exceeds user expectations.",
-  },
+  // More posts...
 ];
 
 export default function Announce() {
   return (
-    <Container
-      id="Announce"
-      sx={(theme) => ({
-        pt: 3,
-        pb: 3,
-        position: "relative",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: { xs: 3, sm: 6 },
-        boxShadow:
-          theme.palette.mode === "light"
-            ? `0 0 1px rgba(85, 166, 246, 0.1), 1px 1.5px 2px -1px rgba(85, 166, 246, 0.15), 4px 4px 12px -2.5px rgba(85, 166, 246, 0.15)`
-            : "0 0 1px rgba(2, 31, 59, 0.7), 1px 1.5px 2px -1px rgba(2, 31, 59, 0.65), 4px 4px 12px -2.5px rgba(2, 31, 59, 0.65)",
-      })}
-    >
-      <Typography
-        component="h2"
-        variant="h4"
-        color="text.primary"
-        sx={{
-          width: { sm: "100%", md: "60%" },
-          textAlign: { sm: "left", md: "center" },
-        }}
-      >
-        공지사항
-      </Typography>
-      <Box sx={{ width: "100%" }}>
-        {Announcement.map((testimonial, index) => (
-          <Box key={index} sx={{ width: "100%" }}>
-            <Card
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                flexGrow: 1,
-              }}
+    <div className="bg-[#f9fafb] py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl lg:mx-0">
+          <h2 className="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+            공지사항
+          </h2>
+          <p className="mt-2 text-lg/8 text-gray-600">
+            이벤트 소식과 코인 거래 관련 공지를 전달합니다.
+          </p>
+        </div>
+        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+          {posts.map((post) => (
+            <article
+              key={post.id}
+              className="flex max-w-xl flex-col items-start justify-between"
             >
-              <CardHeader
-                title={testimonial.name}
-                subheader={testimonial.occupation}
-                sx={{ paddingBottom: 1 }}
-              />
-              <CardContent sx={{ paddingTop: 0 }}>
-                <Typography variant="body2" color="text.secondary">
-                  {testimonial.testimonial}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Box>
-        ))}
-      </Box>
-    </Container>
+              <div className="flex items-center gap-x-4 text-xs">
+                <time dateTime={post.datetime} className="text-gray-500">
+                  {post.date}
+                </time>
+                <a
+                  href={post.category.href}
+                  className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+                >
+                  {post.category.title}
+                </a>
+              </div>
+              <div className="group relative">
+                <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
+                  <a href={post.href}>
+                    <span className="absolute inset-0" />
+                    {post.title}
+                  </a>
+                </h3>
+                <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600">
+                  {post.description}
+                </p>
+              </div>
+              <div className="relative mt-8 flex items-center gap-x-4">
+                <img
+                  alt=""
+                  src={post.author.imageUrl}
+                  className="size-10 rounded-full bg-gray-50"
+                />
+                <div className="text-sm/6">
+                  <p className="font-semibold text-gray-900">
+                    <a href={post.author.href}>
+                      <span className="absolute inset-0" />
+                      {post.author.name}
+                    </a>
+                  </p>
+                  <p className="text-gray-600">{post.author.role}</p>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
