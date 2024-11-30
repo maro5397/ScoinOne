@@ -57,9 +57,10 @@ public class BuyOrderController {
 
     @DeleteMapping("/{orderId}")
     public ResponseEntity<DeleteResponseDto> deleteBuyOrder(
-            @PathVariable("orderId") Long orderId
+            @PathVariable("orderId") Long orderId,
+            @LoginUser User user
     ) {
-        String result = buyOrderService.deleteBuyOrder(orderId);
+        String result = buyOrderService.deleteBuyOrder(orderId, user.getId());
         DeleteResponseDto deleteResponseDto = new DeleteResponseDto(result);
         return new ResponseEntity<>(deleteResponseDto, HttpStatus.OK);
     }
