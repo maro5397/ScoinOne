@@ -45,8 +45,11 @@ public class BuyOrderServiceImpl implements BuyOrderService {
     }
 
     @Override
-    public String deleteBuyOrder(Long id) {
-        buyOrderRepository.deleteById(id);
+    public String deleteBuyOrder(Long id, Long userId) {
+        Long count = buyOrderRepository.deleteByIdAndBuyer_Id(id, userId);
+        if (count == 0) {
+            throw new EntityNotFoundException("BuyOrder not found or you are not authorized to delete this BuyOrder");
+        }
         return "BuyOrder deleted successfully";
     }
 }
