@@ -72,7 +72,11 @@ class BuyOrderServiceImplTest {
     @DisplayName("구매 주문 삭제 테스트")
     public void testDeleteBuyOrder() {
         Long buyOrderId = 1L;
-        buyOrderService.deleteBuyOrder(buyOrderId);
-        verify(buyOrderRepository).deleteById(buyOrderId);
+        Long buyerId = 1L;
+
+        when(buyOrderRepository.deleteByIdAndBuyer_Id(buyOrderId, buyerId)).thenReturn(1L);
+
+        buyOrderService.deleteBuyOrder(buyOrderId, buyerId);
+        verify(buyOrderRepository).deleteByIdAndBuyer_Id(buyOrderId, buyerId);
     }
 }
