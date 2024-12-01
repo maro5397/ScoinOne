@@ -1,6 +1,15 @@
 package com.scoinone.core.common.type;
 
+import lombok.Getter;
+
+@Getter
 public enum PostType {
-    QNA,        // 질의사항
-    ANNOUNCEMENT       // 공지사항
+    QNA("QUESTION"),
+    ANNOUNCEMENT("ANNOUNCEMENT");
+
+    private final String value;
+
+    PostType(String value) {
+        this.value = value;
+    }
 }
