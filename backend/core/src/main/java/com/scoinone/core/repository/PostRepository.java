@@ -1,7 +1,9 @@
 package com.scoinone.core.repository;
 
 import com.scoinone.core.common.PostType;
+import com.scoinone.core.entity.Comment;
 import com.scoinone.core.entity.Post;
+import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +15,6 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByUser_IdAndPostType(Long userId, PostType postType);
     Page<Post> findByPostType(Pageable pageable, PostType postType);
+    Optional<Post> findByIdAndUser_Id(Long id, Long userId);
+    Long deleteByIdAndUser_Id(Long id, Long userId);
 }
