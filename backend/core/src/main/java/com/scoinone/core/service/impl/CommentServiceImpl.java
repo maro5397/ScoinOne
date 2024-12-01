@@ -11,9 +11,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CommentServiceImpl implements CommentService {
 
     private final PostRepository postRepository;
@@ -43,15 +45,21 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment updateComment(Long id, String newContent) {
-        Comment existedComment = getCommentById(id);
+    public Comment updateComment(Long id, Long userId, String newContent) {
+        Comment existedComment = commentRepository.findByIdAndUser_Id(id, userId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Comment not found with id: " + id + ", userId: " + userId
+                ));
         existedComment.setContent(newContent);
         return existedComment;
     }
 
     @Override
-    public String deleteComment(Long id) {
-        commentRepository.deleteById(id);
+    public String deleteComment(Long id, Long userId) {
+        Long count = commentRepository.deleteByIdAndUser_Id(id, userId);
+        if (count == 0) {
+            throw new EntityNotFoundException("Comment not found or you are not authorized to delete this Comment");
+        }
         return "Comment deleted successfully";
     }
 }

@@ -14,7 +14,7 @@ public interface CommentService {
 
     Comment createComment(Long PostId, String content, User user);
 
-    Comment updateComment(Long id, String newContent);
+    Comment updateComment(Long id, Long userId, String newContent);
 
-    String deleteComment(Long id);
+    String deleteComment(Long id, Long userId);
 }
