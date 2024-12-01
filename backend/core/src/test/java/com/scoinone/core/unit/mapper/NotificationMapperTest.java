@@ -62,7 +62,7 @@ class NotificationMapperTest {
     @Test
     @DisplayName("알람 엔티티 객체를 리스트를 통해 조회용 응답 DTO로 매핑")
     public void testListToGetNotificationListResponseDto() {
-        GetNotificationsResponseDto responseDto = notificationMapper.listToGetNotificationListResponseDto(
+        GetNotificationsResponseDto responseDto = notificationMapper.listToGetNotificationsResponseDto(
                 notifications
         );
 

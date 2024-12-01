@@ -28,7 +28,7 @@ public interface NotificationMapper {
 
     List<GetNotificationResponseDto> notificationsToGetNotificationsResponseDto(List<Notification> notifications);
 
-    default GetNotificationsResponseDto listToGetNotificationListResponseDto(List<Notification> notifications) {
+    default GetNotificationsResponseDto listToGetNotificationsResponseDto(List<Notification> notifications) {
         GetNotificationsResponseDto responseDto = new GetNotificationsResponseDto();
         responseDto.setNotifications(notificationsToGetNotificationsResponseDto(notifications));
         return responseDto;

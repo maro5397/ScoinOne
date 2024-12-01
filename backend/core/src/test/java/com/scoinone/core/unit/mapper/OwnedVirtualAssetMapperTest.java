@@ -1,7 +1,6 @@
 package com.scoinone.core.unit.mapper;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.scoinone.core.dto.response.user.GetOwnedAssetsResponseDto;
 import com.scoinone.core.dto.response.user.GetOwnedAssetResponseDto;
@@ -48,11 +47,13 @@ class OwnedVirtualAssetMapperTest {
     @Test
     @DisplayName("보유 가상자산 엔티티 객체를 리스트 조회용 응답 DTO로 매핑")
     public void testListToGetOwnedAssetListResponseDto() {
-        GetOwnedAssetsResponseDto responseDto = mapper.listToGetOwnedAssetListResponseDto(ownedVirtualAssets);
+        GetOwnedAssetsResponseDto responseDto = mapper.listToGetOwnedAssetsResponseDto(ownedVirtualAssets);
 
-        assertEquals(2, responseDto.getOwnedAssets().size());
-        assertEquals(1L, responseDto.getOwnedAssets().get(0).getOwnedVirtualAssetId());
-        assertEquals(4L, responseDto.getOwnedAssets().get(1).getOwnedVirtualAssetId());
+        assertSoftly(softly -> {
+            softly.assertThat(responseDto.getOwnedAssets().size()).isEqualTo(ownedVirtualAssets.size());
+            softly.assertThat(responseDto.getOwnedAssets().get(0).getOwnedVirtualAssetId()).isEqualTo(1L);
+            softly.assertThat(responseDto.getOwnedAssets().get(1).getOwnedVirtualAssetId()).isEqualTo(4L);
+        });
     }
 
     private OwnedVirtualAsset createOwnedVirtualAsset(Long id, Long userId, Long virtualAssetId) {

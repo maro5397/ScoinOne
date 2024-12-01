@@ -1,6 +1,7 @@
 package com.scoinone.core;
 
 import com.scoinone.core.config.TestContainerConfig;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -12,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 class CoreApplicationTests {
 
 	@Test
+	@DisplayName("애플리케이션 컨텍스트 로딩 테스트 (실행 테스트)")
 	void contextLoads() {
 	}
 

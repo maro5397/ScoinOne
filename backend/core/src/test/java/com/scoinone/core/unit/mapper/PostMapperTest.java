@@ -2,7 +2,7 @@ package com.scoinone.core.unit.mapper;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import com.scoinone.core.common.PostType;
+import com.scoinone.core.common.type.PostType;
 import com.scoinone.core.dto.response.post.CreatePostResponseDto;
 import com.scoinone.core.dto.response.post.GetPostsResponseDto;
 import com.scoinone.core.dto.response.post.GetPostResponseDto;
@@ -93,7 +93,7 @@ class PostMapperTest {
     public void testPageToGetPostListResponseDto() {
         Page<Post> page = new PageImpl<>(posts, PageRequest.of(0, 10), 1);
 
-        GetPostsResponseDto responseDto = mapper.pageToGetPostListResponseDto(page);
+        GetPostsResponseDto responseDto = mapper.pageToGetPostsResponseDto(page);
 
         assertSoftly(softly -> {
             softly.assertThat(responseDto).isNotNull();
@@ -108,7 +108,7 @@ class PostMapperTest {
     @Test
     @DisplayName("게시글 리스트 엔티티 객체들을 조회용 응답 DTO로 매핑")
     public void testListToGetPostListResponseDto() {
-        GetPostsResponseDto responseDto = mapper.listToGetPostListResponseDto(posts);
+        GetPostsResponseDto responseDto = mapper.listToGetPostsResponseDto(posts);
 
         assertSoftly(softly -> {
             softly.assertThat(responseDto).isNotNull();

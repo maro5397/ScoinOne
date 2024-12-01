@@ -2,7 +2,7 @@ package com.scoinone.core.integration.controller;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import com.scoinone.core.common.PostType;
+import com.scoinone.core.common.type.PostType;
 import com.scoinone.core.config.TestContainerConfig;
 import com.scoinone.core.dto.common.DeleteResponseDto;
 import com.scoinone.core.dto.request.user.CreateUserRequestDto;
@@ -30,7 +30,7 @@ import com.scoinone.core.service.PostService;
 import com.scoinone.core.service.SellOrderService;
 import com.scoinone.core.service.UserService;
 import com.scoinone.core.service.VirtualAssetService;
-import com.scoinone.core.util.UserDataInitializer;
+import com.scoinone.core.config.UserDataInitializer;
 import java.math.BigDecimal;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
@@ -118,7 +118,7 @@ class UserControllerTest {
         );
 
         assertSoftly(softly -> {
-            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
             softly.assertThat(Objects.requireNonNull(response.getBody()).getEmail()).isEqualTo("newUser@example.com");
             softly.assertThat(response.getBody().getUsername()).isEqualTo("newUser");
         });

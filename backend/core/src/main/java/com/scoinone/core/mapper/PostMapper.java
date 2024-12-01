@@ -1,7 +1,10 @@
 package com.scoinone.core.mapper;
 
 import com.scoinone.core.dto.common.PageInfoDto;
-import com.scoinone.core.dto.response.post.*;
+import com.scoinone.core.dto.response.post.CreatePostResponseDto;
+import com.scoinone.core.dto.response.post.GetPostResponseDto;
+import com.scoinone.core.dto.response.post.GetPostsResponseDto;
+import com.scoinone.core.dto.response.post.UpdatePostResponseDto;
 import com.scoinone.core.entity.Post;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -43,7 +46,7 @@ public interface PostMapper {
 
     List<GetPostResponseDto> postsToGetPostsResponseDto(List<Post> posts);
 
-    default GetPostsResponseDto pageToGetPostListResponseDto(Page<Post> page) {
+    default GetPostsResponseDto pageToGetPostsResponseDto(Page<Post> page) {
         GetPostsResponseDto responseDto = new GetPostsResponseDto();
         responseDto.setPosts(postsToGetPostsResponseDto(page.getContent()));
         responseDto.setPageInfo(PageInfoDto.builder()
@@ -54,7 +57,7 @@ public interface PostMapper {
         return responseDto;
     }
 
-    default GetPostsResponseDto listToGetPostListResponseDto(List<Post> posts) {
+    default GetPostsResponseDto listToGetPostsResponseDto(List<Post> posts) {
         GetPostsResponseDto responseDto = new GetPostsResponseDto();
         responseDto.setPosts(postsToGetPostsResponseDto(posts));
         return responseDto;

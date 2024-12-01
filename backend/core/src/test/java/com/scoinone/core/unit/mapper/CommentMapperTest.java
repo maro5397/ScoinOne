@@ -81,7 +81,7 @@ class CommentMapperTest {
         Comment comment = comments.getFirst();
         Page<Comment> page = new PageImpl<>(Collections.singletonList(comment), Pageable.ofSize(1), 1);
 
-        GetCommentsResponseDto responseDto = commentMapper.pageToGetCommentListResponseDto(page);
+        GetCommentsResponseDto responseDto = commentMapper.pageToGetCommentsResponseDto(page);
 
         assertSoftly(softly -> {
             softly.assertThat(responseDto.getComments().size()).isEqualTo(1);

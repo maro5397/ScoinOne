@@ -2,7 +2,7 @@ package com.scoinone.core.integration.controller;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import com.scoinone.core.common.PostType;
+import com.scoinone.core.common.type.PostType;
 import com.scoinone.core.config.TestContainerConfig;
 import com.scoinone.core.dto.common.DeleteResponseDto;
 import com.scoinone.core.dto.request.post.CreatePostRequestDto;
@@ -17,7 +17,7 @@ import com.scoinone.core.repository.PostRepository;
 import com.scoinone.core.service.AuthService;
 import com.scoinone.core.service.PostService;
 import com.scoinone.core.service.UserService;
-import com.scoinone.core.util.UserDataInitializer;
+import com.scoinone.core.config.UserDataInitializer;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -94,7 +94,7 @@ class PostControllerTest {
         ResponseEntity<GetPostResponseDto> response = restTemplate.exchange(
                 "/api/post/" + PostType.QNA + "/" + savedPost.getId(),
                 HttpMethod.GET,
-                new HttpEntity<>(headers),
+                null,
                 GetPostResponseDto.class
         );
 
@@ -157,7 +157,7 @@ class PostControllerTest {
         ResponseEntity<GetPostsResponseDto> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
-                new HttpEntity<>(headers),
+                null,
                 GetPostsResponseDto.class
         );
 

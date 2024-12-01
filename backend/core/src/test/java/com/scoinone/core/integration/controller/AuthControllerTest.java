@@ -5,7 +5,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import com.scoinone.core.config.TestContainerConfig;
 import com.scoinone.core.dto.request.auth.LoginRequestDto;
 import com.scoinone.core.dto.response.auth.LoginResponseDto;
-import com.scoinone.core.util.UserDataInitializer;
+import com.scoinone.core.config.UserDataInitializer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

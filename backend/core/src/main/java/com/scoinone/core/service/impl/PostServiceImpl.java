@@ -1,6 +1,6 @@
 package com.scoinone.core.service.impl;
 
-import com.scoinone.core.common.PostType;
+import com.scoinone.core.common.type.PostType;
 import com.scoinone.core.entity.Post;
 import com.scoinone.core.entity.User;
 import com.scoinone.core.repository.PostRepository;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class PostServiceImpl implements PostService {
-    
+
     private final PostRepository postRepository;
 
     @Override
@@ -44,10 +44,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post updatePost(Long id, Long userId, String title, String content) {
-        Post existedPost = postRepository.findByIdAndUser_Id(id, userId)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Post not found with id: " + id + ", userId: " + userId
-                ));
+        Post existedPost = postRepository.findByIdAndUser_Id(id, userId).orElseThrow(
+                () -> new EntityNotFoundException("Post not found with id: " + id + ", userId: " + userId));
         existedPost.setTitle(title);
         existedPost.setContent(content);
         return existedPost;

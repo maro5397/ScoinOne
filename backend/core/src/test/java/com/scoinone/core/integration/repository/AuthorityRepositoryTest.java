@@ -7,6 +7,7 @@ import com.scoinone.core.entity.Authority;
 import com.scoinone.core.repository.AuthorityRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -31,6 +32,7 @@ class AuthorityRepositoryTest {
     }
 
     @Test
+    @DisplayName("권한 이름 조회")
     public void testFindByAuthorityName() {
         Optional<Authority> foundAuthority = authorityRepository.findByAuthorityName("ROLE_USER");
         assertSoftly((softly) -> {
@@ -42,6 +44,7 @@ class AuthorityRepositoryTest {
     }
 
     @Test
+    @DisplayName("없는 권한 이름 조회")
     public void testFindByAuthorityName_NotFound() {
         Optional<Authority> foundAuthority = authorityRepository.findByAuthorityName("ROLE_NON_EXISTENT");
         assertSoftly((softly) -> {

@@ -1,7 +1,6 @@
 package com.scoinone.core.repository;
 
-import com.scoinone.core.common.PostType;
-import com.scoinone.core.entity.Comment;
+import com.scoinone.core.common.type.PostType;
 import com.scoinone.core.entity.Post;
 import java.util.Optional;
 import org.springframework.data.domain.Page;

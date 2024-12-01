@@ -1,6 +1,6 @@
 package com.scoinone.core.service;
 
-import com.scoinone.core.common.PostType;
+import com.scoinone.core.common.type.PostType;
 import com.scoinone.core.entity.Post;
 import com.scoinone.core.entity.User;
 import org.springframework.data.domain.Page;

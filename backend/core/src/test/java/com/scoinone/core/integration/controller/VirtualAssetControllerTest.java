@@ -14,7 +14,7 @@ import com.scoinone.core.entity.VirtualAsset;
 import com.scoinone.core.repository.VirtualAssetRepository;
 import com.scoinone.core.service.AuthService;
 import com.scoinone.core.service.VirtualAssetService;
-import com.scoinone.core.util.UserDataInitializer;
+import com.scoinone.core.config.UserDataInitializer;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -89,7 +89,7 @@ class VirtualAssetControllerTest {
         ResponseEntity<GetVirtualAssetsResponseDto> response = restTemplate.exchange(
                 "/api/assets",
                 HttpMethod.GET,
-                new HttpEntity<>(headers),
+                null,
                 GetVirtualAssetsResponseDto.class
         );
 
@@ -105,7 +105,7 @@ class VirtualAssetControllerTest {
         ResponseEntity<GetVirtualAssetResponseDto> response = restTemplate.exchange(
                 "/api/assets/" + savedVirtualAsset.getId(),
                 HttpMethod.GET,
-                new HttpEntity<>(headers),
+                null,
                 GetVirtualAssetResponseDto.class
         );
 

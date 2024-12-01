@@ -16,8 +16,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,20 +25,24 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class JwtTokenProvider implements InitializingBean {
+    private static final String JWT_SECRET = "${jwt.secret}";
+    private static final String JWT_TOKEN_VALIDITY_IN_SECONDS = "${jwt.token-validity-in-seconds}";
+    private static final String AUTHORITIES_DELIMITER = ",";
+    private static final String AUTHORITIES_KEY = "authorities";
+    private static final String ID_KEY = "id";
 
     private final UserRepository userRepository;
-
-    private final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
-    private final String AUTHORITIES_KEY = "authorities";
     private final String secret;
     private final long tokenValidityInMilliseconds;
     private Key key;
 
     public JwtTokenProvider(
-            UserRepository userRepository, @Value("${jwt.secret}") String secret,
-            @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds
+            UserRepository userRepository,
+            @Value(JWT_SECRET) String secret,
+            @Value(JWT_TOKEN_VALIDITY_IN_SECONDS) long tokenValidityInSeconds
     ) {
         this.userRepository = userRepository;
         this.secret = secret;
@@ -58,15 +61,14 @@ public class JwtTokenProvider implements InitializingBean {
     public String createToken(Authentication authentication, Long userId, String username) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
+                .collect(Collectors.joining(AUTHORITIES_DELIMITER));
 
         long now = (new Date()).getTime();
         Date validity = new Date(now + this.tokenValidityInMilliseconds);
 
         return Jwts.builder()
                 .setSubject(authentication.getName())
-                .claim("id", userId.toString())
-                .claim("username", username)
+                .claim(ID_KEY, userId.toString())
                 .claim(AUTHORITIES_KEY, authorities)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setExpiration(validity)
@@ -82,11 +84,11 @@ public class JwtTokenProvider implements InitializingBean {
                 .getBody();
 
         Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(AUTHORITIES_DELIMITER))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        Long userId = Long.parseLong(claims.get("id").toString());
+        Long userId = Long.parseLong(claims.get(ID_KEY).toString());
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with userId: " + userId));
 
@@ -98,13 +100,13 @@ public class JwtTokenProvider implements InitializingBean {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            logger.info("잘못된 JWT 서명입니다.");
+            log.info("잘못된 JWT 서명입니다.");
         } catch (ExpiredJwtException e) {
-            logger.info("만료된 JWT 토큰입니다.");
+            log.info("만료된 JWT 토큰입니다.");
         } catch (UnsupportedJwtException e) {
-            logger.info("지원되지 않는 JWT 토큰입니다.");
+            log.info("지원되지 않는 JWT 토큰입니다.");
         } catch (IllegalArgumentException e) {
-            logger.info("JWT 토큰이 잘못되었습니다.");
+            log.info("JWT 토큰이 잘못되었습니다.");
         }
         return false;
     }

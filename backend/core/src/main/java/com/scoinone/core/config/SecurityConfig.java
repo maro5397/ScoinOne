@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -56,6 +56,15 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers(HttpMethod.GET,
+                                "/",
+                                "/api/comment/*",
+                                "/api/post/*",
+                                "/api/post/*/*",
+                                "/api/assets",
+                                "/api/assets/*"
+                        )
+                        .permitAll()
                         .requestMatchers(
                                 "/api/user/signup",
                                 "/api/auth/signin"
@@ -64,7 +73,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .logout((logout) -> logout
-                        .logoutUrl("/api/user/logout")
+                        .logoutUrl("/api/auth/logout")
                         .logoutSuccessUrl("/")
                 )
                 .sessionManagement((sessionManagement) -> {

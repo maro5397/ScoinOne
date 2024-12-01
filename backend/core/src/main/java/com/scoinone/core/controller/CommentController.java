@@ -1,6 +1,6 @@
 package com.scoinone.core.controller;
 
-import com.scoinone.core.auth.LoginUser;
+import com.scoinone.core.common.annotation.LoginUser;
 import com.scoinone.core.dto.common.DeleteResponseDto;
 import com.scoinone.core.dto.request.comment.CreateCommentRequestDto;
 import com.scoinone.core.dto.request.comment.UpdateCommentRequestDto;
@@ -51,7 +51,7 @@ public class CommentController {
     ) {
         Page<Comment> commentsByPostId = commentService.getCommentsByPostId(pageable, postId);
         return new ResponseEntity<>(
-                CommentMapper.INSTANCE.pageToGetCommentListResponseDto(commentsByPostId),
+                CommentMapper.INSTANCE.pageToGetCommentsResponseDto(commentsByPostId),
                 HttpStatus.OK
         );
     }

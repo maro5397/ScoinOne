@@ -22,7 +22,7 @@ public interface OwnedVirtualAssetMapper {
 
     List<GetOwnedAssetResponseDto> ownedVirtualAssetsToGetOwnedAssetsResponseDto(List<OwnedVirtualAsset> ownedVirtualAssets);
 
-    default GetOwnedAssetsResponseDto listToGetOwnedAssetListResponseDto(List<OwnedVirtualAsset> ownedVirtualAssets) {
+    default GetOwnedAssetsResponseDto listToGetOwnedAssetsResponseDto(List<OwnedVirtualAsset> ownedVirtualAssets) {
         GetOwnedAssetsResponseDto responseDto = new GetOwnedAssetsResponseDto();
         responseDto.setOwnedAssets(ownedVirtualAssetsToGetOwnedAssetsResponseDto(ownedVirtualAssets));
         return responseDto;

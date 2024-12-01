@@ -1,6 +1,6 @@
 package com.scoinone.core.service.impl;
 
-import com.scoinone.core.common.OrderStatus;
+import com.scoinone.core.common.status.OrderStatus;
 import com.scoinone.core.entity.SellOrder;
 import com.scoinone.core.entity.User;
 import com.scoinone.core.entity.VirtualAsset;
