@@ -51,7 +51,7 @@ class TradeMapperTest {
     @Test
     @DisplayName("다수의 거래 엔티티 객체들을 조회용 응답 DTO로 매핑")
     public void testListToGetTradeListResponseDto() {
-        GetTradesResponseDto responseDto = mapper.listToGetTradeListResponseDto(trades);
+        GetTradesResponseDto responseDto = mapper.listToGetTradesResponseDto(trades);
 
         assertSoftly(softly -> {
             softly.assertThat(responseDto).isNotNull();

@@ -77,7 +77,7 @@ class VirtualAssetMapperTest {
     @Test
     @DisplayName("다수의 가상자산 엔티티 객체들을 조회용 응답 DTO로 매핑")
     public void testListToGetVirtualAssetListResponseDto() {
-        GetVirtualAssetsResponseDto responseDto = mapper.listToGetVirtualAssetListResponseDto(virtualAssets);
+        GetVirtualAssetsResponseDto responseDto = mapper.listToGetVirtualAssetsResponseDto(virtualAssets);
         assertSoftly(softly -> {
             softly.assertThat(responseDto).isNotNull();
             softly.assertThat(responseDto.getVirtualAssets()).hasSize(3);

@@ -1,6 +1,6 @@
 package com.scoinone.core.repository;
 
-import com.scoinone.core.common.OrderStatus;
+import com.scoinone.core.common.status.OrderStatus;
 import com.scoinone.core.entity.BuyOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

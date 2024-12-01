@@ -1,6 +1,5 @@
 package com.scoinone.core.controller;
 
-import com.scoinone.core.auth.JwtFilter;
 import com.scoinone.core.dto.request.auth.LoginRequestDto;
 import com.scoinone.core.dto.response.auth.LoginResponseDto;
 import com.scoinone.core.service.AuthService;
@@ -25,7 +24,7 @@ public class AuthController {
         String jwt = authService.authenticate(requestDto.getEmail(), requestDto.getPassword());
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        httpHeaders.setBearerAuth(jwt);
         LoginResponseDto loginResponseDto = new LoginResponseDto();
         loginResponseDto.setToken(jwt);
 

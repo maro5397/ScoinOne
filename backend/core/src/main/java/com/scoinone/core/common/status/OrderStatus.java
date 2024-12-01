@@ -1,4 +1,4 @@
-package com.scoinone.core.common;
+package com.scoinone.core.common.status;
 
 import lombok.Getter;
 

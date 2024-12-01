@@ -12,7 +12,7 @@ import com.scoinone.core.repository.NotificationRepository;
 import com.scoinone.core.service.AuthService;
 import com.scoinone.core.service.NotificationService;
 import com.scoinone.core.service.UserService;
-import com.scoinone.core.util.UserDataInitializer;
+import com.scoinone.core.config.UserDataInitializer;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

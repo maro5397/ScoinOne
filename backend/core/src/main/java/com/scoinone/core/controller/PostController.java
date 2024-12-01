@@ -1,7 +1,7 @@
 package com.scoinone.core.controller;
 
-import com.scoinone.core.auth.LoginUser;
-import com.scoinone.core.common.PostType;
+import com.scoinone.core.common.annotation.LoginUser;
+import com.scoinone.core.common.type.PostType;
 import com.scoinone.core.dto.common.DeleteResponseDto;
 import com.scoinone.core.dto.request.post.CreatePostRequestDto;
 import com.scoinone.core.dto.request.post.UpdatePostRequestDto;
@@ -50,7 +50,7 @@ public class PostController {
             Pageable pageable
     ) {
         Page<Post> posts = postService.getPosts(pageable, postType);
-        return new ResponseEntity<>(PostMapper.INSTANCE.pageToGetPostListResponseDto(posts), HttpStatus.OK);
+        return new ResponseEntity<>(PostMapper.INSTANCE.pageToGetPostsResponseDto(posts), HttpStatus.OK);
     }
 
     @GetMapping("/{postType}/{postId}")
@@ -81,6 +81,6 @@ public class PostController {
     ) {
         String result = postService.deletePost(postId, user.getId());
         DeleteResponseDto response = new DeleteResponseDto(result);
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

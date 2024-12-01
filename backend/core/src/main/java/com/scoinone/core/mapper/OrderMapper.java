@@ -1,6 +1,11 @@
 package com.scoinone.core.mapper;
 
-import com.scoinone.core.dto.response.order.*;
+import com.scoinone.core.dto.response.order.CreateBuyOrderResponseDto;
+import com.scoinone.core.dto.response.order.CreateSellOrderResponseDto;
+import com.scoinone.core.dto.response.order.GetBuyOrderResponseDto;
+import com.scoinone.core.dto.response.order.GetBuyOrdersResponseDto;
+import com.scoinone.core.dto.response.order.GetSellOrderResponseDto;
+import com.scoinone.core.dto.response.order.GetSellOrdersResponseDto;
 import com.scoinone.core.entity.BuyOrder;
 import com.scoinone.core.entity.SellOrder;
 import org.mapstruct.Mapper;
@@ -51,7 +56,7 @@ public interface OrderMapper {
 
     List<GetBuyOrderResponseDto> buyOrdersToGetBuyOrdersResponseDto(List<BuyOrder> buyOrders);
 
-    default GetBuyOrdersResponseDto listToGetBuyOrderListResponseDto(List<BuyOrder> buyOrders) {
+    default GetBuyOrdersResponseDto listToGetBuyOrdersResponseDto(List<BuyOrder> buyOrders) {
         GetBuyOrdersResponseDto responseDto = new GetBuyOrdersResponseDto();
         responseDto.setBuyOrders(buyOrdersToGetBuyOrdersResponseDto(buyOrders));
         return responseDto;
@@ -59,7 +64,7 @@ public interface OrderMapper {
 
     List<GetSellOrderResponseDto> sellOrdersToGetSellOrdersResponseDto(List<SellOrder> sellOrders);
 
-    default GetSellOrdersResponseDto listToGetSellOrderListResponseDto(List<SellOrder> sellOrders) {
+    default GetSellOrdersResponseDto listToGetSellOrdersResponseDto(List<SellOrder> sellOrders) {
         GetSellOrdersResponseDto responseDto = new GetSellOrdersResponseDto();
         responseDto.setSellOrders(sellOrdersToGetSellOrdersResponseDto(sellOrders));
         return responseDto;

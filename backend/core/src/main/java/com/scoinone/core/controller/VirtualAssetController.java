@@ -49,7 +49,7 @@ public class VirtualAssetController {
     public ResponseEntity<GetVirtualAssetsResponseDto> getVirtualAssets() {
         List<VirtualAsset> virtualAssets = virtualAssetService.getVirtualAssets();
         return new ResponseEntity<>(
-                VirtualAssetMapper.INSTANCE.listToGetVirtualAssetListResponseDto(virtualAssets),
+                VirtualAssetMapper.INSTANCE.listToGetVirtualAssetsResponseDto(virtualAssets),
                 HttpStatus.OK
         );
     }

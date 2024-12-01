@@ -1,6 +1,6 @@
 package com.scoinone.core.controller;
 
-import com.scoinone.core.auth.LoginUser;
+import com.scoinone.core.common.annotation.LoginUser;
 import com.scoinone.core.dto.common.DeleteResponseDto;
 import com.scoinone.core.dto.request.order.CreateSellOrderRequestDto;
 import com.scoinone.core.dto.response.order.CreateSellOrderResponseDto;
@@ -52,7 +52,7 @@ public class SellOrderController {
             @LoginUser User user
     ) {
         List<SellOrder> SellOrders = userService.getSellOrderByUserId(user.getId());
-        return new ResponseEntity<>(OrderMapper.INSTANCE.listToGetSellOrderListResponseDto(SellOrders), HttpStatus.OK);
+        return new ResponseEntity<>(OrderMapper.INSTANCE.listToGetSellOrdersResponseDto(SellOrders), HttpStatus.OK);
     }
 
     @DeleteMapping("/{orderId}")

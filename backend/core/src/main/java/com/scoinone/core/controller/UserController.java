@@ -1,6 +1,6 @@
 package com.scoinone.core.controller;
 
-import com.scoinone.core.auth.LoginUser;
+import com.scoinone.core.common.annotation.LoginUser;
 import com.scoinone.core.dto.common.DeleteResponseDto;
 import com.scoinone.core.dto.request.user.CreateUserRequestDto;
 import com.scoinone.core.dto.request.user.UpdateUserRequestDto;
@@ -44,12 +44,12 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<CreateUserResponseDto> createUser(@Valid @RequestBody CreateUserRequestDto requestDto) {
         User user = userService.createUser(requestDto.getEmail(), requestDto.getPassword(), requestDto.getUsername());
-        return ResponseEntity.ok(UserMapper.INSTANCE.userToCreateUserResponseDto(user));
+        return new ResponseEntity<>(UserMapper.INSTANCE.userToCreateUserResponseDto(user), HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<GetUserResponseDto> getUser(@Valid @LoginUser User user) {
-        return ResponseEntity.ok(UserMapper.INSTANCE.userToGetUserResponseDto(user));
+        return new ResponseEntity<>(UserMapper.INSTANCE.userToGetUserResponseDto(user), HttpStatus.OK);
     }
 
     @PatchMapping
@@ -58,14 +58,14 @@ public class UserController {
             @Valid @LoginUser User user
     ) {
         User updatedUser = userService.updateUser(user.getId(), requestDto.getUsername());
-        return ResponseEntity.ok(UserMapper.INSTANCE.userToUpdateUserResponseDto(updatedUser));
+        return new ResponseEntity<>(UserMapper.INSTANCE.userToUpdateUserResponseDto(updatedUser), HttpStatus.OK);
     }
 
     @DeleteMapping
     public ResponseEntity<DeleteResponseDto> deleteUser(@Valid @LoginUser User user) {
         String result = userService.deleteUser(user.getId());
         DeleteResponseDto response = new DeleteResponseDto(result);
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/notification")
@@ -74,7 +74,7 @@ public class UserController {
                 user.getId()
         );
         return new ResponseEntity<>(
-                NotificationMapper.INSTANCE.listToGetNotificationListResponseDto(notificationsFromLast30Days),
+                NotificationMapper.INSTANCE.listToGetNotificationsResponseDto(notificationsFromLast30Days),
                 HttpStatus.OK
         );
     }
@@ -83,7 +83,7 @@ public class UserController {
     public ResponseEntity<GetTradesResponseDto> getTrades(@Valid @LoginUser User user) {
         List<Trade> tradeByUserId = userService.getTradeByUserId(user.getId());
         return new ResponseEntity<>(
-                TradeMapper.INSTANCE.listToGetTradeListResponseDto(tradeByUserId),
+                TradeMapper.INSTANCE.listToGetTradesResponseDto(tradeByUserId),
                 HttpStatus.OK
         );
     }
@@ -92,7 +92,7 @@ public class UserController {
     public ResponseEntity<GetPostsResponseDto> getQuestionPosts(@Valid @LoginUser User user) {
         List<Post> questionsByUserId = userService.getQuestionsByUserId(user.getId());
         return new ResponseEntity<>(
-                PostMapper.INSTANCE.listToGetPostListResponseDto(questionsByUserId),
+                PostMapper.INSTANCE.listToGetPostsResponseDto(questionsByUserId),
                 HttpStatus.OK
         );
     }
@@ -101,7 +101,7 @@ public class UserController {
     public ResponseEntity<GetOwnedAssetsResponseDto> getVirtualAssets(@Valid @LoginUser User user) {
         List<OwnedVirtualAsset> ownedVirtualAssets = userService.getOwnedVirtualAssetsByUserId(user.getId());
         return new ResponseEntity<>(
-                OwnedVirtualAssetMapper.INSTANCE.listToGetOwnedAssetListResponseDto(ownedVirtualAssets),
+                OwnedVirtualAssetMapper.INSTANCE.listToGetOwnedAssetsResponseDto(ownedVirtualAssets),
                 HttpStatus.OK
         );
     }
