@@ -64,20 +64,22 @@ public class PostController {
 
     @PatchMapping("/{postType}/{postId}")
     public ResponseEntity<UpdatePostResponseDto> updatePost(
+            @Valid @LoginUser User user,
             @PathVariable("postType") PostType postType,
             @PathVariable("postId") Long postId,
             @RequestBody UpdatePostRequestDto requestDto
     ) {
-        Post post = postService.updatePost(postId, requestDto.getTitle(), requestDto.getContent());
+        Post post = postService.updatePost(postId, user.getId(), requestDto.getTitle(), requestDto.getContent());
         return new ResponseEntity<>(PostMapper.INSTANCE.postToUpdatePostResponseDto(post), HttpStatus.OK);
     }
 
     @DeleteMapping("/{postType}/{postId}")
     public ResponseEntity<DeleteResponseDto> deletePost(
+            @Valid @LoginUser User user,
             @PathVariable("postType") PostType postType,
             @PathVariable("postId") Long postId
     ) {
-        String result = postService.deletePost(postId);
+        String result = postService.deletePost(postId, user.getId());
         DeleteResponseDto response = new DeleteResponseDto(result);
         return ResponseEntity.ok(response);
     }
