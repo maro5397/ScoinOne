@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
                 .username(username)
                 .email(email)
                 .password(passwordEncoder.encode(password))
-                .lastLogin(LocalDateTime.now())
+                .lastLogin(LocalDateTime.now(clock))
                 .build();
 
         Authority authority = authorityRepository.findByAuthorityName("ROLE_USER")
