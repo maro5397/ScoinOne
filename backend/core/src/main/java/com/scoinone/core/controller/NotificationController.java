@@ -24,7 +24,7 @@ public class NotificationController {
     private final NotificationService notificationService;
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public ResponseEntity<CreateNotificationResponseDto> createNotification(
         @RequestBody CreateNotificationRequestDto requestDto
     ) {
@@ -39,7 +39,7 @@ public class NotificationController {
     }
 
     @DeleteMapping("/{notificationId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     public ResponseEntity<DeleteResponseDto> deleteNotification(
             @PathVariable("notificationId") Long notificationId
     ) {

@@ -50,7 +50,7 @@ class NotificationControllerTest {
 
         savedNotification = notificationService.createNotification(savedUser.getEmail(), "test Notification Content");
 
-        String jwtToken = authService.authenticate("admin@example.com", "password");
+        String jwtToken = authService.authenticate("manager@example.com", "password");
 
         headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + jwtToken);
