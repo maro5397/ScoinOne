@@ -9,6 +9,7 @@ import com.scoinone.core.entity.User;
 import com.scoinone.core.repository.PostRepository;
 import com.scoinone.core.repository.UserRepository;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,6 +29,7 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("dev")
 class PostRepositoryTest {
     private User user;
+    private Post post;
 
     @Autowired
     private PostRepository postRepository;
@@ -68,6 +70,7 @@ class PostRepositoryTest {
                 .viewCount(0)
                 .build();
 
+        post = post1;
         postRepository.save(post1);
         postRepository.save(post2);
         postRepository.save(post3);
@@ -105,6 +108,30 @@ class PostRepositoryTest {
             softly.assertThat(postsPage.getTotalElements()).isEqualTo(2);
             softly.assertThat(postsPage.getContent()).hasSize(2);
             softly.assertThat(postsPage.getContent().getFirst().getTitle()).isEqualTo("First QNA Post");
+        });
+    }
+
+    @Test
+    @DisplayName("게시글 ID 및 사용자 ID로 댓글 조회")
+    void testFindByIdAndUser_Id() {
+        Optional<Post> getPost = postRepository.findByIdAndUser_Id(post.getId(), user.getId());
+
+        assertSoftly(softly -> {
+            softly.assertThat(getPost.isPresent()).isTrue();
+            getPost.ifPresent(postData -> {
+                softly.assertThat(postData.getUser().getId()).isEqualTo(user.getId());
+                softly.assertThat(postData.getId()).isEqualTo(post.getId());
+            });
+        });
+    }
+
+    @Test
+    @DisplayName("게시글 ID 및 사용자 ID로 댓글 삭제")
+    void testDeleteByIdAndUser_Id() {
+        Long count = postRepository.deleteByIdAndUser_Id(post.getId(), user.getId());
+
+        assertSoftly(softly -> {
+            softly.assertThat(count).isEqualTo(1);
         });
     }
 }
