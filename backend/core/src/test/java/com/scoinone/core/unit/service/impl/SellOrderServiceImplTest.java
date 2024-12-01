@@ -73,9 +73,11 @@ class SellOrderServiceImplTest {
     @DisplayName("판매 주문 삭제 테스트")
     public void testDeleteSellOrder() {
         Long sellOrderId = 1L;
+        Long sellerId = 1L;
 
-        sellOrderService.deleteSellOrder(sellOrderId);
+        when(sellOrderRepository.deleteByIdAndSeller_Id(sellOrderId, sellerId)).thenReturn(1L);
 
-        verify(sellOrderRepository).deleteById(sellOrderId);
+        sellOrderService.deleteSellOrder(sellOrderId, sellerId);
+        verify(sellOrderRepository).deleteByIdAndSeller_Id(sellOrderId, sellerId);
     }
 }
