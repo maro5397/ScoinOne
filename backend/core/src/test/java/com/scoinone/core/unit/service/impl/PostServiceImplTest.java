@@ -109,6 +109,7 @@ class PostServiceImplTest {
     @DisplayName("게시글 수정 테스트")
     public void testUpdatePost() {
         Long postId = 1L;
+        Long userId = 1L;
         String title = "Test Title";
         String content = "Test Content";
         Post existingPost = Post.builder()
@@ -117,15 +118,15 @@ class PostServiceImplTest {
                 .content("Old Content")
                 .build();
 
-        when(postRepository.findById(postId)).thenReturn(Optional.of(existingPost));
+        when(postRepository.findByIdAndUser_Id(postId, userId)).thenReturn(Optional.of(existingPost));
 
-        Post result = postService.updatePost(postId, title, content);
+        Post result = postService.updatePost(postId, userId, title, content);
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
             softly.assertThat(result.getTitle()).isEqualTo(title);
             softly.assertThat(result.getContent()).isEqualTo(content);
-            verify(postRepository).findById(postId);
+            verify(postRepository).findByIdAndUser_Id(postId, userId);
         });
     }
 
@@ -133,9 +134,12 @@ class PostServiceImplTest {
     @DisplayName("게시글 삭제 테스트")
     public void testDeletePost() {
         Long postId = 1L;
+        Long userId = 1L;
 
-        postService.deletePost(postId);
+        when(postRepository.deleteByIdAndUser_Id(postId, userId)).thenReturn(1L);
 
-        verify(postRepository).deleteById(postId);
+        postService.deletePost(postId, userId);
+
+        verify(postRepository).deleteByIdAndUser_Id(postId, userId);
     }
 }
