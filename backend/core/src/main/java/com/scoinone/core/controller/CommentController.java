@@ -59,17 +59,19 @@ public class CommentController {
     @PatchMapping("/{commentId}")
     public ResponseEntity<UpdateCommentResponseDto> updateComment(
             @PathVariable("commentId") Long commentId,
-            @RequestBody UpdateCommentRequestDto requestDto
+            @RequestBody UpdateCommentRequestDto requestDto,
+            @Valid @LoginUser User user
     ) {
-        Comment comment = commentService.updateComment(commentId, requestDto.getContent());
+        Comment comment = commentService.updateComment(commentId, user.getId(), requestDto.getContent());
         return new ResponseEntity<>(CommentMapper.INSTANCE.commentToUpdateCommentResponseDto(comment), HttpStatus.OK);
     }
 
     @DeleteMapping("/{commentId}")
     public ResponseEntity<DeleteResponseDto> deleteComment(
-            @PathVariable("commentId") Long commentId
+            @PathVariable("commentId") Long commentId,
+            @Valid @LoginUser User user
     ) {
-        String result = commentService.deleteComment(commentId);
+        String result = commentService.deleteComment(commentId, user.getId());
         DeleteResponseDto response = new DeleteResponseDto(result);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
