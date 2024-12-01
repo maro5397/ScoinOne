@@ -1,4 +1,4 @@
-package com.scoinone.core.util;
+package com.scoinone.core.config;
 
 import com.scoinone.core.entity.Authority;
 import com.scoinone.core.repository.AuthorityRepository;

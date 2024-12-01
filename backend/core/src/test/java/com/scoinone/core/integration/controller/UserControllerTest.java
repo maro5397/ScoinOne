@@ -30,7 +30,7 @@ import com.scoinone.core.service.PostService;
 import com.scoinone.core.service.SellOrderService;
 import com.scoinone.core.service.UserService;
 import com.scoinone.core.service.VirtualAssetService;
-import com.scoinone.core.util.UserDataInitializer;
+import com.scoinone.core.config.UserDataInitializer;
 import java.math.BigDecimal;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;

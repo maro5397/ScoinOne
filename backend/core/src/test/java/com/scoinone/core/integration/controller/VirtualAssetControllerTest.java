@@ -14,7 +14,7 @@ import com.scoinone.core.entity.VirtualAsset;
 import com.scoinone.core.repository.VirtualAssetRepository;
 import com.scoinone.core.service.AuthService;
 import com.scoinone.core.service.VirtualAssetService;
-import com.scoinone.core.util.UserDataInitializer;
+import com.scoinone.core.config.UserDataInitializer;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
