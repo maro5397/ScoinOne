@@ -16,9 +16,10 @@ import org.springframework.web.filter.GenericFilterBean;
 
 @RequiredArgsConstructor
 public class JwtFilter extends GenericFilterBean {
-
-    private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
     public static final String AUTHORIZATION_HEADER = "Authorization";
+    public static final String AUTHORIZATION_MODIFIER = "Bearer";
+
+    private final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
     private final JwtTokenProvider tokenProvider;
 
     @Override
@@ -43,7 +44,7 @@ public class JwtFilter extends GenericFilterBean {
 
     private String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(AUTHORIZATION_MODIFIER)) {
             return bearerToken.substring(7);
         }
         return null;
