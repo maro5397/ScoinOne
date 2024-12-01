@@ -57,9 +57,10 @@ public class SellOrderController {
 
     @DeleteMapping("/{orderId}")
     public ResponseEntity<DeleteResponseDto> deleteSellOrder(
+            @LoginUser User user,
             @PathVariable("orderId") Long orderId
     ) {
-        String result = sellOrderService.deleteSellOrder(orderId);
+        String result = sellOrderService.deleteSellOrder(orderId, user.getId());
         DeleteResponseDto deleteResponseDto = new DeleteResponseDto(result);
         return new ResponseEntity<>(deleteResponseDto, HttpStatus.OK);
     }
