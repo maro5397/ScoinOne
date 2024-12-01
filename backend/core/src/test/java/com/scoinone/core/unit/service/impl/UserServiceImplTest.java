@@ -6,8 +6,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.scoinone.core.common.OrderStatus;
-import com.scoinone.core.common.PostType;
+import com.scoinone.core.common.status.OrderStatus;
+import com.scoinone.core.common.type.PostType;
 import com.scoinone.core.entity.Authority;
 import com.scoinone.core.entity.BuyOrder;
 import com.scoinone.core.entity.Notification;

@@ -1,6 +1,6 @@
 package com.scoinone.core.service.impl;
 
-import com.scoinone.core.common.NotificationStatus;
+import com.scoinone.core.common.status.NotificationStatus;
 import com.scoinone.core.entity.Notification;
 import com.scoinone.core.entity.User;
 import com.scoinone.core.repository.NotificationRepository;

@@ -2,7 +2,7 @@ package com.scoinone.core.integration.controller;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import com.scoinone.core.common.PostType;
+import com.scoinone.core.common.type.PostType;
 import com.scoinone.core.config.TestContainerConfig;
 import com.scoinone.core.dto.common.DeleteResponseDto;
 import com.scoinone.core.dto.request.comment.CreateCommentRequestDto;

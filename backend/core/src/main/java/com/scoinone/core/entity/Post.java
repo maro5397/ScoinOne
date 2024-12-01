@@ -1,6 +1,6 @@
 package com.scoinone.core.entity;
 
-import com.scoinone.core.common.PostType;
+import com.scoinone.core.common.type.PostType;
 import com.scoinone.core.entity.base.UpdatableEntity;
 import jakarta.persistence.*;
 import lombok.*;

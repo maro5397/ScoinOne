@@ -1,7 +1,7 @@
 package com.scoinone.core.service.impl;
 
-import com.scoinone.core.common.OrderStatus;
-import com.scoinone.core.common.PostType;
+import com.scoinone.core.common.status.OrderStatus;
+import com.scoinone.core.common.type.PostType;
 import com.scoinone.core.entity.*;
 import com.scoinone.core.repository.*;
 import com.scoinone.core.service.UserService;

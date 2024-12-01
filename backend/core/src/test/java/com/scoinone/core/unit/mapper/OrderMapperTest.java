@@ -2,7 +2,7 @@ package com.scoinone.core.unit.mapper;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import com.scoinone.core.common.OrderStatus;
+import com.scoinone.core.common.status.OrderStatus;
 import com.scoinone.core.dto.response.order.CreateBuyOrderResponseDto;
 import com.scoinone.core.dto.response.order.CreateSellOrderResponseDto;
 import com.scoinone.core.dto.response.order.GetBuyOrdersResponseDto;

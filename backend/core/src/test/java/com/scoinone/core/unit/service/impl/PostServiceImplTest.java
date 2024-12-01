@@ -5,7 +5,7 @@ import static org.mockito.ArgumentCaptor.forClass;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.scoinone.core.common.PostType;
+import com.scoinone.core.common.type.PostType;
 import com.scoinone.core.entity.Post;
 import com.scoinone.core.entity.User;
 import com.scoinone.core.repository.PostRepository;

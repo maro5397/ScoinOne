@@ -1,7 +1,7 @@
 package com.scoinone.core.controller;
 
-import com.scoinone.core.auth.LoginUser;
-import com.scoinone.core.common.PostType;
+import com.scoinone.core.common.annotation.LoginUser;
+import com.scoinone.core.common.type.PostType;
 import com.scoinone.core.dto.common.DeleteResponseDto;
 import com.scoinone.core.dto.request.post.CreatePostRequestDto;
 import com.scoinone.core.dto.request.post.UpdatePostRequestDto;

@@ -1,4 +1,4 @@
-package com.scoinone.core.common;
+package com.scoinone.core.common.constant;
 
 public class PageConstant {
     private PageConstant() {}

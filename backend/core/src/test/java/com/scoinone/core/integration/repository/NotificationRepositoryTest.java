@@ -2,7 +2,7 @@ package com.scoinone.core.integration.repository;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import com.scoinone.core.common.NotificationStatus;
+import com.scoinone.core.common.status.NotificationStatus;
 import com.scoinone.core.config.TestContainerConfig;
 import com.scoinone.core.entity.Notification;
 import com.scoinone.core.entity.User;

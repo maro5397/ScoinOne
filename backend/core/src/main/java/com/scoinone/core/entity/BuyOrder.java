@@ -1,6 +1,6 @@
 package com.scoinone.core.entity;
 
-import com.scoinone.core.common.OrderStatus;
+import com.scoinone.core.common.status.OrderStatus;
 import com.scoinone.core.entity.base.CreatableEntity;
 import jakarta.persistence.*;
 import lombok.*;

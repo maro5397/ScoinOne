@@ -1,4 +1,4 @@
-package com.scoinone.core.common;
+package com.scoinone.core.common.type;
 
 public enum PostType {
     QNA,        // 질의사항

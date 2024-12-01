@@ -1,4 +1,4 @@
-package com.scoinone.core.auth;
+package com.scoinone.core.common.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

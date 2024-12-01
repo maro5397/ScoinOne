@@ -2,7 +2,7 @@ package com.scoinone.core.unit.mapper;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import com.scoinone.core.common.PostType;
+import com.scoinone.core.common.type.PostType;
 import com.scoinone.core.dto.response.post.CreatePostResponseDto;
 import com.scoinone.core.dto.response.post.GetPostsResponseDto;
 import com.scoinone.core.dto.response.post.GetPostResponseDto;

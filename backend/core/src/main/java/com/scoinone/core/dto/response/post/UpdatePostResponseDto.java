@@ -1,7 +1,7 @@
 package com.scoinone.core.dto.response.post;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.scoinone.core.common.PostType;
+import com.scoinone.core.common.type.PostType;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
