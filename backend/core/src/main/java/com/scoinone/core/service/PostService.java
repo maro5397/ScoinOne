@@ -13,7 +13,7 @@ public interface PostService {
 
     Post createPost(String title, String content, User user, PostType postType);
 
-    Post updatePost(Long id, String title, String content);
+    Post updatePost(Long id, Long userId, String title, String content);
 
-    String deletePost(Long id);
+    String deletePost(Long id, Long userId);
 }

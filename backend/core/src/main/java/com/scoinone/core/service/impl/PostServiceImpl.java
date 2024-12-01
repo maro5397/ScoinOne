@@ -43,16 +43,22 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post updatePost(Long id, String title, String content) {
-        Post existedPost = getPostById(id);
+    public Post updatePost(Long id, Long userId, String title, String content) {
+        Post existedPost = postRepository.findByIdAndUser_Id(id, userId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Post not found with id: " + id + ", userId: " + userId
+                ));
         existedPost.setTitle(title);
         existedPost.setContent(content);
         return existedPost;
     }
 
     @Override
-    public String deletePost(Long id) {
-        postRepository.deleteById(id);
+    public String deletePost(Long id, Long userId) {
+        Long count = postRepository.deleteByIdAndUser_Id(id, userId);
+        if (count == 0) {
+            throw new EntityNotFoundException("Post not found or you are not authorized to delete this Post");
+        }
         return "Post deleted successfully";
     }
 }
