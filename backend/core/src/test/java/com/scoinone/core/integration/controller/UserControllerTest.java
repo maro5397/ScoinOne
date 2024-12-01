@@ -118,7 +118,7 @@ class UserControllerTest {
         );
 
         assertSoftly(softly -> {
-            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
             softly.assertThat(Objects.requireNonNull(response.getBody()).getEmail()).isEqualTo("newUser@example.com");
             softly.assertThat(response.getBody().getUsername()).isEqualTo("newUser");
         });
