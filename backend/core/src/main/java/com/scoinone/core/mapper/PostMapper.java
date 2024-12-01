@@ -1,7 +1,10 @@
 package com.scoinone.core.mapper;
 
 import com.scoinone.core.dto.common.PageInfoDto;
-import com.scoinone.core.dto.response.post.*;
+import com.scoinone.core.dto.response.post.CreatePostResponseDto;
+import com.scoinone.core.dto.response.post.GetPostResponseDto;
+import com.scoinone.core.dto.response.post.GetPostsResponseDto;
+import com.scoinone.core.dto.response.post.UpdatePostResponseDto;
 import com.scoinone.core.entity.Post;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,6 +1,12 @@
 package com.scoinone.core.service;
 
-import com.scoinone.core.entity.*;
+import com.scoinone.core.entity.BuyOrder;
+import com.scoinone.core.entity.Notification;
+import com.scoinone.core.entity.OwnedVirtualAsset;
+import com.scoinone.core.entity.Post;
+import com.scoinone.core.entity.SellOrder;
+import com.scoinone.core.entity.Trade;
+import com.scoinone.core.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;

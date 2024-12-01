@@ -1,7 +1,10 @@
 package com.scoinone.core.mapper;
 
 import com.scoinone.core.dto.common.PageInfoDto;
-import com.scoinone.core.dto.response.comment.*;
+import com.scoinone.core.dto.response.comment.CreateCommentResponseDto;
+import com.scoinone.core.dto.response.comment.GetCommentResponseDto;
+import com.scoinone.core.dto.response.comment.GetCommentsResponseDto;
+import com.scoinone.core.dto.response.comment.UpdateCommentResponseDto;
 import com.scoinone.core.entity.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
