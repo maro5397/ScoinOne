@@ -19,4 +19,6 @@ public interface SellOrderRepository extends JpaRepository<SellOrder, Long> {
             "WHERE s.price <= :buyPrice AND s.status = 'PENDING' " +
             "ORDER BY s.price DESC, s.createdAt ASC")
     List<SellOrder> findMatchableSellOrders(@Param("buyPrice") BigDecimal buyPrice);
+
+    Long deleteByIdAndSeller_Id(Long id, Long sellerId);
 }
