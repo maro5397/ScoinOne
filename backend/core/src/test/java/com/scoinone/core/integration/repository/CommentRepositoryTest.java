@@ -10,6 +10,7 @@ import com.scoinone.core.entity.User;
 import com.scoinone.core.repository.CommentRepository;
 import com.scoinone.core.repository.PostRepository;
 import com.scoinone.core.repository.UserRepository;
+import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,6 +31,7 @@ import org.springframework.test.context.ActiveProfiles;
 class CommentRepositoryTest {
     private User user;
     private Post post;
+    private Comment comment;
 
     @Autowired
     private CommentRepository commentRepository;
@@ -70,7 +72,7 @@ class CommentRepositoryTest {
                 .content("This is the second comment.")
                 .build();
 
-        commentRepository.save(comment1);
+        comment = commentRepository.save(comment1);
         commentRepository.save(comment2);
     }
 
@@ -110,6 +112,30 @@ class CommentRepositoryTest {
             softly.assertThat(commentsPage).isNotNull();
             softly.assertThat(commentsPage.getTotalElements()).isEqualTo(0);
             softly.assertThat(commentsPage.getContent()).isEmpty();
+        });
+    }
+
+    @Test
+    @DisplayName("댓글 ID 및 사용자 ID로 댓글 조회")
+    void testFindByIdAndUser_Id() {
+        Optional<Comment> getComment = commentRepository.findByIdAndUser_Id(comment.getId(), user.getId());
+
+        assertSoftly(softly -> {
+            softly.assertThat(getComment.isPresent()).isTrue();
+            getComment.ifPresent(commentData -> {
+                softly.assertThat(commentData.getUser().getId()).isEqualTo(user.getId());
+                softly.assertThat(commentData.getPost().getId()).isEqualTo(post.getId());
+            });
+        });
+    }
+
+    @Test
+    @DisplayName("댓글 ID 및 사용자 ID로 댓글 삭제")
+    void testDeleteByIdAndUser_Id() {
+        Long count = commentRepository.deleteByIdAndUser_Id(comment.getId(), user.getId());
+
+        assertSoftly(softly -> {
+            softly.assertThat(count).isEqualTo(1);
         });
     }
 }
