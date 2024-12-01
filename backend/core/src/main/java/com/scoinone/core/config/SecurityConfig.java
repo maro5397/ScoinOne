@@ -73,7 +73,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .logout((logout) -> logout
-                        .logoutUrl("/api/user/logout")
+                        .logoutUrl("/api/auth/logout")
                         .logoutSuccessUrl("/")
                 )
                 .sessionManagement((sessionManagement) -> {
