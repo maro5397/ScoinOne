@@ -119,14 +119,14 @@ class CommentServiceImplTest {
                 .content("Old content")
                 .build();
 
-        when(commentRepository.findById(commentId)).thenReturn(Optional.of(existingComment));
+        when(commentRepository.findByIdAndUser_Id(commentId, 1L)).thenReturn(Optional.of(existingComment));
 
-        Comment result = commentService.updateComment(commentId, "Updated content");
+        Comment result = commentService.updateComment(commentId, 1L, "Updated content");
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
             softly.assertThat(result.getContent()).isEqualTo("Updated content");
-            verify(commentRepository).findById(commentId);
+            verify(commentRepository).findByIdAndUser_Id(commentId, 1L);
         });
     }
 
@@ -134,9 +134,11 @@ class CommentServiceImplTest {
     @DisplayName("댓글 삭제 테스트")
     public void testDeleteComment() {
         Long commentId = 1L;
+        Long userId = 1L;
 
-        commentService.deleteComment(commentId);
+        when(commentRepository.deleteByIdAndUser_Id(commentId, userId)).thenReturn(1L);
+        commentService.deleteComment(commentId, userId);
 
-        verify(commentRepository).deleteById(commentId);
+        verify(commentRepository).deleteByIdAndUser_Id(commentId, userId);
     }
 }
