@@ -66,6 +66,7 @@ public class VirtualAssetController {
     }
 
     @PatchMapping("/{virtualAssetId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UpdateVirtualAssetResponseDto> updateVirtualAsset(
             @PathVariable("virtualAssetId") Long virtualAssetId,
             @RequestBody UpdateVirtualAssetRequestDto requestDto
@@ -83,6 +84,7 @@ public class VirtualAssetController {
     }
 
     @DeleteMapping("/{virtualAssetId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<DeleteResponseDto> deleteVirtualAsset(
             @PathVariable("virtualAssetId") Long virtualAssetId
     ) {
