@@ -94,7 +94,7 @@ class PostControllerTest {
         ResponseEntity<GetPostResponseDto> response = restTemplate.exchange(
                 "/api/post/" + PostType.QNA + "/" + savedPost.getId(),
                 HttpMethod.GET,
-                new HttpEntity<>(headers),
+                null,
                 GetPostResponseDto.class
         );
 
@@ -157,7 +157,7 @@ class PostControllerTest {
         ResponseEntity<GetPostsResponseDto> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
-                new HttpEntity<>(headers),
+                null,
                 GetPostsResponseDto.class
         );
 

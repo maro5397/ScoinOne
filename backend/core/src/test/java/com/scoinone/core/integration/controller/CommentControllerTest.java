@@ -114,7 +114,7 @@ class CommentControllerTest {
         ResponseEntity<GetCommentsResponseDto> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
-                new HttpEntity<>(headers),
+                null,
                 GetCommentsResponseDto.class
         );
 

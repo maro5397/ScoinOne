@@ -89,7 +89,7 @@ class VirtualAssetControllerTest {
         ResponseEntity<GetVirtualAssetsResponseDto> response = restTemplate.exchange(
                 "/api/assets",
                 HttpMethod.GET,
-                new HttpEntity<>(headers),
+                null,
                 GetVirtualAssetsResponseDto.class
         );
 
@@ -105,7 +105,7 @@ class VirtualAssetControllerTest {
         ResponseEntity<GetVirtualAssetResponseDto> response = restTemplate.exchange(
                 "/api/assets/" + savedVirtualAsset.getId(),
                 HttpMethod.GET,
-                new HttpEntity<>(headers),
+                null,
                 GetVirtualAssetResponseDto.class
         );
 
