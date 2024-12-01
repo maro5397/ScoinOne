@@ -74,7 +74,7 @@ public class UserController {
                 user.getId()
         );
         return new ResponseEntity<>(
-                NotificationMapper.INSTANCE.listToGetNotificationListResponseDto(notificationsFromLast30Days),
+                NotificationMapper.INSTANCE.listToGetNotificationsResponseDto(notificationsFromLast30Days),
                 HttpStatus.OK
         );
     }
@@ -83,7 +83,7 @@ public class UserController {
     public ResponseEntity<GetTradesResponseDto> getTrades(@Valid @LoginUser User user) {
         List<Trade> tradeByUserId = userService.getTradeByUserId(user.getId());
         return new ResponseEntity<>(
-                TradeMapper.INSTANCE.listToGetTradeListResponseDto(tradeByUserId),
+                TradeMapper.INSTANCE.listToGetTradesResponseDto(tradeByUserId),
                 HttpStatus.OK
         );
     }
@@ -92,7 +92,7 @@ public class UserController {
     public ResponseEntity<GetPostsResponseDto> getQuestionPosts(@Valid @LoginUser User user) {
         List<Post> questionsByUserId = userService.getQuestionsByUserId(user.getId());
         return new ResponseEntity<>(
-                PostMapper.INSTANCE.listToGetPostListResponseDto(questionsByUserId),
+                PostMapper.INSTANCE.listToGetPostsResponseDto(questionsByUserId),
                 HttpStatus.OK
         );
     }
@@ -101,7 +101,7 @@ public class UserController {
     public ResponseEntity<GetOwnedAssetsResponseDto> getVirtualAssets(@Valid @LoginUser User user) {
         List<OwnedVirtualAsset> ownedVirtualAssets = userService.getOwnedVirtualAssetsByUserId(user.getId());
         return new ResponseEntity<>(
-                OwnedVirtualAssetMapper.INSTANCE.listToGetOwnedAssetListResponseDto(ownedVirtualAssets),
+                OwnedVirtualAssetMapper.INSTANCE.listToGetOwnedAssetsResponseDto(ownedVirtualAssets),
                 HttpStatus.OK
         );
     }

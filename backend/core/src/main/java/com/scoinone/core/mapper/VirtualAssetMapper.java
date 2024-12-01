@@ -38,7 +38,7 @@ public interface VirtualAssetMapper {
 
     List<GetVirtualAssetResponseDto> virtualAssetsToGetVirtualAssetsResponseDto(List<VirtualAsset> virtualAssets);
 
-    default GetVirtualAssetsResponseDto listToGetVirtualAssetListResponseDto(List<VirtualAsset> virtualAssets) {
+    default GetVirtualAssetsResponseDto listToGetVirtualAssetsResponseDto(List<VirtualAsset> virtualAssets) {
         GetVirtualAssetsResponseDto responseDto = new GetVirtualAssetsResponseDto();
         responseDto.setVirtualAssets(virtualAssetsToGetVirtualAssetsResponseDto(virtualAssets));
         return responseDto;

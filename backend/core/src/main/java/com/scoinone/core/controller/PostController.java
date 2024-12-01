@@ -50,7 +50,7 @@ public class PostController {
             Pageable pageable
     ) {
         Page<Post> posts = postService.getPosts(pageable, postType);
-        return new ResponseEntity<>(PostMapper.INSTANCE.pageToGetPostListResponseDto(posts), HttpStatus.OK);
+        return new ResponseEntity<>(PostMapper.INSTANCE.pageToGetPostsResponseDto(posts), HttpStatus.OK);
     }
 
     @GetMapping("/{postType}/{postId}")

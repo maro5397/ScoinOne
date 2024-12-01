@@ -48,7 +48,7 @@ class OwnedVirtualAssetMapperTest {
     @Test
     @DisplayName("보유 가상자산 엔티티 객체를 리스트 조회용 응답 DTO로 매핑")
     public void testListToGetOwnedAssetListResponseDto() {
-        GetOwnedAssetsResponseDto responseDto = mapper.listToGetOwnedAssetListResponseDto(ownedVirtualAssets);
+        GetOwnedAssetsResponseDto responseDto = mapper.listToGetOwnedAssetsResponseDto(ownedVirtualAssets);
 
         assertEquals(2, responseDto.getOwnedAssets().size());
         assertEquals(1L, responseDto.getOwnedAssets().get(0).getOwnedVirtualAssetId());

@@ -52,7 +52,7 @@ public class SellOrderController {
             @LoginUser User user
     ) {
         List<SellOrder> SellOrders = userService.getSellOrderByUserId(user.getId());
-        return new ResponseEntity<>(OrderMapper.INSTANCE.listToGetSellOrderListResponseDto(SellOrders), HttpStatus.OK);
+        return new ResponseEntity<>(OrderMapper.INSTANCE.listToGetSellOrdersResponseDto(SellOrders), HttpStatus.OK);
     }
 
     @DeleteMapping("/{orderId}")

@@ -23,7 +23,7 @@ public interface TradeMapper {
 
     List<GetTradeResponseDto> tradesToGetTradesResponseDto(List<Trade> trades);
 
-    default GetTradesResponseDto listToGetTradeListResponseDto(List<Trade> trades) {
+    default GetTradesResponseDto listToGetTradesResponseDto(List<Trade> trades) {
         GetTradesResponseDto responseDto = new GetTradesResponseDto();
         responseDto.setTrades(tradesToGetTradesResponseDto(trades));
         return responseDto;

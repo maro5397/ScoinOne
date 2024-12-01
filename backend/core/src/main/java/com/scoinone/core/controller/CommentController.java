@@ -51,7 +51,7 @@ public class CommentController {
     ) {
         Page<Comment> commentsByPostId = commentService.getCommentsByPostId(pageable, postId);
         return new ResponseEntity<>(
-                CommentMapper.INSTANCE.pageToGetCommentListResponseDto(commentsByPostId),
+                CommentMapper.INSTANCE.pageToGetCommentsResponseDto(commentsByPostId),
                 HttpStatus.OK
         );
     }

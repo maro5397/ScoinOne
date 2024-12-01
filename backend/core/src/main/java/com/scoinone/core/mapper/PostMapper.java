@@ -43,7 +43,7 @@ public interface PostMapper {
 
     List<GetPostResponseDto> postsToGetPostsResponseDto(List<Post> posts);
 
-    default GetPostsResponseDto pageToGetPostListResponseDto(Page<Post> page) {
+    default GetPostsResponseDto pageToGetPostsResponseDto(Page<Post> page) {
         GetPostsResponseDto responseDto = new GetPostsResponseDto();
         responseDto.setPosts(postsToGetPostsResponseDto(page.getContent()));
         responseDto.setPageInfo(PageInfoDto.builder()
@@ -54,7 +54,7 @@ public interface PostMapper {
         return responseDto;
     }
 
-    default GetPostsResponseDto listToGetPostListResponseDto(List<Post> posts) {
+    default GetPostsResponseDto listToGetPostsResponseDto(List<Post> posts) {
         GetPostsResponseDto responseDto = new GetPostsResponseDto();
         responseDto.setPosts(postsToGetPostsResponseDto(posts));
         return responseDto;
