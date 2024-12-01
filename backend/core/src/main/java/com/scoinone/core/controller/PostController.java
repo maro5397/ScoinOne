@@ -81,6 +81,6 @@ public class PostController {
     ) {
         String result = postService.deletePost(postId, user.getId());
         DeleteResponseDto response = new DeleteResponseDto(result);
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

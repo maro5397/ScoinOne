@@ -44,12 +44,12 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<CreateUserResponseDto> createUser(@Valid @RequestBody CreateUserRequestDto requestDto) {
         User user = userService.createUser(requestDto.getEmail(), requestDto.getPassword(), requestDto.getUsername());
-        return ResponseEntity.ok(UserMapper.INSTANCE.userToCreateUserResponseDto(user));
+        return new ResponseEntity<>(UserMapper.INSTANCE.userToCreateUserResponseDto(user), HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<GetUserResponseDto> getUser(@Valid @LoginUser User user) {
-        return ResponseEntity.ok(UserMapper.INSTANCE.userToGetUserResponseDto(user));
+        return new ResponseEntity<>(UserMapper.INSTANCE.userToGetUserResponseDto(user), HttpStatus.OK);
     }
 
     @PatchMapping
@@ -58,14 +58,14 @@ public class UserController {
             @Valid @LoginUser User user
     ) {
         User updatedUser = userService.updateUser(user.getId(), requestDto.getUsername());
-        return ResponseEntity.ok(UserMapper.INSTANCE.userToUpdateUserResponseDto(updatedUser));
+        return new ResponseEntity<>(UserMapper.INSTANCE.userToUpdateUserResponseDto(updatedUser), HttpStatus.OK);
     }
 
     @DeleteMapping
     public ResponseEntity<DeleteResponseDto> deleteUser(@Valid @LoginUser User user) {
         String result = userService.deleteUser(user.getId());
         DeleteResponseDto response = new DeleteResponseDto(result);
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/notification")
