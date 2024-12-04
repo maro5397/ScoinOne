@@ -7,7 +7,7 @@ const menuItems = [
   { name: "내 자산", href: "#" },
 ];
 
-export default function Navigation2() {
+export default function Navigation() {
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
