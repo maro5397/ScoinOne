@@ -8,12 +8,12 @@ export class NaverCafeScraper {
     const page = await browser.newPage();
     await page.goto(`https://cafe.naver.com/CafeProfileView.nhn?clubid=${cafeId}`);
 
-    const data1 = await page.locator('//*[@id="main-area"]/div/table/tbody/tr[14]/td/span[1]').textContent();
-    const data2 = await page.locator('//*[@id="main-area"]/div/table/tbody/tr[14]/td/span[2]').textContent();
-    const data3 = await page.locator('//*[@id="main-area"]/div/table/tbody/tr[14]/td/span[3]').textContent();
+    const memberCount = await page.locator('//*[@id="main-area"]/div/table/tbody/tr[14]/td/span[1]').textContent();
+    const postCount = await page.locator('//*[@id="main-area"]/div/table/tbody/tr[14]/td/span[2]').textContent();
+    const visitorCount = await page.locator('//*[@id="main-area"]/div/table/tbody/tr[14]/td/span[3]').textContent();
 
     await browser.close();
 
-    return { data1, data2, data3 };
+    return { memberCount: memberCount, postCount: postCount, visitorCount: visitorCount };
   }
 }

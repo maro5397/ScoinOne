@@ -12,7 +12,7 @@ export class ChzzkChannelScraper {
     try {
       const response = await firstValueFrom(this.httpService.get(url));
       const followerCount = response.data.content.followerCount;
-      return { followerCount };
+      return { followerCount: followerCount };
     } catch (error) {
       console.error('Error fetching follower count:', error);
       throw new Error('Failed to fetch follower count');
