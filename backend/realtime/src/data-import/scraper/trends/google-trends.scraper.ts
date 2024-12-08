@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { chromium } from 'playwright';
 
 @Injectable()
-export class GoogleTrendsScrape {
+export class GoogleTrendsScraper {
   async getTrends(keyword: string) {
     const url = `https://trends.google.co.kr/trends/explore?date=now 1-H&geo=KR&q=${keyword}&hl=ko`;
 

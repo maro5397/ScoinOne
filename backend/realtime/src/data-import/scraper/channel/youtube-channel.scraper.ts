@@ -4,7 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class YoutubeChannelScrape {
+export class YoutubeChannelScraper {
   private readonly API_KEY: string;
 
   constructor(

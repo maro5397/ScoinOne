@@ -2,7 +2,7 @@ import { chromium } from 'playwright';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class NaverCafeScrape {
+export class NaverCafeScraper {
   async getIntroduceData(cafeId: string) {
     const browser = await chromium.launch();
     const page = await browser.newPage();

@@ -3,7 +3,7 @@ import { firstValueFrom } from 'rxjs';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class ChzzkChannelScrape {
+export class ChzzkChannelScraper {
   constructor(private readonly httpService: HttpService) {}
 
   async getFollowerCount(streamerId: string) {

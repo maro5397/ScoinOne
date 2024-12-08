@@ -4,7 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class NaverTrendsScrape {
+export class NaverTrendsScraper {
   private readonly clientId: string;
   private readonly clientSecret: string;
 
