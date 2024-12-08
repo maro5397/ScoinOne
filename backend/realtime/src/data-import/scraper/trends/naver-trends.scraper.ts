@@ -24,9 +24,15 @@ export class NaverTrendsScraper {
       'Content-Type': 'application/json',
     };
 
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    const dayBeforeYesterday = new Date(today);
+    dayBeforeYesterday.setDate(today.getDate() - 2);
+
     const body = {
-      startDate: '2023-01-01',
-      endDate: '2023-12-31',
+      startDate: this.formatDate(dayBeforeYesterday),
+      endDate: this.formatDate(yesterday),
       timeUnit: 'date',
       keywordGroups: [
         {
@@ -38,10 +44,14 @@ export class NaverTrendsScraper {
 
     try {
       const response = await firstValueFrom(this.httpService.post(url, body, { headers }));
-      return response.data;
+      return response.data.results[0]?.data;
     } catch (error) {
       console.error('Error fetching trends:', error);
       throw new Error('Failed to fetch trends');
     }
+  }
+
+  private formatDate(date: Date): string {
+    return date.toISOString().split('T')[0];
   }
 }
