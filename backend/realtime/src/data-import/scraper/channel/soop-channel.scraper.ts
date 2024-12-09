@@ -9,13 +9,19 @@ export class SoopChannelScraper {
   async getFollowerCount(streamerId: string) {
     const url = `https://chapi.sooplive.co.kr/api/${streamerId}/station`;
 
+    const config = {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0',
+      },
+    };
+
     try {
-      const response = await firstValueFrom(this.httpService.get(url));
+      const response = await firstValueFrom(this.httpService.get(url, config));
       const followerCount = response.data.station.upd.fan_cnt;
       return { followerCount: followerCount };
     } catch (error) {
-      console.error('Error fetching follower count:', error);
-      throw new Error('Failed to fetch follower count');
+      throw new Error(error);
     }
   }
 }
