@@ -46,8 +46,7 @@ export class NaverTrendsScraper {
       const response = await firstValueFrom(this.httpService.post(url, body, { headers }));
       return response.data.results[0]?.data;
     } catch (error) {
-      console.error('Error fetching trends:', error);
-      throw new Error('Failed to fetch trends');
+      throw new Error(error);
     }
   }
 
