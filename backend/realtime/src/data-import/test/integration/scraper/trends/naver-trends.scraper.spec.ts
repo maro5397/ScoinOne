@@ -24,5 +24,9 @@ describe('NaverTrendsScraperTest', () => {
   it('should return subscriber and view count', async () => {
     const result = await scraper.getTrends('한동숙');
     expect(result.length).toBe(2);
+    expect(typeof result[0].period).toBe('string');
+    expect(typeof result[1].period).toBe('string');
+    expect(typeof result[0].ratio).toBe('number');
+    expect(typeof result[1].ratio).toBe('number');
   });
 });
