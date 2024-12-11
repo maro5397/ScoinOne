@@ -3,27 +3,46 @@ import { chromium } from 'playwright';
 
 @Injectable()
 export class GoogleTrendsScraper {
+  // data per 8 minute
+  // Chart data may not be received in some cases
   async getTrends(keyword: string) {
-    const url = `https://trends.google.co.kr/trends/explore?date=now 1-H&geo=KR&q=${keyword}&hl=ko`;
+    const url = `https://trends.google.co.kr/trends/explore?date=now%201-d&geo=KR&q=${keyword}&hl=ko`;
 
     const browser = await chromium.launch();
-    const page = await browser.newPage();
+    const context = await browser.newContext();
+    const page = await context.newPage();
     await page.goto(url);
+    await page.waitForLoadState('networkidle');
+    await page.reload();
+    await page.waitForLoadState('networkidle');
 
-    const lastTwoTrendStatistics = await page.$$eval(
-      '/html/body/div[3]/div[2]/div/md-content/div/div/div[1]' +
-        '/trends-widget/ng-include/widget/div/div/ng-include/div/ng-include/div' +
-        '/line-chart-directive/div[1]/div/div[1]/div/div/table/tbody/tr',
-      (rows) => {
-        return rows.slice(-2).map((row) => {
-          const period = row.querySelector('td:nth-child(1)').textContent;
-          const ratio = row.querySelector('td:nth-child(2)').textContent;
-          return { period: period, ratio: ratio };
+    const errorCodeTag = '//*[@id="af-error-container"]/p[1]/b';
+    const errorCodeLocator = page.locator(`xpath=${errorCodeTag}`);
+    if ((await errorCodeLocator.count()) > 0 && (await errorCodeLocator.textContent()).includes('429')) {
+      await browser.close();
+      throw new Error('HTTP 429: Too Many Requests');
+    }
+
+    for (let i = 0; i < 5; i++) {
+      const tdElements = await page.locator('tbody tr').evaluateAll((rows) => {
+        const lastTwoRows = rows.slice(-2);
+        return lastTwoRows.map((row) => {
+          const tds = row.querySelectorAll('td');
+          if (tds.length == 2) {
+            return { period: tds[0].textContent.trim(), ratio: Number(tds[1].textContent.trim()) };
+          }
         });
-      },
-    );
-
-    await browser.close();
-    return lastTwoTrendStatistics;
+      });
+      if (tdElements.length == 2) {
+        await browser.close();
+        return tdElements;
+      }
+      await page.reload();
+      await page.waitForLoadState('networkidle');
+    }
+    return [
+      { period: null, ratio: 0 },
+      { period: null, ratio: 0 },
+    ];
   }
 }
