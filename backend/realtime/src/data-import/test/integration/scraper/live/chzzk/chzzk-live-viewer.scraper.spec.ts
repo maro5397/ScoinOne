@@ -1,6 +1,6 @@
 import { TestingModule, Test } from '@nestjs/testing';
 import { HttpModule } from '@nestjs/axios';
-import { ChzzkLiveViewerScraper } from '../../../../scraper/live/chzzk-live-viewer.scraper';
+import { ChzzkLiveViewerScraper } from '../../../../../scraper/live/chzzk/chzzk-live-viewer.scraper';
 
 const HANDONGSUK_ID = '75cbf189b3bb8f9f687d2aca0d0a382b';
 

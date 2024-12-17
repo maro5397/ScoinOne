@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { ChzzkLiveChatScraper } from '../../../../scraper/live/chzzk-live-chat.scraper';
+import { ChzzkLiveChatScraper } from '../../../../../scraper/live/chzzk/chzzk-live-chat.scraper';
 
 (async function () {
   const httpService = new HttpService();
@@ -7,7 +7,7 @@ import { ChzzkLiveChatScraper } from '../../../../scraper/live/chzzk-live-chat.s
   const scraper = new ChzzkLiveChatScraper(httpService);
 
   try {
-    const streamerId = 'a86031fdfeb1b223ad1172cf6ba4b94e';
+    const streamerId = 'a6c4ddb09cdb160478996007bff35296';
     const liveChatInfo = await scraper.getLiveChats(streamerId);
     console.log('Live Chat Info:', liveChatInfo);
   } catch (error) {

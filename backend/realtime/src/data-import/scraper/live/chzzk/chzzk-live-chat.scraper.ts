@@ -24,7 +24,7 @@ export class ChzzkLiveChatScraper {
     }
     const accessToken = await this.getAccessToken(channelId);
 
-    this.socket = new WebSocket(chatUrls[0]);
+    this.socket = new WebSocket(chatUrls[4]);
     this.socket.on('open', () => {
       console.log('Connected to chat server');
       this.initializeChatConnection(channelId, accessToken);
