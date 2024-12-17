@@ -3,6 +3,7 @@ import { ChzzkClient } from './client';
 
 @Injectable()
 export class ChzzkLiveChatScraper {
+  // 19금 설정 방송의 경우 채팅 가져오기 불가 (테스트 필요)
   async getLiveChats(streamerId: string) {
     const client = new ChzzkClient();
 
