@@ -1,7 +1,8 @@
 import { SoopAPIBaseUrls } from './types';
 
 export const DEFAULT_BASE_URLS: SoopAPIBaseUrls = {
-  soopPlayerBaseUrl: 'https://live.sooplive.co.kr',
+  soopLiveBaseUrl: 'https://live.sooplive.co.kr',
+  soopChannelBaseUrl: 'https://chapi.sooplive.co.kr',
 };
 
 export const DEFAULT_USER_AGENT =

@@ -1,4 +1,5 @@
 import { SoopClient } from '../client';
+import { DEFAULT_BASE_URLS } from '../const';
 
 export interface LiveDetail {
   CHANNEL: {
@@ -127,6 +128,7 @@ export class SoopLive {
   async detail(
     streamerId: string,
     options: LiveDetailOptions = DEFAULT_REQUEST_BODY_FOR_LIVE_STATUS,
+    baseUrl: string = DEFAULT_BASE_URLS.soopLiveBaseUrl,
   ): Promise<LiveDetail> {
     const body = {
       bid: streamerId,
@@ -142,7 +144,7 @@ export class SoopLive {
       ),
     );
     return this.client
-      .fetch(`/afreeca/player_live_api.php?bjid=${streamerId}`, {
+      .fetch(`${baseUrl}/afreeca/player_live_api.php?bjid=${streamerId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
