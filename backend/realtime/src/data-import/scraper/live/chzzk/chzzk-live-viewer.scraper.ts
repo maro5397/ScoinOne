@@ -11,7 +11,7 @@ export class ChzzkLiveViewerScraper {
         const viewerCount = liveStatus.concurrentUserCount;
         return { live: true, viewerCount: viewerCount };
       }
-      return { live: false, viewerCount: 0 };
+      return { live: false, viewerCount: -1 };
     } catch (error) {
       throw error;
     }
