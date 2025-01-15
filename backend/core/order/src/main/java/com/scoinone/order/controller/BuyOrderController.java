@@ -32,14 +32,14 @@ public class BuyOrderController {
             @RequestBody CreateBuyOrderRequestDto requestDto,
             @RequestHeader(value = "UserId") String userId
     ) {
-        BuyOrderEntity buyOrderEntity = buyOrderService.createBuyOrder(
+        BuyOrderEntity buyOrder = buyOrderService.createBuyOrder(
                 virtualAssetId,
                 requestDto.getQuantity(),
                 requestDto.getPrice(),
                 userId
         );
         return new ResponseEntity<>(
-                OrderMapper.INSTANCE.buyOrderToCreateBuyOrderResponseDto(buyOrderEntity),
+                OrderMapper.INSTANCE.buyOrderToCreateBuyOrderResponseDto(buyOrder),
                 HttpStatus.CREATED
         );
     }

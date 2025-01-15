@@ -26,16 +26,16 @@ public class BuyOrderServiceImpl implements BuyOrderService {
 
     @Override
     public BuyOrderEntity createBuyOrder(String assetId, BigDecimal quantity, BigDecimal price, String userId) {
-        BuyOrderEntity buyOrderEntity = BuyOrderEntity.builder()
+        BuyOrderEntity buyOrder = BuyOrderEntity.builder()
                 .buyerId(userId)
                 .price(price)
                 .quantity(quantity)
                 .status(OrderStatus.PENDING)
                 .virtualAssetId(assetId)
                 .build();
-        entityManager.persist(buyOrderEntity);
-        tradeService.processBuyOrderTrade(buyOrderEntity);
-        return buyOrderRepository.save(buyOrderEntity);
+        entityManager.persist(buyOrder);
+        tradeService.processBuyOrderTrade(buyOrder);
+        return buyOrderRepository.save(buyOrder);
     }
 
     @Override
