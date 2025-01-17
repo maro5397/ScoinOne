@@ -1,8 +1,41 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
+  "sourceRoot": "apps/api-gateway/src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/api-gateway",
+  "projects": {
+    "chart-manager": {
+      "type": "application",
+      "root": "apps/chart-manager",
+      "entryFile": "main",
+      "sourceRoot": "apps/chart-manager/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/chart-manager/tsconfig.app.json"
+      }
+    },
+    "scraper-manager": {
+      "type": "application",
+      "root": "apps/scraper-manager",
+      "entryFile": "main",
+      "sourceRoot": "apps/scraper-manager/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/scraper-manager/tsconfig.app.json"
+      }
+    },
+    "api-gateway": {
+      "type": "application",
+      "root": "apps/api-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+      }
+    }
   }
 }
