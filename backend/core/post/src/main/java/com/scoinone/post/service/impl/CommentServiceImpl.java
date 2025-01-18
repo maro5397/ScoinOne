@@ -21,8 +21,8 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
 
     @Override
-    public Page<CommentEntity> getCommentsByPostId(Long id, Pageable pageable) {
-        return commentRepository.findByPost_Id(pageable, id);
+    public Page<CommentEntity> getCommentsByPostId(Pageable pageable, Long postId) {
+        return commentRepository.findByPost_Id(pageable, postId);
     }
 
     @Override

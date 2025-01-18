@@ -33,13 +33,14 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<CreateCommentResponseDto> createComment(
             @RequestBody CreateCommentRequestDto requestDto,
-            @RequestHeader(value = "UserId") String userId
+            @RequestHeader(value = "UserId") String userId,
+            @RequestHeader(value = "Username") String username
     ) {
         CommentEntity comment = commentService.createComment(
                 requestDto.getPostId(),
                 requestDto.getContent(),
                 userId,
-                requestDto.getUsername()
+                username
         );
         return new ResponseEntity<>(
                 CommentMapper.INSTANCE.commentToCreateCommentResponseDto(comment),
@@ -49,7 +50,7 @@ public class CommentController {
 
     @GetMapping("/{postId}")
     public ResponseEntity<GetCommentsResponseDto> getComments(@PathVariable("postId") Long postId, Pageable pageable) {
-        Page<CommentEntity> commentsByPostId = commentService.getCommentsByPostId(postId, pageable);
+        Page<CommentEntity> commentsByPostId = commentService.getCommentsByPostId(pageable, postId);
         return new ResponseEntity<>(
                 CommentMapper.INSTANCE.pageToGetCommentsResponseDto(commentsByPostId),
                 HttpStatus.OK

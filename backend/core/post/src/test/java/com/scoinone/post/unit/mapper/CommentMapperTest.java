@@ -49,7 +49,7 @@ class CommentMapperTest {
         assertSoftly(softly -> {
             softly.assertThat(comment.getId()).isEqualTo(responseDto.getCommentId());
             softly.assertThat(comment.getContent()).isEqualTo(responseDto.getContent());
-            softly.assertThat(testUsername1).isEqualTo(responseDto.getAuthor());
+            softly.assertThat(testUsername1).isEqualTo(responseDto.getUsername());
         });
     }
 
@@ -61,7 +61,7 @@ class CommentMapperTest {
         assertSoftly(softly -> {
             softly.assertThat(comment.getId()).isEqualTo(responseDto.getCommentId());
             softly.assertThat(comment.getContent()).isEqualTo(responseDto.getContent());
-            softly.assertThat(testUsername1).isEqualTo(responseDto.getAuthor());
+            softly.assertThat(testUsername1).isEqualTo(responseDto.getUsername());
         });
     }
 
@@ -105,7 +105,7 @@ class CommentMapperTest {
         assertSoftly(softly -> {
             softly.assertThat(comment.getId()).isEqualTo(responseDto.getCommentId());
             softly.assertThat(comment.getContent()).isEqualTo(responseDto.getContent());
-            softly.assertThat(testUsername1).isEqualTo(responseDto.getAuthor());
+            softly.assertThat(testUsername1).isEqualTo(responseDto.getUsername());
         });
     }
 

@@ -50,7 +50,7 @@ class CommentServiceImplTest {
         Pageable pageable = Pageable.unpaged();
         when(commentRepository.findByPost_Id(pageable, postId)).thenReturn(page);
 
-        Page<CommentEntity> result = commentService.getCommentsByPostId(postId, pageable);
+        Page<CommentEntity> result = commentService.getCommentsByPostId(pageable, postId);
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();

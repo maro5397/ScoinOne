@@ -7,6 +7,7 @@ import com.scoinone.post.dto.request.post.UpdatePostRequestDto;
 import com.scoinone.post.dto.response.post.CreatePostResponseDto;
 import com.scoinone.post.dto.response.post.GetPostResponseDto;
 import com.scoinone.post.dto.response.post.GetPostsResponseDto;
+import com.scoinone.post.dto.response.post.GetUserQuestionsResponseDto;
 import com.scoinone.post.dto.response.post.UpdatePostResponseDto;
 import com.scoinone.post.entity.PostEntity;
 import com.scoinone.post.mapper.PostMapper;
@@ -37,13 +38,14 @@ public class PostController {
     public ResponseEntity<CreatePostResponseDto> createPost(
             @PathVariable("postType") PostType postType,
             @RequestBody CreatePostRequestDto requestDto,
-            @RequestHeader(value = "UserId") String userId
+            @RequestHeader(value = "UserId") String userId,
+            @RequestHeader(value = "Username") String username
     ) {
         PostEntity post = postService.createPost(
                 requestDto.getTitle(),
                 requestDto.getContent(),
                 userId,
-                requestDto.getUsername(),
+                username,
                 postType
         );
         return new ResponseEntity<>(PostMapper.INSTANCE.postToCreatePostResponseDto(post), HttpStatus.CREATED);
@@ -68,7 +70,9 @@ public class PostController {
     }
 
     @GetMapping("/question")
-    public ResponseEntity<GetPostsResponseDto> getQuestionPosts(@RequestHeader(value = "UserId") String userId) {
+    public ResponseEntity<GetUserQuestionsResponseDto> getUserQuestionPosts(
+            @RequestHeader(value = "UserId") String userId
+    ) {
         List<PostEntity> questionsByUserId = postService.getQuestionsByUserId(userId);
         return new ResponseEntity<>(
                 PostMapper.INSTANCE.listToGetPostsResponseDto(questionsByUserId),
