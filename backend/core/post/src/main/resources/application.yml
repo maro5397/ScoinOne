@@ -3,3 +3,6 @@ spring:
     name: post
   profiles:
     include: local
+
+server:
+  port: 8000
