@@ -51,6 +51,7 @@ class PostControllerTest {
 
         headers = new HttpHeaders();
         headers.set("UserId", testUserId);
+        headers.set("Username", testUsername);
         headers.set("Content-Type", "application/json");
     }
 
