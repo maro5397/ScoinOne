@@ -37,13 +37,14 @@ public class PostController {
     public ResponseEntity<CreatePostResponseDto> createPost(
             @PathVariable("postType") PostType postType,
             @RequestBody CreatePostRequestDto requestDto,
-            @RequestHeader(value = "UserId") String userId
+            @RequestHeader(value = "UserId") String userId,
+            @RequestHeader(value = "Username") String username
     ) {
         PostEntity post = postService.createPost(
                 requestDto.getTitle(),
                 requestDto.getContent(),
                 userId,
-                requestDto.getUsername(),
+                username,
                 postType
         );
         return new ResponseEntity<>(PostMapper.INSTANCE.postToCreatePostResponseDto(post), HttpStatus.CREATED);
