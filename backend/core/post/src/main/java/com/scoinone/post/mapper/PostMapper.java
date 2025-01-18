@@ -29,7 +29,7 @@ public interface PostMapper {
     @Mapping(source = "postType", target = "postType")
     @Mapping(source = "title", target = "title")
     @Mapping(source = "content", target = "content")
-    @Mapping(source = "username", target = "author")
+    @Mapping(source = "username", target = "username")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     GetPostResponseDto postToGetPostResponseDto(PostEntity post);
@@ -38,7 +38,7 @@ public interface PostMapper {
     @Mapping(source = "postType", target = "postType")
     @Mapping(source = "title", target = "title")
     @Mapping(source = "content", target = "content")
-    @Mapping(source = "username", target = "author")
+    @Mapping(source = "username", target = "username")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     UpdatePostResponseDto postToUpdatePostResponseDto(PostEntity post);
@@ -48,11 +48,12 @@ public interface PostMapper {
     default GetPostsResponseDto pageToGetPostsResponseDto(Page<PostEntity> page) {
         GetPostsResponseDto responseDto = new GetPostsResponseDto();
         responseDto.setPosts(postsToGetPostsResponseDto(page.getContent()));
-        responseDto.setPageInfo(PageInfoDto.builder()
-                .totalElements(page.getTotalElements())
-                .totalPages(page.getTotalPages())
-                .build());
-
+        responseDto.setPageInfo(
+                PageInfoDto.builder()
+                        .totalElements(page.getTotalElements())
+                        .totalPages(page.getTotalPages())
+                        .build()
+        );
         return responseDto;
     }
 
