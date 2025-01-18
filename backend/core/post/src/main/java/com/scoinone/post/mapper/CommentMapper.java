@@ -45,10 +45,12 @@ public interface CommentMapper {
     default GetCommentsResponseDto pageToGetCommentsResponseDto(Page<CommentEntity> page) {
         GetCommentsResponseDto responseDto = new GetCommentsResponseDto();
         responseDto.setComments(commentsToGetCommentsResponseDto(page.getContent()));
-        responseDto.setPageInfo(PageInfoDto.builder()
-                .totalElements(page.getTotalElements())
-                .totalPages(page.getTotalPages())
-                .build());
+        responseDto.setPageInfo(
+                PageInfoDto.builder()
+                        .totalElements(page.getTotalElements())
+                        .totalPages(page.getTotalPages())
+                        .build()
+        );
 
         return responseDto;
     }
