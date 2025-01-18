@@ -74,11 +74,10 @@ class CommentControllerTest {
     @DisplayName("댓글 생성 테스트")
     void createComment_shouldReturnCreatedComment() {
         CreateCommentRequestDto requestDto = new CreateCommentRequestDto();
-        requestDto.setPostId(savedPost.getId());
         requestDto.setContent("This is a test comment.");
 
         ResponseEntity<CreateCommentResponseDto> response = restTemplate.exchange(
-                "/api/comment",
+                "/api/comment/" + savedPost.getId(),
                 HttpMethod.POST,
                 new HttpEntity<>(requestDto, headers),
                 CreateCommentResponseDto.class
