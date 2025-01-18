@@ -4,6 +4,7 @@ import com.scoinone.post.dto.common.PageInfoDto;
 import com.scoinone.post.dto.response.post.CreatePostResponseDto;
 import com.scoinone.post.dto.response.post.GetPostResponseDto;
 import com.scoinone.post.dto.response.post.GetPostsResponseDto;
+import com.scoinone.post.dto.response.post.GetUserQuestionsResponseDto;
 import com.scoinone.post.dto.response.post.UpdatePostResponseDto;
 import com.scoinone.post.entity.PostEntity;
 import java.util.List;
@@ -57,8 +58,8 @@ public interface PostMapper {
         return responseDto;
     }
 
-    default GetPostsResponseDto listToGetPostsResponseDto(List<PostEntity> posts) {
-        GetPostsResponseDto responseDto = new GetPostsResponseDto();
+    default GetUserQuestionsResponseDto listToGetPostsResponseDto(List<PostEntity> posts) {
+        GetUserQuestionsResponseDto responseDto = new GetUserQuestionsResponseDto();
         responseDto.setPosts(postsToGetPostsResponseDto(posts));
         return responseDto;
     }
