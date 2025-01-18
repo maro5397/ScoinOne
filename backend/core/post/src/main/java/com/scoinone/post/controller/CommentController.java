@@ -30,18 +30,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController {
     private final CommentService commentService;
 
-    @PostMapping
+    @PostMapping("/{postId}")
     public ResponseEntity<CreateCommentResponseDto> createComment(
             @RequestBody CreateCommentRequestDto requestDto,
+            @PathVariable("postId") Long postId,
             @RequestHeader(value = "UserId") String userId,
             @RequestHeader(value = "Username") String username
     ) {
-        CommentEntity comment = commentService.createComment(
-                requestDto.getPostId(),
-                requestDto.getContent(),
-                userId,
-                username
-        );
+        CommentEntity comment = commentService.createComment(postId, requestDto.getContent(), userId, username);
         return new ResponseEntity<>(
                 CommentMapper.INSTANCE.commentToCreateCommentResponseDto(comment),
                 HttpStatus.CREATED
