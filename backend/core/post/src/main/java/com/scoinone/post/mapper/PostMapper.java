@@ -20,7 +20,7 @@ public interface PostMapper {
     @Mapping(source = "postType", target = "postType")
     @Mapping(source = "title", target = "title")
     @Mapping(source = "content", target = "content")
-    @Mapping(source = "username", target = "author")
+    @Mapping(source = "username", target = "username")
     @Mapping(source = "createdAt", target = "createdAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     CreatePostResponseDto postToCreatePostResponseDto(PostEntity post);
