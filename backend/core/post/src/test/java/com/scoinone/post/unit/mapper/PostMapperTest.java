@@ -6,6 +6,7 @@ import com.scoinone.post.common.type.PostType;
 import com.scoinone.post.dto.response.post.CreatePostResponseDto;
 import com.scoinone.post.dto.response.post.GetPostResponseDto;
 import com.scoinone.post.dto.response.post.GetPostsResponseDto;
+import com.scoinone.post.dto.response.post.GetUserQuestionsResponseDto;
 import com.scoinone.post.dto.response.post.UpdatePostResponseDto;
 import com.scoinone.post.entity.PostEntity;
 import com.scoinone.post.mapper.PostMapper;
@@ -54,7 +55,7 @@ class PostMapperTest {
             softly.assertThat(responseDto.getPostType()).isEqualTo(PostType.ANNOUNCEMENT);
             softly.assertThat(responseDto.getTitle()).isEqualTo("Test Title1");
             softly.assertThat(responseDto.getContent()).isEqualTo("Test Content1");
-            softly.assertThat(responseDto.getAuthor()).isEqualTo(testUsername1);
+            softly.assertThat(responseDto.getUsername()).isEqualTo(testUsername1);
         });
     }
 
@@ -71,7 +72,7 @@ class PostMapperTest {
             softly.assertThat(responseDto.getPostType()).isEqualTo(PostType.ANNOUNCEMENT);
             softly.assertThat(responseDto.getTitle()).isEqualTo("Test Title1");
             softly.assertThat(responseDto.getContent()).isEqualTo("Test Content1");
-            softly.assertThat(responseDto.getAuthor()).isEqualTo(testUsername1);
+            softly.assertThat(responseDto.getUsername()).isEqualTo(testUsername1);
         });
     }
 
@@ -88,7 +89,7 @@ class PostMapperTest {
             softly.assertThat(responseDto.getPostType()).isEqualTo(PostType.ANNOUNCEMENT);
             softly.assertThat(responseDto.getTitle()).isEqualTo("Test Title1");
             softly.assertThat(responseDto.getContent()).isEqualTo("Test Content1");
-            softly.assertThat(responseDto.getAuthor()).isEqualTo(testUsername1);
+            softly.assertThat(responseDto.getUsername()).isEqualTo(testUsername1);
         });
     }
 
@@ -111,8 +112,8 @@ class PostMapperTest {
 
     @Test
     @DisplayName("게시글 리스트 엔티티 객체들을 조회용 응답 DTO로 매핑")
-    public void testListToGetPostListResponseDto() {
-        GetPostsResponseDto responseDto = mapper.listToGetPostsResponseDto(posts);
+    public void testListToGetUserQuestionsResponseDto() {
+        GetUserQuestionsResponseDto responseDto = mapper.listToGetPostsResponseDto(posts);
 
         assertSoftly(softly -> {
             softly.assertThat(responseDto).isNotNull();
