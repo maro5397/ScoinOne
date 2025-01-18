@@ -38,11 +38,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostEntity createPost(String title, String content, String userId, String username, PostType postType) {
         PostEntity post = PostEntity.builder()
-                .title(title)
-                .content(content)
                 .userId(userId)
                 .username(username)
                 .postType(postType)
+                .title(title)
+                .content(content)
                 .viewCount(0)
                 .build();
         return postRepository.save(post);
