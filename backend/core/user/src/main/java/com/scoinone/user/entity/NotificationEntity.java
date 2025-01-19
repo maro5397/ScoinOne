@@ -11,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,6 +38,4 @@ public class NotificationEntity extends CreatableEntity {
 
     @Enumerated(EnumType.STRING)
     private NotificationStatus status;
-
-    private LocalDateTime expiresAt;
 }
