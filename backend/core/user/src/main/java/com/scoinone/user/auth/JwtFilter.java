@@ -2,6 +2,7 @@ package com.scoinone.user.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scoinone.user.dto.request.auth.SignInRequestDto;
+import com.scoinone.user.dto.response.auth.SignInResponseDto;
 import com.scoinone.user.entity.UserEntity;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -71,7 +72,7 @@ public class JwtFilter extends UsernamePasswordAuthenticationFilter {
             HttpServletResponse response,
             FilterChain chain,
             Authentication authResult
-    ) {
+    ) throws IOException {
         UserEntity user = (UserEntity)authResult.getPrincipal();
 
         String authorities = user.getAuthorities().stream()
@@ -87,6 +88,11 @@ public class JwtFilter extends UsernamePasswordAuthenticationFilter {
                 .signWith(this.key, SignatureAlgorithm.HS512)
                 .compact();
 
+        SignInResponseDto responseDto = new SignInResponseDto();
+        responseDto.setToken(token);
+
         response.addHeader("Authorization", "Bearer " + token);
+        response.setContentType("application/json");
+        new ObjectMapper().writeValue(response.getWriter(), responseDto);
     }
 }
