@@ -12,6 +12,8 @@ import com.scoinone.user.service.impl.NotificationServiceImpl;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,6 +24,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 class NotificationServiceImplTest {
+    private static final String testUserId = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaauser1";
+
     @InjectMocks
     private NotificationServiceImpl notificationService;
 
@@ -60,6 +64,20 @@ class NotificationServiceImplTest {
             softly.assertThat(notification).isNotNull();
             softly.assertThat(notification.getContent()).isEqualTo("Test notification");
             verify(notificationRepository).save(notification);
+        });
+    }
+
+    @Test
+    @DisplayName("사용자 알림 30일까지 조회")
+    public void testGetCommentsFromLast30DaysByUserId() {
+        List<NotificationEntity> notifications = Collections.singletonList(NotificationEntity.builder().build());
+        when(notificationRepository.findByUserIdAndLast30Days(testUserId)).thenReturn(notifications);
+
+        List<NotificationEntity> result = notificationService.getNotificationsFromLast30DaysByUserId(testUserId);
+
+        assertSoftly(softly -> {
+            softly.assertThat(result).isNotNull();
+            verify(notificationRepository).findByUserIdAndLast30Days(testUserId);
         });
     }
 

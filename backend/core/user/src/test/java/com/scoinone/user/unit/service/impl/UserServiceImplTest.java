@@ -6,11 +6,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.scoinone.user.entity.AuthorityEntity;
-import com.scoinone.user.entity.NotificationEntity;
 import com.scoinone.user.entity.OwnedVirtualAssetEntity;
 import com.scoinone.user.entity.UserEntity;
 import com.scoinone.user.repository.AuthorityRepository;
-import com.scoinone.user.repository.NotificationRepository;
 import com.scoinone.user.repository.OwnedVirtualAssetRepository;
 import com.scoinone.user.repository.UserRepository;
 import com.scoinone.user.service.impl.UserServiceImpl;
@@ -46,9 +44,6 @@ class UserServiceImplTest {
 
     @Mock
     private OwnedVirtualAssetRepository ownedVirtualAssetRepository;
-
-    @Mock
-    private NotificationRepository notificationRepository;
 
     @Mock
     private AuthorityRepository authorityRepository;
@@ -209,20 +204,6 @@ class UserServiceImplTest {
             softly.assertThatThrownBy(() -> userService.loadUserByUsername(email))
                     .isInstanceOf(UsernameNotFoundException.class)
                     .hasMessageContaining("User not found with email: " + email);
-        });
-    }
-
-    @Test
-    @DisplayName("사용자 알림 30일까지 조회")
-    public void testGetCommentsFromLast30DaysByUserId() {
-        List<NotificationEntity> notifications = Collections.singletonList(NotificationEntity.builder().build());
-        when(notificationRepository.findByUserIdAndLast30Days(testUserId)).thenReturn(notifications);
-
-        List<NotificationEntity> result = userService.getNotificationsFromLast30DaysByUserId(testUserId);
-
-        assertSoftly(softly -> {
-            softly.assertThat(result).isNotNull();
-            verify(notificationRepository).findByUserIdAndLast30Days(testUserId);
         });
     }
 
