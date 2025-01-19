@@ -1,12 +1,10 @@
 package com.scoinone.user.service.impl;
 
 import com.scoinone.user.entity.AuthorityEntity;
-import com.scoinone.user.entity.NotificationEntity;
 import com.scoinone.user.entity.OwnedVirtualAssetEntity;
 import com.scoinone.user.entity.UserAuthorityEntity;
 import com.scoinone.user.entity.UserEntity;
 import com.scoinone.user.repository.AuthorityRepository;
-import com.scoinone.user.repository.NotificationRepository;
 import com.scoinone.user.repository.OwnedVirtualAssetRepository;
 import com.scoinone.user.repository.UserRepository;
 import com.scoinone.user.service.UserService;
@@ -29,7 +27,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final OwnedVirtualAssetRepository ownedVirtualAssetRepository;
-    private final NotificationRepository notificationRepository;
     private final AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -91,11 +88,6 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-    }
-
-    @Override
-    public List<NotificationEntity> getNotificationsFromLast30DaysByUserId(String userId) {
-        return notificationRepository.findByUserIdAndLast30Days(userId);
     }
 
     @Override

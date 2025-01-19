@@ -1,6 +1,5 @@
 package com.scoinone.user.service;
 
-import com.scoinone.user.entity.NotificationEntity;
 import com.scoinone.user.entity.OwnedVirtualAssetEntity;
 import com.scoinone.user.entity.UserEntity;
 import java.util.List;
@@ -17,8 +16,6 @@ public interface UserService extends UserDetailsService {
     UserEntity updateUser(String id, String newUsername);
 
     String deleteUser(String id);
-
-    List<NotificationEntity> getNotificationsFromLast30DaysByUserId(String userId);
 
     List<OwnedVirtualAssetEntity> getOwnedVirtualAssetsByUserId(String userId);
 }

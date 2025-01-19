@@ -7,8 +7,7 @@ import com.scoinone.user.repository.NotificationRepository;
 import com.scoinone.user.repository.UserRepository;
 import com.scoinone.user.service.NotificationService;
 import jakarta.persistence.EntityNotFoundException;
-import java.time.Clock;
-import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +20,6 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
 
-    private final Clock clock;
-
     @Override
     public NotificationEntity createNotification(String email, String content) {
         UserEntity user = userRepository.findByEmail(email)
@@ -31,7 +28,6 @@ public class NotificationServiceImpl implements NotificationService {
                 .content(content)
                 .user(user)
                 .status(NotificationStatus.UNREAD)
-                .expiresAt(LocalDateTime.now(clock).plusDays(7))
                 .build();
         return notificationRepository.save(notification);
     }
@@ -40,5 +36,10 @@ public class NotificationServiceImpl implements NotificationService {
     public String deleteNotification(Long id) {
         notificationRepository.deleteById(id);
         return "Notification deleted successfully";
+    }
+
+    @Override
+    public List<NotificationEntity> getNotificationsFromLast30DaysByUserId(String userId) {
+        return notificationRepository.findByUserIdAndLast30Days(userId);
     }
 }
