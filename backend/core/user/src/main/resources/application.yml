@@ -3,3 +3,6 @@ spring:
     name: user
   profiles:
     include: local
+
+server:
+  port: 8001
