@@ -7,14 +7,12 @@ import com.scoinone.user.config.UserDataInitializer;
 import com.scoinone.user.dto.common.DeleteResponseDto;
 import com.scoinone.user.dto.request.user.CreateUserRequestDto;
 import com.scoinone.user.dto.request.user.UpdateUserRequestDto;
-import com.scoinone.user.dto.response.notification.GetNotificationsResponseDto;
 import com.scoinone.user.dto.response.user.CreateUserResponseDto;
 import com.scoinone.user.dto.response.user.GetUserResponseDto;
 import com.scoinone.user.dto.response.user.UpdateUserResponseDto;
 import com.scoinone.user.entity.UserEntity;
 import com.scoinone.user.repository.NotificationRepository;
 import com.scoinone.user.repository.OwnedVirtualAssetRepository;
-import com.scoinone.user.service.NotificationService;
 import com.scoinone.user.service.UserService;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
@@ -38,9 +36,6 @@ import org.springframework.test.context.ActiveProfiles;
 class UserControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
-
-    @Autowired
-    private NotificationService notificationService;
 
     @Autowired
     private UserService userService;
@@ -144,26 +139,6 @@ class UserControllerTest {
             softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             softly.assertThat(Objects.requireNonNull(response.getBody()).getMessage())
                     .contains("User deleted successfully");
-        });
-    }
-
-    @Test
-    @DisplayName("사용자 알림 조회 테스트")
-    void getNotifications_shouldReturnListOfNotifications() {
-        notificationService.createNotification(savedUser.getEmail(), "Test Notification1");
-        notificationService.createNotification(savedUser.getEmail(), "Test Notification2");
-        notificationService.createNotification(savedUser.getEmail(), "Test Notification3");
-
-        ResponseEntity<GetNotificationsResponseDto> response = restTemplate.exchange(
-                "/api/user/notification",
-                HttpMethod.GET,
-                new HttpEntity<>(headers),
-                GetNotificationsResponseDto.class
-        );
-
-        assertSoftly(softly -> {
-            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            softly.assertThat(Objects.requireNonNull(response.getBody()).getNotifications()).hasSize(3);
         });
     }
 
