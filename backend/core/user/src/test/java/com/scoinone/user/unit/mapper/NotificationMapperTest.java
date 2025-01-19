@@ -57,7 +57,6 @@ class NotificationMapperTest {
             softly.assertThat(responseDto.getNotificationId()).isEqualTo(notification.getId());
             softly.assertThat(responseDto.getUserId()).isEqualTo(notification.getUser().getId());
             softly.assertThat(responseDto.getCreatedAt()).isEqualTo(notification.getCreatedAt());
-            softly.assertThat(responseDto.getExpiresAt()).isEqualTo(notification.getExpiresAt());
         });
     }
 
@@ -86,7 +85,6 @@ class NotificationMapperTest {
 
         return NotificationEntity.builder()
                 .id(id)
-                .expiresAt(LocalDateTime.now().plusDays(1))
                 .user(user)
                 .build();
     }
