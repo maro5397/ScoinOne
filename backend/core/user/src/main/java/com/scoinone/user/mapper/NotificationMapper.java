@@ -16,13 +16,13 @@ public interface NotificationMapper {
     @Mapping(source = "id", target = "notificationId")
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "status.value", target = "status")
+    @Mapping(source = "createdAt", target = "createdAt")
     CreateNotificationResponseDto notificationToCreateNotificationResponseDto(NotificationEntity notification);
 
     @Mapping(source = "id", target = "notificationId")
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "status.value", target = "status")
     @Mapping(source = "createdAt", target = "createdAt")
-    @Mapping(source = "expiresAt", target = "expiresAt")
     GetNotificationResponseDto notificationToGetNotificationResponseDto(NotificationEntity notification);
 
     List<GetNotificationResponseDto> notificationsToGetNotificationsResponseDto(List<NotificationEntity> notifications);
