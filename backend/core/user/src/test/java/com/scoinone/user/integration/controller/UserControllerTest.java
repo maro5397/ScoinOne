@@ -129,27 +129,4 @@ class UserControllerTest {
                     .contains("User deleted successfully");
         });
     }
-
-//    @Test
-//    @DisplayName("사용자 보유 자산 조회 테스트")
-//    void getVirtualAssets_shouldReturnListOfOwnedAssets() {
-//        ResponseEntity<GetOwnedAssetsResponseDto> response = restTemplate.exchange(
-//                "/api/user/asset",
-//                HttpMethod.GET,
-//                new HttpEntity<>(headers),
-//                GetOwnedAssetsResponseDto.class
-//        );
-//
-//        assertSoftly(softly -> {
-//            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-//            softly.assertThat(Objects.requireNonNull(response.getBody()).getOwnedAssets()).hasSize(1);
-//            softly.assertThat(Objects.requireNonNull(response.getBody()).getOwnedAssets().getFirst().getAmount())
-//                    .isEqualByComparingTo(BigDecimal.ZERO);
-//            softly.assertThat(
-//                    Objects.requireNonNull(response.getBody())
-//                            .getOwnedAssets()
-//                            .getFirst()
-//                            .getVirtualAssetId()).isEqualTo(virtualAsset.getId());
-//        });
-//    }
 }

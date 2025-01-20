@@ -199,18 +199,4 @@ class UserServiceImplTest {
                     .hasMessageContaining("User not found with email: " + email);
         });
     }
-
-//    @Test
-//    @DisplayName("사용자 보유 가상자산 조회")
-//    public void testGetOwnedVirtualAssetsByUserId() {
-//        List<OwnedVirtualAssetEntity> ownedAssets = Collections.singletonList(OwnedVirtualAssetEntity.builder().build());
-//        when(ownedVirtualAssetRepository.findByUser_Id(testUserId)).thenReturn(ownedAssets);
-//
-//        List<OwnedVirtualAssetEntity> result = userService.getOwnedVirtualAssetsByUserId(testUserId);
-//
-//        assertSoftly(softly -> {
-//            softly.assertThat(result).isNotNull();
-//            verify(ownedVirtualAssetRepository).findByUser_Id(testUserId);
-//        });
-//    }
 }
