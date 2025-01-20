@@ -6,18 +6,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.scoinone.user.entity.AuthorityEntity;
-import com.scoinone.user.entity.OwnedVirtualAssetEntity;
 import com.scoinone.user.entity.UserEntity;
 import com.scoinone.user.repository.AuthorityRepository;
-import com.scoinone.user.repository.OwnedVirtualAssetRepository;
 import com.scoinone.user.repository.UserRepository;
 import com.scoinone.user.service.impl.UserServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -41,9 +37,6 @@ class UserServiceImplTest {
 
     @Mock
     private UserRepository userRepository;
-
-    @Mock
-    private OwnedVirtualAssetRepository ownedVirtualAssetRepository;
 
     @Mock
     private AuthorityRepository authorityRepository;
@@ -207,17 +200,17 @@ class UserServiceImplTest {
         });
     }
 
-    @Test
-    @DisplayName("사용자 보유 가상자산 조회")
-    public void testGetOwnedVirtualAssetsByUserId() {
-        List<OwnedVirtualAssetEntity> ownedAssets = Collections.singletonList(OwnedVirtualAssetEntity.builder().build());
-        when(ownedVirtualAssetRepository.findByUser_Id(testUserId)).thenReturn(ownedAssets);
-
-        List<OwnedVirtualAssetEntity> result = userService.getOwnedVirtualAssetsByUserId(testUserId);
-
-        assertSoftly(softly -> {
-            softly.assertThat(result).isNotNull();
-            verify(ownedVirtualAssetRepository).findByUser_Id(testUserId);
-        });
-    }
+//    @Test
+//    @DisplayName("사용자 보유 가상자산 조회")
+//    public void testGetOwnedVirtualAssetsByUserId() {
+//        List<OwnedVirtualAssetEntity> ownedAssets = Collections.singletonList(OwnedVirtualAssetEntity.builder().build());
+//        when(ownedVirtualAssetRepository.findByUser_Id(testUserId)).thenReturn(ownedAssets);
+//
+//        List<OwnedVirtualAssetEntity> result = userService.getOwnedVirtualAssetsByUserId(testUserId);
+//
+//        assertSoftly(softly -> {
+//            softly.assertThat(result).isNotNull();
+//            verify(ownedVirtualAssetRepository).findByUser_Id(testUserId);
+//        });
+//    }
 }

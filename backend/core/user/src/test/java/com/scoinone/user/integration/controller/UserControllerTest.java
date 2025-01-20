@@ -11,11 +11,8 @@ import com.scoinone.user.dto.response.user.CreateUserResponseDto;
 import com.scoinone.user.dto.response.user.GetUserResponseDto;
 import com.scoinone.user.dto.response.user.UpdateUserResponseDto;
 import com.scoinone.user.entity.UserEntity;
-import com.scoinone.user.repository.NotificationRepository;
-import com.scoinone.user.repository.OwnedVirtualAssetRepository;
 import com.scoinone.user.service.UserService;
 import java.util.Objects;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,15 +47,6 @@ class UserControllerTest {
         headers = new HttpHeaders();
         headers.set("UserId", savedUser.getId());
         headers.set("Content-Type", "application/json");
-    }
-
-    @AfterEach
-    void tearDown(
-            @Autowired NotificationRepository notificationRepository,
-            @Autowired OwnedVirtualAssetRepository ownedVirtualAssetRepository
-    ) {
-        notificationRepository.deleteAll();
-        ownedVirtualAssetRepository.deleteAll();
     }
 
     @Test
