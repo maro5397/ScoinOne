@@ -1,17 +1,14 @@
 package com.scoinone.user.service.impl;
 
 import com.scoinone.user.entity.AuthorityEntity;
-import com.scoinone.user.entity.OwnedVirtualAssetEntity;
 import com.scoinone.user.entity.UserAuthorityEntity;
 import com.scoinone.user.entity.UserEntity;
 import com.scoinone.user.repository.AuthorityRepository;
-import com.scoinone.user.repository.OwnedVirtualAssetRepository;
 import com.scoinone.user.repository.UserRepository;
 import com.scoinone.user.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.Clock;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final OwnedVirtualAssetRepository ownedVirtualAssetRepository;
     private final AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -88,10 +84,5 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-    }
-
-    @Override
-    public List<OwnedVirtualAssetEntity> getOwnedVirtualAssetsByUserId(String userId) {
-        return ownedVirtualAssetRepository.findByUser_Id(userId);
     }
 }

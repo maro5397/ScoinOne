@@ -1,8 +1,6 @@
 package com.scoinone.user.service;
 
-import com.scoinone.user.entity.OwnedVirtualAssetEntity;
 import com.scoinone.user.entity.UserEntity;
-import java.util.List;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
@@ -16,6 +14,4 @@ public interface UserService extends UserDetailsService {
     UserEntity updateUser(String id, String newUsername);
 
     String deleteUser(String id);
-
-    List<OwnedVirtualAssetEntity> getOwnedVirtualAssetsByUserId(String userId);
 }

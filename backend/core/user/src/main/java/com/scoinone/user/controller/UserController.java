@@ -4,16 +4,12 @@ import com.scoinone.user.dto.common.DeleteResponseDto;
 import com.scoinone.user.dto.request.user.CreateUserRequestDto;
 import com.scoinone.user.dto.request.user.UpdateUserRequestDto;
 import com.scoinone.user.dto.response.user.CreateUserResponseDto;
-import com.scoinone.user.dto.response.user.GetOwnedAssetsResponseDto;
 import com.scoinone.user.dto.response.user.GetUserResponseDto;
 import com.scoinone.user.dto.response.user.UpdateUserResponseDto;
-import com.scoinone.user.entity.OwnedVirtualAssetEntity;
 import com.scoinone.user.entity.UserEntity;
-import com.scoinone.user.mapper.OwnedVirtualAssetMapper;
 import com.scoinone.user.mapper.UserMapper;
 import com.scoinone.user.service.UserService;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,14 +58,5 @@ public class UserController {
         String result = userService.deleteUser(userId);
         DeleteResponseDto response = new DeleteResponseDto(result);
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @GetMapping("/asset")
-    public ResponseEntity<GetOwnedAssetsResponseDto> getVirtualAssets(@RequestHeader(value = "UserId") String userId) {
-        List<OwnedVirtualAssetEntity> ownedVirtualAssets = userService.getOwnedVirtualAssetsByUserId(userId);
-        return new ResponseEntity<>(
-                OwnedVirtualAssetMapper.INSTANCE.listToGetOwnedAssetsResponseDto(ownedVirtualAssets),
-                HttpStatus.OK
-        );
     }
 }
