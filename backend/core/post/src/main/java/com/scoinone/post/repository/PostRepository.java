@@ -15,4 +15,5 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
     Page<PostEntity> findByPostType(Pageable pageable, PostType postType);
     Optional<PostEntity> findByIdAndUserId(Long id, String userId);
     Long deleteByIdAndUserId(Long id, String userId);
+    Long deleteByUserId(String userId);
 }
