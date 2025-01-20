@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -98,6 +99,13 @@ public class PostController {
             @RequestHeader(value = "UserId") String userId
     ) {
         String result = postService.deletePost(postId, userId);
+        DeleteResponseDto response = new DeleteResponseDto(result);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<DeleteResponseDto> deleteAllPostByUserId(@RequestParam("userId") String userId) {
+        String result = postService.deleteAllPost(userId);
         DeleteResponseDto response = new DeleteResponseDto(result);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

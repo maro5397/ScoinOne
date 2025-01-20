@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -69,6 +70,13 @@ public class CommentController {
             @RequestHeader(value = "UserId") String userId
     ) {
         String result = commentService.deleteComment(commentId, userId);
+        DeleteResponseDto response = new DeleteResponseDto(result);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<DeleteResponseDto> deleteAllCommentByUserId(@RequestParam("userId") String userId) {
+        String result = commentService.deleteAllComment(userId);
         DeleteResponseDto response = new DeleteResponseDto(result);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
