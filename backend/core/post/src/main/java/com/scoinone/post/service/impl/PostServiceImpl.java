@@ -65,4 +65,10 @@ public class PostServiceImpl implements PostService {
         }
         return "Post deleted successfully";
     }
+
+    @Override
+    public String deleteAllPost(String userId) {
+        Long count = postRepository.deleteByUserId(userId);
+        return "All of Post(" + count + ") deleted successfully";
+    }
 }

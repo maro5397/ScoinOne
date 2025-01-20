@@ -14,4 +14,6 @@ public interface CommentService {
     CommentEntity updateComment(Long id, String userId, String newContent);
 
     String deleteComment(Long id, String userId);
+
+    String deleteAllComment(String userId);
 }

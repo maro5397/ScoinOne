@@ -18,4 +18,6 @@ public interface PostService {
     PostEntity updatePost(Long id, String userId, String title, String content);
 
     String deletePost(Long id, String userId);
+
+    String deleteAllPost(String userId);
 }

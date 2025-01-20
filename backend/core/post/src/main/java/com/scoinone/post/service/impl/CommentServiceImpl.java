@@ -60,4 +60,10 @@ public class CommentServiceImpl implements CommentService {
         }
         return "Comment deleted successfully";
     }
+
+    @Override
+    public String deleteAllComment(String userId) {
+        Long count = commentRepository.deleteByUserId(userId);
+        return "All of Comment(" + count + ") deleted successfully";
+    }
 }
