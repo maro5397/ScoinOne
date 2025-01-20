@@ -109,7 +109,7 @@ class CommentRepositoryTest {
 
     @Test
     @DisplayName("댓글 ID 및 사용자 ID로 댓글 조회")
-    void testFindByIdAndUser_Id() {
+    void testFindByIdAndUserId() {
         Optional<CommentEntity> getComment = commentRepository.findByIdAndUserId(comment.getId(), testUserId);
 
         assertSoftly(softly -> {
@@ -123,11 +123,21 @@ class CommentRepositoryTest {
 
     @Test
     @DisplayName("댓글 ID 및 사용자 ID로 댓글 삭제")
-    void testDeleteByIdAndUser_Id() {
+    void testDeleteByIdAndUserId() {
         Long count = commentRepository.deleteByIdAndUserId(comment.getId(), testUserId);
 
         assertSoftly(softly -> {
             softly.assertThat(count).isEqualTo(1);
+        });
+    }
+
+    @Test
+    @DisplayName("사용자 ID로 댓글 삭제")
+    void testDeleteByUserId() {
+        Long count = commentRepository.deleteByUserId(testUserId);
+
+        assertSoftly(softly -> {
+            softly.assertThat(count).isEqualTo(2);
         });
     }
 }

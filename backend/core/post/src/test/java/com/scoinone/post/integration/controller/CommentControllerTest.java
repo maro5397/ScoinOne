@@ -149,4 +149,21 @@ class CommentControllerTest {
                     .contains("Comment deleted successfully");
         });
     }
+
+    @Test
+    @DisplayName("댓글 전체 삭제 테스트")
+    void deleteAllCommentByUserId_shouldReturnOk() {
+        ResponseEntity<DeleteResponseDto> response = restTemplate.exchange(
+                "/api/comment?userId=" + testUserId,
+                HttpMethod.DELETE,
+                new HttpEntity<>(headers),
+                DeleteResponseDto.class
+        );
+
+        assertSoftly(softly -> {
+            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            softly.assertThat(Objects.requireNonNull(response.getBody()).getMessage())
+                    .contains("All of Comment(1) deleted successfully");
+        });
+    }
 }

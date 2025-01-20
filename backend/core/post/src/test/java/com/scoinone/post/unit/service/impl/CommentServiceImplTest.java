@@ -143,4 +143,14 @@ class CommentServiceImplTest {
 
         verify(commentRepository).deleteByIdAndUserId(commentId, testUserId);
     }
+
+    @Test
+    @DisplayName("사용자 댓글 전체 삭제 테스트")
+    public void testDeleteAllCommentByUserId() {
+        when(commentRepository.deleteByUserId(testUserId)).thenReturn(10L);
+
+        commentService.deleteAllComment(testUserId);
+
+        verify(commentRepository).deleteByUserId(testUserId);
+    }
 }
