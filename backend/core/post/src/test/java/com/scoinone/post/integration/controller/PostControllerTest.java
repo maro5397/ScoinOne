@@ -175,4 +175,21 @@ class PostControllerTest {
             softly.assertThat(Objects.requireNonNull(response.getBody()).getPosts()).hasSize(1);
         });
     }
+
+    @Test
+    @DisplayName("게시글 전체 삭제 테스트")
+    void deleteAllPostByUserId_shouldReturnOk() {
+        ResponseEntity<DeleteResponseDto> response = restTemplate.exchange(
+                "/api/post?userId=" + testUserId,
+                HttpMethod.DELETE,
+                new HttpEntity<>(headers),
+                DeleteResponseDto.class
+        );
+
+        assertSoftly(softly -> {
+            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            softly.assertThat(Objects.requireNonNull(response.getBody()).getMessage())
+                    .contains("All of Post(1) deleted successfully");
+        });
+    }
 }

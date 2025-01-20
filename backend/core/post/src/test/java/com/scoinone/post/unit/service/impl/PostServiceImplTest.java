@@ -167,4 +167,14 @@ class PostServiceImplTest {
             verify(postRepository).findByUserIdAndPostType(testUserId, PostType.QNA);
         });
     }
+
+    @Test
+    @DisplayName("사용자 게시글 전체 삭제 테스트")
+    public void testDeleteAllPostByUserId() {
+        when(postRepository.deleteByUserId(testUserId)).thenReturn(10L);
+
+        postService.deleteAllPost(testUserId);
+
+        verify(postRepository).deleteByUserId(testUserId);
+    }
 }

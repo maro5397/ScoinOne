@@ -104,7 +104,7 @@ class PostRepositoryTest {
 
     @Test
     @DisplayName("게시글 ID 및 사용자 ID로 댓글 조회")
-    void testFindByIdAndUser_Id() {
+    void testFindByIdAndUserId() {
         Optional<PostEntity> getPost = postRepository.findByIdAndUserId(post.getId(), testUserId);
 
         assertSoftly(softly -> {
@@ -118,11 +118,21 @@ class PostRepositoryTest {
 
     @Test
     @DisplayName("게시글 ID 및 사용자 ID로 댓글 삭제")
-    void testDeleteByIdAndUser_Id() {
+    void testDeleteByIdAndUserId() {
         Long count = postRepository.deleteByIdAndUserId(post.getId(), testUserId);
 
         assertSoftly(softly -> {
             softly.assertThat(count).isEqualTo(1);
+        });
+    }
+
+    @Test
+    @DisplayName("사용자 ID로 댓글 삭제")
+    void testDeleteByUserId() {
+        Long count = postRepository.deleteByUserId(testUserId);
+
+        assertSoftly(softly -> {
+            softly.assertThat(count).isEqualTo(3);
         });
     }
 }
