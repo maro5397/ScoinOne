@@ -2,7 +2,6 @@ package com.scoinone.streamer.unit.mapper;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import com.scoinone.streamer.dto.response.virtualasset.CreateVirtualAssetResponseDto;
 import com.scoinone.streamer.dto.response.virtualasset.GetVirtualAssetResponseDto;
 import com.scoinone.streamer.dto.response.virtualasset.GetVirtualAssetsResponseDto;
 import com.scoinone.streamer.dto.response.virtualasset.UpdateVirtualAssetResponseDto;
@@ -38,22 +37,6 @@ class VirtualAssetMapperTest {
     public void testVirtualAssetToGetVirtualAssetResponseDto() {
         VirtualAssetEntity virtualAsset = virtualAssets.getFirst();
         GetVirtualAssetResponseDto responseDto = mapper.virtualAssetToGetVirtualAssetResponseDto(virtualAsset);
-        assertSoftly(softly -> {
-            softly.assertThat(responseDto).isNotNull();
-            softly.assertThat(responseDto.getVirtualAssetId()).isEqualTo(testVirtualAssetId1);
-            softly.assertThat(responseDto.getName()).isEqualTo("Bitcoin");
-            softly.assertThat(responseDto.getSymbol()).isEqualTo("BTC");
-            softly.assertThat(responseDto.getDescription()).isEqualTo("Bitcoin Description");
-        });
-    }
-
-    @Test
-    @DisplayName("가상자산 엔티티 객체를 생성용 응답 DTO로 매핑")
-    public void testVirtualAssetToCreateVirtualAssetResponseDto() {
-        VirtualAssetEntity virtualAsset = virtualAssets.getFirst();
-        CreateVirtualAssetResponseDto responseDto = mapper.virtualAssetToCreateVirtualAssetResponseDto(virtualAsset);
-
-        // Then
         assertSoftly(softly -> {
             softly.assertThat(responseDto).isNotNull();
             softly.assertThat(responseDto.getVirtualAssetId()).isEqualTo(testVirtualAssetId1);

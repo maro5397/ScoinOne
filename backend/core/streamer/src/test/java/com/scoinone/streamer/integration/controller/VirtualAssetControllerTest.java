@@ -3,16 +3,13 @@ package com.scoinone.streamer.integration.controller;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.scoinone.streamer.config.TestContainerConfig;
-import com.scoinone.streamer.dto.common.DeleteResponseDto;
-import com.scoinone.streamer.dto.request.virtualasset.CreateVirtualAssetRequestDto;
 import com.scoinone.streamer.dto.request.virtualasset.UpdateVirtualAssetRequestDto;
-import com.scoinone.streamer.dto.response.virtualasset.CreateVirtualAssetResponseDto;
 import com.scoinone.streamer.dto.response.virtualasset.GetVirtualAssetResponseDto;
 import com.scoinone.streamer.dto.response.virtualasset.GetVirtualAssetsResponseDto;
 import com.scoinone.streamer.dto.response.virtualasset.UpdateVirtualAssetResponseDto;
-import com.scoinone.streamer.entity.VirtualAssetEntity;
-import com.scoinone.streamer.repository.VirtualAssetRepository;
-import com.scoinone.streamer.service.VirtualAssetService;
+import com.scoinone.streamer.entity.StreamerEntity;
+import com.scoinone.streamer.repository.StreamerRepository;
+import com.scoinone.streamer.service.StreamerService;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,12 +35,21 @@ class VirtualAssetControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    private VirtualAssetEntity savedVirtualAsset;
+    private StreamerEntity savedStreamer;
     private HttpHeaders headers;
 
     @BeforeEach
-    void setUp(@Autowired VirtualAssetService virtualAssetService) {
-        savedVirtualAsset = virtualAssetService.createVirtualAsset("Bitcoin", "BTC", "Digital currency");
+    void setUp(@Autowired StreamerService streamerService) {
+        savedStreamer = streamerService.createStreamer(
+                "soop",
+                "ecvhao",
+                "우왁굳",
+                "@woowakgood",
+                "steamindiegame",
+                "WakToken",
+                "WAK",
+                "우왁굳 코인"
+        );
 
         headers = new HttpHeaders();
         headers.set("UserId", testUserId);
@@ -51,31 +57,8 @@ class VirtualAssetControllerTest {
     }
 
     @AfterEach
-    void tearDown(@Autowired VirtualAssetRepository virtualAssetRepository) {
-        virtualAssetRepository.deleteAll();
-    }
-
-    @Test
-    @DisplayName("가상 자산 생성 테스트")
-    void createVirtualAsset_shouldReturnCreatedVirtualAsset() {
-        CreateVirtualAssetRequestDto requestDto = new CreateVirtualAssetRequestDto();
-        requestDto.setName("Ethereum");
-        requestDto.setSymbol("ETH");
-        requestDto.setDescription("Another digital currency");
-
-        ResponseEntity<CreateVirtualAssetResponseDto> response = restTemplate.exchange(
-                "/api/assets",
-                HttpMethod.POST,
-                new HttpEntity<>(requestDto, headers),
-                CreateVirtualAssetResponseDto.class
-        );
-
-        assertSoftly(softly -> {
-            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-            softly.assertThat(Objects.requireNonNull(response.getBody()).getName()).isEqualTo("Ethereum");
-            softly.assertThat(response.getBody().getSymbol()).isEqualTo("ETH");
-            softly.assertThat(response.getBody().getDescription()).isEqualTo("Another digital currency");
-        });
+    void tearDown(@Autowired StreamerRepository streamerRepository) {
+        streamerRepository.deleteAll();
     }
 
     @Test
@@ -98,7 +81,7 @@ class VirtualAssetControllerTest {
     @DisplayName("가상 자산 조회 테스트")
     void getVirtualAsset_shouldReturnVirtualAsset() {
         ResponseEntity<GetVirtualAssetResponseDto> response = restTemplate.exchange(
-                "/api/assets/" + savedVirtualAsset.getId(),
+                "/api/assets/" + savedStreamer.getVirtualAsset().getId(),
                 HttpMethod.GET,
                 null,
                 GetVirtualAssetResponseDto.class
@@ -106,8 +89,8 @@ class VirtualAssetControllerTest {
 
         assertSoftly(softly -> {
             softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            softly.assertThat(Objects.requireNonNull(response.getBody()).getName()).isEqualTo("Bitcoin");
-            softly.assertThat(response.getBody().getSymbol()).isEqualTo("BTC");
+            softly.assertThat(Objects.requireNonNull(response.getBody()).getName()).isEqualTo("WakToken");
+            softly.assertThat(response.getBody().getSymbol()).isEqualTo("WAK");
         });
     }
 
@@ -115,12 +98,12 @@ class VirtualAssetControllerTest {
     @DisplayName("가상 자산 수정 테스트")
     void updateVirtualAsset_shouldReturnUpdatedVirtualAsset() {
         UpdateVirtualAssetRequestDto updateRequestDto = new UpdateVirtualAssetRequestDto();
-        updateRequestDto.setName("Ripple Updated");
-        updateRequestDto.setSymbol("XRP");
-        updateRequestDto.setDescription("Updated description");
+        updateRequestDto.setName("RATMonster");
+        updateRequestDto.setSymbol("RAT");
+        updateRequestDto.setDescription("괴물쥐 코인");
 
         ResponseEntity<UpdateVirtualAssetResponseDto> response = restTemplate.exchange(
-                "/api/assets/" + savedVirtualAsset.getId(),
+                "/api/assets/" + savedStreamer.getVirtualAsset().getId(),
                 HttpMethod.PATCH,
                 new HttpEntity<>(updateRequestDto, headers),
                 UpdateVirtualAssetResponseDto.class
@@ -128,25 +111,8 @@ class VirtualAssetControllerTest {
 
         assertSoftly(softly -> {
             softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            softly.assertThat(Objects.requireNonNull(response.getBody()).getName()).isEqualTo("Ripple Updated");
-            softly.assertThat(response.getBody().getDescription()).isEqualTo("Updated description");
-        });
-    }
-
-    @Test
-    @DisplayName("가상 자산 삭제 테스트")
-    void deleteVirtualAsset_shouldReturnOk() {
-        ResponseEntity<DeleteResponseDto> response = restTemplate.exchange(
-                "/api/assets/" + savedVirtualAsset.getId(),
-                HttpMethod.DELETE,
-                new HttpEntity<>(headers),
-                DeleteResponseDto.class
-        );
-
-        assertSoftly(softly -> {
-            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            softly.assertThat(Objects.requireNonNull(response.getBody()).getMessage())
-                    .contains("VirtualAsset deleted successfully");
+            softly.assertThat(Objects.requireNonNull(response.getBody()).getName()).isEqualTo("RATMonster");
+            softly.assertThat(response.getBody().getDescription()).isEqualTo("괴물쥐 코인");
         });
     }
 }
