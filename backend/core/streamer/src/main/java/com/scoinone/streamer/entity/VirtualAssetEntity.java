@@ -1,6 +1,6 @@
 package com.scoinone.streamer.entity;
 
-import com.scoinone.streamer.entity.base.CreatableEntity;
+import com.scoinone.streamer.entity.base.UpdatableEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class VirtualAssetEntity extends CreatableEntity {
+public class VirtualAssetEntity extends UpdatableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
