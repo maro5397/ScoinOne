@@ -28,27 +28,11 @@ public class VirtualAssetServiceImpl implements VirtualAssetService {
     }
 
     @Override
-    public VirtualAssetEntity createVirtualAsset(String name, String symbol, String description) {
-        VirtualAssetEntity virtualAsset = VirtualAssetEntity.builder()
-                .name(name)
-                .symbol(symbol)
-                .description(description)
-                .build();
-        return virtualAssetRepository.save(virtualAsset);
-    }
-
-    @Override
     public VirtualAssetEntity updateVirtualAsset(String id, String name, String symbol, String description) {
         VirtualAssetEntity existedVirtualAsset = getVirtualAssetById(id);
         existedVirtualAsset.setName(name);
         existedVirtualAsset.setSymbol(symbol);
         existedVirtualAsset.setDescription(description);
         return existedVirtualAsset;
-    }
-
-    @Override
-    public String deleteVirtualAsset(String id) {
-        virtualAssetRepository.deleteById(id);
-        return "VirtualAsset deleted successfully";
     }
 }

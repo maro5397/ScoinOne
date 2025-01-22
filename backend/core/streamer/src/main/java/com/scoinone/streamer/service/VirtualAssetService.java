@@ -8,9 +8,5 @@ public interface VirtualAssetService {
 
     VirtualAssetEntity getVirtualAssetById(String id);
 
-    VirtualAssetEntity createVirtualAsset(String name, String symbol, String description);
-
     VirtualAssetEntity updateVirtualAsset(String id, String name, String symbol, String description);
-
-    String deleteVirtualAsset(String id);
 }
