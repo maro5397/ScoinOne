@@ -1,5 +1,6 @@
 package com.scoinone.order.controller;
 
+import com.scoinone.order.dto.response.trade.GetTradesByUserIdResponseDto;
 import com.scoinone.order.dto.response.trade.GetTradesResponseDto;
 import com.scoinone.order.entity.TradeEntity;
 import com.scoinone.order.mapper.TradeMapper;
@@ -30,22 +31,24 @@ public class TradeController {
     }
 
     @GetMapping
-    public ResponseEntity<GetTradesResponseDto> getTradesByUserId(@RequestHeader(value = "UserId") String userId) {
+    public ResponseEntity<GetTradesByUserIdResponseDto> getTradesByUserId(
+            @RequestHeader(value = "UserId") String userId
+    ) {
         List<TradeEntity> tradeByUserId = tradeService.getTradeByUserId(userId);
         return new ResponseEntity<>(
-                TradeMapper.INSTANCE.listToGetTradesResponseDto(tradeByUserId),
+                TradeMapper.INSTANCE.listToGetTradesByUserIdResponseDto(tradeByUserId),
                 HttpStatus.OK
         );
     }
 
     @GetMapping("/{assetId}")
-    public ResponseEntity<GetTradesResponseDto> getTradesByUserIdAndAssetId(
+    public ResponseEntity<GetTradesByUserIdResponseDto> getTradesByUserIdAndAssetId(
             @PathVariable("assetId") String assetId,
             @RequestHeader(value = "UserId") String userId
     ) {
         List<TradeEntity> tradeByUserIdAndAssetId = tradeService.getTradeByUserIdAndAssetId(userId, assetId);
         return new ResponseEntity<>(
-                TradeMapper.INSTANCE.listToGetTradesResponseDto(tradeByUserIdAndAssetId),
+                TradeMapper.INSTANCE.listToGetTradesByUserIdResponseDto(tradeByUserIdAndAssetId),
                 HttpStatus.OK
         );
     }
