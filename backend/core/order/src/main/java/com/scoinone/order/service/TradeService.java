@@ -13,6 +13,10 @@ public interface TradeService {
 
     List<TradeEntity> getTradeByUserId(String userId);
 
+    List<TradeEntity> getTradeByAssetId(String assetId);
+
+    List<TradeEntity> getTradeByUserIdAndAssetId(String userId, String assetId);
+
     TradeEntity createTrade(BuyOrderEntity buyOrder, SellOrderEntity sellOrder, BigDecimal tradeQuantity);
 
     List<TradeEntity> processBuyOrderTrade(BuyOrderEntity buyOrder);

@@ -11,10 +11,7 @@ import com.scoinone.order.service.TradeService;
 import jakarta.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,17 +38,19 @@ public class TradeServiceImpl implements TradeService {
 
     @Override
     public List<TradeEntity> getTradeByUserId(String userId) {
-        List<TradeEntity> buyingTrades = tradeRepository.findByBuyOrder_BuyerId(userId);
-        List<TradeEntity> sellingTrades = tradeRepository.findBySellOrder_SellerId(userId);
+        return tradeRepository.findByBuyOrder_BuyerIdOrSellOrder_SellerId(userId, userId);
+    }
 
-        Set<TradeEntity> tradeSet = new HashSet<>();
-        tradeSet.addAll(buyingTrades);
-        tradeSet.addAll(sellingTrades);
+    @Override
+    public List<TradeEntity> getTradeByAssetId(String assetId) {
+        return tradeRepository.findByVirtualAssetId(assetId);
+    }
 
-        List<TradeEntity> allTrades = new ArrayList<>(tradeSet);
-        allTrades.sort(Comparator.comparing(TradeEntity::getCreatedAt, Comparator.nullsLast(Comparator.naturalOrder())));
-
-        return allTrades;
+    @Override
+    public List<TradeEntity> getTradeByUserIdAndAssetId(String userId, String assetId) {
+        return tradeRepository.findByVirtualAssetIdAndBuyOrder_BuyerIdOrVirtualAssetIdAndSellOrder_SellerId(
+                assetId, userId, assetId, userId
+        );
     }
 
     @Override
