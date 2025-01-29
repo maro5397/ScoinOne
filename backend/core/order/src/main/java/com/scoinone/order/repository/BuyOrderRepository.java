@@ -14,6 +14,14 @@ import org.springframework.stereotype.Repository;
 public interface BuyOrderRepository extends JpaRepository<BuyOrderEntity, Long> {
     List<BuyOrderEntity> findByBuyerIdAndStatus(String userId, OrderStatus status);
 
+    List<BuyOrderEntity> findByVirtualAssetIdAndStatus(String userId, OrderStatus status);
+
+    List<BuyOrderEntity> findByBuyerIdAndVirtualAssetIdAndStatus(
+            String userId,
+            String virtualAssetId,
+            OrderStatus status
+    );
+
     Optional<BuyOrderEntity> findByIdAndBuyerIdAndStatus(Long id, String userId, OrderStatus status);
 
     @Query("SELECT b " +
