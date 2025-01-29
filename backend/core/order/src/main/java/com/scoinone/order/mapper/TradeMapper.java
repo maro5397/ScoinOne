@@ -1,7 +1,12 @@
 package com.scoinone.order.mapper;
 
+import com.scoinone.order.dto.response.trade.GetTradeByUserIdResponseDto;
+import com.scoinone.order.dto.response.trade.GetTradeByUserIdResponseDto.OrderDto;
 import com.scoinone.order.dto.response.trade.GetTradeResponseDto;
+import com.scoinone.order.dto.response.trade.GetTradesByUserIdResponseDto;
 import com.scoinone.order.dto.response.trade.GetTradesResponseDto;
+import com.scoinone.order.entity.BuyOrderEntity;
+import com.scoinone.order.entity.SellOrderEntity;
 import com.scoinone.order.entity.TradeEntity;
 import java.util.List;
 import org.mapstruct.Mapper;
@@ -25,6 +30,58 @@ public interface TradeMapper {
     default GetTradesResponseDto listToGetTradesResponseDto(List<TradeEntity> trades) {
         GetTradesResponseDto responseDto = new GetTradesResponseDto();
         responseDto.setTrades(tradesToGetTradesResponseDto(trades));
+        return responseDto;
+    }
+
+    @Mapping(source = "id", target = "tradeId")
+    @Mapping(source = "buyOrder.id", target = "buyId")
+    @Mapping(source = "sellOrder.id", target = "sellId")
+    @Mapping(source = "virtualAssetId", target = "virtualAssetId")
+    @Mapping(source = "quantity", target = "quantity")
+    @Mapping(source = "price", target = "price")
+    @Mapping(target = "order", expression = "java(mapOrder(userId, trade))")
+    GetTradeByUserIdResponseDto tradeToGetTradeByUserIdResponseDto(String userId, TradeEntity trade);
+
+    default OrderDto mapOrder(String userId, TradeEntity trade) {
+        if (trade.getBuyOrder() != null && trade.getBuyOrder().getBuyerId().equals(userId)) {
+            return mapBuyOrderToOrderDto(trade.getBuyOrder());
+        } else if (trade.getSellOrder() != null && trade.getSellOrder().getSellerId().equals(userId)) {
+            return mapSellOrderToOrderDto(trade.getSellOrder());
+        }
+        return null;
+    }
+
+    default OrderDto mapBuyOrderToOrderDto(BuyOrderEntity buyOrder) {
+        OrderDto orderDto = new OrderDto();
+        orderDto.setOrderId(buyOrder.getId());
+        orderDto.setUserId(buyOrder.getBuyerId());
+        orderDto.setVirtualAssetId(buyOrder.getVirtualAssetId());
+        orderDto.setOrderType("BUY");
+        orderDto.setPrice(buyOrder.getPrice());
+        orderDto.setStatus(buyOrder.getStatus().getValue());
+        orderDto.setTradeTime(buyOrder.getCreatedAt());
+        orderDto.setCreatedAt(buyOrder.getCreatedAt());
+        return orderDto;
+    }
+
+    default OrderDto mapSellOrderToOrderDto(SellOrderEntity sellOrder) {
+        OrderDto orderDto = new OrderDto();
+        orderDto.setOrderId(sellOrder.getId());
+        orderDto.setUserId(sellOrder.getSellerId());
+        orderDto.setVirtualAssetId(sellOrder.getVirtualAssetId());
+        orderDto.setOrderType("SELL");
+        orderDto.setPrice(sellOrder.getPrice());
+        orderDto.setStatus(sellOrder.getStatus().getValue());
+        orderDto.setTradeTime(sellOrder.getCreatedAt());
+        orderDto.setCreatedAt(sellOrder.getCreatedAt());
+        return orderDto;
+    }
+
+    List<GetTradeByUserIdResponseDto> tradeToGetTradesByUserIdResponseDto(List<TradeEntity> trades);
+
+    default GetTradesByUserIdResponseDto listToGetTradesByUserIdResponseDto(List<TradeEntity> trades) {
+        GetTradesByUserIdResponseDto responseDto = new GetTradesByUserIdResponseDto();
+        responseDto.setTrades(tradeToGetTradesByUserIdResponseDto(trades));
         return responseDto;
     }
 }
