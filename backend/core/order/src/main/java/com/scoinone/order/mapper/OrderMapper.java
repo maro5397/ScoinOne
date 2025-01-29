@@ -1,14 +1,11 @@
 package com.scoinone.order.mapper;
 
+import com.scoinone.order.dto.response.order.CancelBuyOrderResponseDto;
+import com.scoinone.order.dto.response.order.CancelSellOrderResponseDto;
 import com.scoinone.order.dto.response.order.CreateBuyOrderResponseDto;
 import com.scoinone.order.dto.response.order.CreateSellOrderResponseDto;
-import com.scoinone.order.dto.response.order.GetBuyOrderResponseDto;
-import com.scoinone.order.dto.response.order.GetBuyOrdersResponseDto;
-import com.scoinone.order.dto.response.order.GetSellOrderResponseDto;
-import com.scoinone.order.dto.response.order.GetSellOrdersResponseDto;
 import com.scoinone.order.entity.BuyOrderEntity;
 import com.scoinone.order.entity.SellOrderEntity;
-import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -38,34 +35,16 @@ public interface OrderMapper {
     @Mapping(source = "id", target = "orderId")
     @Mapping(source = "buyerId", target = "buyerId")
     @Mapping(source = "virtualAssetId", target = "virtualAssetId")
-    @Mapping(source = "tradeTime", target = "tradeTime", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "price", target = "price")
     @Mapping(source = "status.value", target = "status")
-    GetBuyOrderResponseDto buyOrderToGetBuyOrderResponseDto(BuyOrderEntity buyOrder);
+    CancelBuyOrderResponseDto buyOrderToCancelBuyOrderResponseDto(BuyOrderEntity buyOrder);
 
     @Mapping(source = "id", target = "orderId")
     @Mapping(source = "sellerId", target = "sellerId")
     @Mapping(source = "virtualAssetId", target = "virtualAssetId")
-    @Mapping(source = "tradeTime", target = "tradeTime", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "price", target = "price")
     @Mapping(source = "status.value", target = "status")
-    GetSellOrderResponseDto sellOrderToGetSellOrderResponseDto(SellOrderEntity sellOrder);
-
-    List<GetBuyOrderResponseDto> buyOrdersToGetBuyOrdersResponseDto(List<BuyOrderEntity> buyOrders);
-
-    default GetBuyOrdersResponseDto listToGetBuyOrdersResponseDto(List<BuyOrderEntity> buyOrders) {
-        GetBuyOrdersResponseDto responseDto = new GetBuyOrdersResponseDto();
-        responseDto.setBuyOrders(buyOrdersToGetBuyOrdersResponseDto(buyOrders));
-        return responseDto;
-    }
-
-    List<GetSellOrderResponseDto> sellOrdersToGetSellOrdersResponseDto(List<SellOrderEntity> sellOrders);
-
-    default GetSellOrdersResponseDto listToGetSellOrdersResponseDto(List<SellOrderEntity> sellOrders) {
-        GetSellOrdersResponseDto responseDto = new GetSellOrdersResponseDto();
-        responseDto.setSellOrders(sellOrdersToGetSellOrdersResponseDto(sellOrders));
-        return responseDto;
-    }
+    CancelSellOrderResponseDto sellOrderToCancelSellOrderResponseDto(SellOrderEntity sellOrder);
 }
