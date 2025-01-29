@@ -39,12 +39,15 @@ public class SellOrderServiceImpl implements SellOrderService {
     }
 
     @Override
-    public String deleteSellOrder(Long id, String userId) {
-        Long count = sellOrderRepository.deleteByIdAndSellerId(id, userId);
-        if (count == 0) {
-            throw new EntityNotFoundException("SellOrder not found or you are not authorized to delete this SellOrder");
-        }
-        return "SellOrder deleted successfully";
+    public SellOrderEntity cancelSellOrder(Long id, String userId) {
+        SellOrderEntity sellOrder = sellOrderRepository.findByIdAndSellerIdAndStatus(id, userId, OrderStatus.PENDING)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "SellOrder not found with id: " + id +
+                                ", userId: " + userId +
+                                ", status: " + OrderStatus.PENDING.getValue())
+                );
+        sellOrder.setStatus(OrderStatus.CANCELED);
+        return sellOrder;
     }
 
     @Override
