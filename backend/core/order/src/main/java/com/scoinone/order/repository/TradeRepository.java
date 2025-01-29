@@ -7,6 +7,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TradeRepository extends JpaRepository<TradeEntity, Long> {
-    List<TradeEntity> findByBuyOrder_BuyerId(String buyerId);
-    List<TradeEntity> findBySellOrder_SellerId(String sellerId);
+    List<TradeEntity> findByVirtualAssetId(String virtualAssetId);
+    List<TradeEntity> findByBuyOrder_BuyerIdOrSellOrder_SellerId(String buyerId, String sellerId);
+    List<TradeEntity> findByVirtualAssetIdAndBuyOrder_BuyerIdOrVirtualAssetIdAndSellOrder_SellerId(
+            String buyerVirtualAssetId, String buyerId,
+            String sellerVirtualAssetId, String sellerId
+    );
 }
