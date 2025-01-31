@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GetOrderResponseDto {
-    private String orderId;
+    private Long orderId;
     private String virtualAssetId;
     private String orderType;
     private BigDecimal quantity;
