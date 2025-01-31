@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class CreateCommentResponseDto {
     private Long commentId;
-    private String postId;
+    private Long postId;
     private String content;
     private String username;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
