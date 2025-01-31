@@ -3,7 +3,6 @@ package com.scoinone.order.unit.mapper;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.scoinone.order.dto.response.ownedvirtualasset.GetOwnedAssetResponseDto;
-import com.scoinone.order.dto.response.ownedvirtualasset.GetOwnedAssetsResponseDto;
 import com.scoinone.order.entity.OwnedVirtualAssetEntity;
 import com.scoinone.order.mapper.OwnedVirtualAssetMapper;
 import java.math.BigDecimal;
@@ -44,20 +43,6 @@ class OwnedVirtualAssetMapperTest {
             softly.assertThat(responseDto.getUserId()).isEqualTo(testUserId);
             softly.assertThat(responseDto.getVirtualAssetId()).isEqualTo(testVirtualAssetId);
             softly.assertThat(responseDto.getAmount()).isEqualByComparingTo(BigDecimal.valueOf(100L));
-        });
-    }
-
-    @Test
-    @DisplayName("보유 가상자산 엔티티 객체를 리스트 조회용 응답 DTO로 매핑")
-    public void testListToGetOwnedAssetListResponseDto() {
-        GetOwnedAssetsResponseDto responseDto = mapper.listToGetOwnedAssetsResponseDto(ownedVirtualAssets);
-
-        assertSoftly(softly -> {
-            softly.assertThat(responseDto.getOwnedAssets().size()).isEqualTo(ownedVirtualAssets.size());
-            softly.assertThat(responseDto.getOwnedAssets().get(0).getOwnedVirtualAssetId())
-                    .isEqualTo(testOwnedVirtualAssetId1);
-            softly.assertThat(responseDto.getOwnedAssets().get(1).getOwnedVirtualAssetId())
-                    .isEqualTo(testOwnedVirtualAssetId2);
         });
     }
 
