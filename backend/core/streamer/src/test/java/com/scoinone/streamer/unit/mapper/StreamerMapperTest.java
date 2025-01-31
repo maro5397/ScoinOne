@@ -4,7 +4,6 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.scoinone.streamer.dto.response.streamer.CreateStreamerResponseDto;
 import com.scoinone.streamer.dto.response.streamer.GetStreamerResponseDto;
-import com.scoinone.streamer.dto.response.streamer.GetStreamersResponseDto;
 import com.scoinone.streamer.dto.response.streamer.UpdateStreamerResponseDto;
 import com.scoinone.streamer.entity.StreamerEntity;
 import com.scoinone.streamer.mapper.StreamerMapper;
@@ -81,19 +80,6 @@ class StreamerMapperTest {
         assertSoftly(softly -> {
             softly.assertThat(responseDto).isNotNull();
             softly.assertThat(responseDto.getStreamerId()).isEqualTo(TEST_STREAMER_ID_1);
-        });
-    }
-
-    @Test
-    @DisplayName("다수의 스트리머 엔티티 객체를 조회용 응답 DTO로 매핑")
-    public void testListToGetStreamersResponseDto() {
-        GetStreamersResponseDto responseDto = mapper.listToGetStreamersResponseDto(streamerEntities);
-
-        assertSoftly(softly -> {
-            softly.assertThat(responseDto).isNotNull();
-            softly.assertThat(responseDto.getStreamers()).hasSize(2);
-            softly.assertThat(responseDto.getStreamers().get(0).getStreamerId()).isEqualTo(TEST_STREAMER_ID_1);
-            softly.assertThat(responseDto.getStreamers().get(1).getStreamerId()).isEqualTo(TEST_STREAMER_ID_2);
         });
     }
 

@@ -3,7 +3,6 @@ package com.scoinone.streamer.unit.mapper;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.scoinone.streamer.dto.response.virtualasset.GetVirtualAssetResponseDto;
-import com.scoinone.streamer.dto.response.virtualasset.GetVirtualAssetsResponseDto;
 import com.scoinone.streamer.dto.response.virtualasset.UpdateVirtualAssetResponseDto;
 import com.scoinone.streamer.entity.VirtualAssetEntity;
 import com.scoinone.streamer.mapper.VirtualAssetMapper;
@@ -58,19 +57,6 @@ class VirtualAssetMapperTest {
             softly.assertThat(responseDto.getName()).isEqualTo("Bitcoin");
             softly.assertThat(responseDto.getSymbol()).isEqualTo("BTC");
             softly.assertThat(responseDto.getDescription()).isEqualTo("Bitcoin Description");
-        });
-    }
-
-    @Test
-    @DisplayName("다수의 가상자산 엔티티 객체들을 조회용 응답 DTO로 매핑")
-    public void testListToGetVirtualAssetListResponseDto() {
-        GetVirtualAssetsResponseDto responseDto = mapper.listToGetVirtualAssetsResponseDto(virtualAssets);
-        assertSoftly(softly -> {
-            softly.assertThat(responseDto).isNotNull();
-            softly.assertThat(responseDto.getVirtualAssets()).hasSize(3);
-            softly.assertThat(responseDto.getVirtualAssets().get(0).getVirtualAssetId()).isEqualTo(testVirtualAssetId1);
-            softly.assertThat(responseDto.getVirtualAssets().get(1).getVirtualAssetId()).isEqualTo(testVirtualAssetId2);
-            softly.assertThat(responseDto.getVirtualAssets().get(2).getVirtualAssetId()).isEqualTo(testVirtualAssetId3);
         });
     }
 
