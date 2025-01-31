@@ -78,9 +78,9 @@ class TradeRepositoryTest {
     }
 
     @Test
-    @DisplayName("구매 주문의 구매자 ID로 체결된 거래 조회")
+    @DisplayName("사용자 ID로 체결된 거래 조회")
     void testFindByBuyOrder_Buyer_Id() {
-        List<TradeEntity> trades = tradeRepository.findByBuyOrder_BuyerId(testBuyerId);
+        List<TradeEntity> trades = tradeRepository.findTradesByUserId(testBuyerId);
 
         assertSoftly(softly -> {
             softly.assertThat(trades).hasSize(1);
@@ -89,9 +89,12 @@ class TradeRepositoryTest {
     }
 
     @Test
-    @DisplayName("판매 주문의 판매자 ID로 체결된 거래 조회")
+    @DisplayName("사용자 ID 및 가상자산 ID로 체결된 거래 조회")
     void testFindBySellOrder_Seller_Id() {
-        List<TradeEntity> trades = tradeRepository.findBySellOrder_SellerId(testSellerId);
+        List<TradeEntity> trades = tradeRepository.findTradesByUserIdAndVirtualAssetId(
+                testSellerId,
+                testVirtualAssetId
+        );
 
         assertSoftly(softly -> {
             softly.assertThat(trades).hasSize(1);

@@ -201,18 +201,15 @@ class TradeServiceImplTest {
     @Test
     @DisplayName("사용자 체결 거래 조회")
     public void testGetTradeByUserId() {
-        List<TradeEntity> buyingTrades = Collections.singletonList(TradeEntity.builder().build());
-        List<TradeEntity> sellingTrades = Collections.singletonList(TradeEntity.builder().build());
-        when(tradeRepository.findByBuyOrder_BuyerId(testUserId)).thenReturn(buyingTrades);
-        when(tradeRepository.findBySellOrder_SellerId(testUserId)).thenReturn(sellingTrades);
+        List<TradeEntity> trades = Collections.singletonList(TradeEntity.builder().build());
+        when(tradeRepository.findTradesByUserId(testUserId)).thenReturn(trades);
 
         List<TradeEntity> result = tradeService.getTradeByUserId(testUserId);
 
         assertSoftly(softly -> {
             softly.assertThat(result).isNotNull();
-            softly.assertThat(result.size()).isEqualTo(buyingTrades.size() + sellingTrades.size());
-            verify(tradeRepository).findByBuyOrder_BuyerId(testUserId);
-            verify(tradeRepository).findBySellOrder_SellerId(testUserId);
+            softly.assertThat(result.size()).isEqualTo(trades.size());
+            verify(tradeRepository).findTradesByUserId(testUserId);
         });
     }
 }
