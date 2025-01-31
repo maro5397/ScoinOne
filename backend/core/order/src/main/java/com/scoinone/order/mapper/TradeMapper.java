@@ -15,6 +15,9 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface TradeMapper {
+    String BUY_TYPE = "BUY";
+    String SELL_TYPE = "SELL";
+
     TradeMapper INSTANCE = Mappers.getMapper(TradeMapper.class);
 
     @Mapping(source = "id", target = "tradeId")
@@ -56,7 +59,7 @@ public interface TradeMapper {
         orderDto.setOrderId(buyOrder.getId());
         orderDto.setUserId(buyOrder.getBuyerId());
         orderDto.setVirtualAssetId(buyOrder.getVirtualAssetId());
-        orderDto.setOrderType("BUY");
+        orderDto.setOrderType(BUY_TYPE);
         orderDto.setPrice(buyOrder.getPrice());
         orderDto.setStatus(buyOrder.getStatus().getValue());
         orderDto.setTradeTime(buyOrder.getCreatedAt());
@@ -69,7 +72,7 @@ public interface TradeMapper {
         orderDto.setOrderId(sellOrder.getId());
         orderDto.setUserId(sellOrder.getSellerId());
         orderDto.setVirtualAssetId(sellOrder.getVirtualAssetId());
-        orderDto.setOrderType("SELL");
+        orderDto.setOrderType(SELL_TYPE);
         orderDto.setPrice(sellOrder.getPrice());
         orderDto.setStatus(sellOrder.getStatus().getValue());
         orderDto.setTradeTime(sellOrder.getCreatedAt());
