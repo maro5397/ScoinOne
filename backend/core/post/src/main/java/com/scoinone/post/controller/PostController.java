@@ -7,7 +7,6 @@ import com.scoinone.post.dto.request.post.UpdatePostRequestDto;
 import com.scoinone.post.dto.response.post.CreatePostResponseDto;
 import com.scoinone.post.dto.response.post.GetPostResponseDto;
 import com.scoinone.post.dto.response.post.GetPostsResponseDto;
-import com.scoinone.post.dto.response.post.GetUserQuestionsResponseDto;
 import com.scoinone.post.dto.response.post.UpdatePostResponseDto;
 import com.scoinone.post.entity.PostEntity;
 import com.scoinone.post.mapper.PostMapper;
@@ -71,12 +70,12 @@ public class PostController {
     }
 
     @GetMapping("/question")
-    public ResponseEntity<GetUserQuestionsResponseDto> getUserQuestionPosts(
+    public ResponseEntity<List<GetPostResponseDto>> getUserQuestionPosts(
             @RequestHeader(value = "UserId") String userId
     ) {
         List<PostEntity> questionsByUserId = postService.getQuestionsByUserId(userId);
         return new ResponseEntity<>(
-                PostMapper.INSTANCE.listToGetPostsResponseDto(questionsByUserId),
+                PostMapper.INSTANCE.postsToGetPostsResponseDto(questionsByUserId),
                 HttpStatus.OK
         );
     }
