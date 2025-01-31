@@ -12,8 +12,8 @@ import org.mapstruct.factory.Mappers;
 public interface OwnedVirtualAssetMapper {
     OwnedVirtualAssetMapper INSTANCE = Mappers.getMapper(OwnedVirtualAssetMapper.class);
 
-    @Mapping(source = "ownedVirtualAsset.id", target = "ownedVirtualAssetId")
-    @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "id", target = "ownedVirtualAssetId")
+    @Mapping(source = "userId", target = "userId")
     @Mapping(source = "virtualAssetId", target = "virtualAssetId")
     @Mapping(source = "amount", target = "amount")
     @Mapping(source = "updatedAt", target = "updatedAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
