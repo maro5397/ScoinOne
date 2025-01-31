@@ -36,7 +36,7 @@ public class TradeController {
     ) {
         List<TradeEntity> tradeByUserId = tradeService.getTradeByUserId(userId);
         return new ResponseEntity<>(
-                TradeMapper.INSTANCE.listToGetTradesByUserIdResponseDto(tradeByUserId),
+                TradeMapper.INSTANCE.listToGetTradesByUserIdResponseDto(userId, tradeByUserId),
                 HttpStatus.OK
         );
     }
@@ -48,7 +48,7 @@ public class TradeController {
     ) {
         List<TradeEntity> tradeByUserIdAndAssetId = tradeService.getTradeByUserIdAndAssetId(userId, assetId);
         return new ResponseEntity<>(
-                TradeMapper.INSTANCE.listToGetTradesByUserIdResponseDto(tradeByUserIdAndAssetId),
+                TradeMapper.INSTANCE.listToGetTradesByUserIdResponseDto(userId, tradeByUserIdAndAssetId),
                 HttpStatus.OK
         );
     }
