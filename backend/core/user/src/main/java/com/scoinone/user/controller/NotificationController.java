@@ -3,7 +3,7 @@ package com.scoinone.user.controller;
 import com.scoinone.user.dto.common.DeleteResponseDto;
 import com.scoinone.user.dto.request.notification.CreateNotificationRequestDto;
 import com.scoinone.user.dto.response.notification.CreateNotificationResponseDto;
-import com.scoinone.user.dto.response.notification.GetNotificationsResponseDto;
+import com.scoinone.user.dto.response.notification.GetNotificationResponseDto;
 import com.scoinone.user.entity.NotificationEntity;
 import com.scoinone.user.mapper.NotificationMapper;
 import com.scoinone.user.service.NotificationService;
@@ -50,13 +50,13 @@ public class NotificationController {
     }
 
     @GetMapping
-    public ResponseEntity<GetNotificationsResponseDto> getNotifications(
+    public ResponseEntity<List<GetNotificationResponseDto>> getNotifications(
             @RequestHeader(value = "UserId") String userId
     ) {
         List<NotificationEntity> notificationsFromLast30Days =
                 notificationService.getNotificationsFromLast30DaysByUserId(userId);
         return new ResponseEntity<>(
-                NotificationMapper.INSTANCE.listToGetNotificationsResponseDto(notificationsFromLast30Days),
+                NotificationMapper.INSTANCE.notificationsToGetNotificationsResponseDto(notificationsFromLast30Days),
                 HttpStatus.OK
         );
     }
