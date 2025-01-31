@@ -38,7 +38,7 @@ public class TradeServiceImpl implements TradeService {
 
     @Override
     public List<TradeEntity> getTradeByUserId(String userId) {
-        return tradeRepository.findByBuyOrder_BuyerIdOrSellOrder_SellerId(userId, userId);
+        return tradeRepository.findTradesByUserId(userId);
     }
 
     @Override
@@ -48,9 +48,7 @@ public class TradeServiceImpl implements TradeService {
 
     @Override
     public List<TradeEntity> getTradeByUserIdAndAssetId(String userId, String assetId) {
-        return tradeRepository.findByVirtualAssetIdAndBuyOrder_BuyerIdOrVirtualAssetIdAndSellOrder_SellerId(
-                assetId, userId, assetId, userId
-        );
+        return tradeRepository.findTradesByUserIdAndVirtualAssetId(userId, assetId);
     }
 
     @Override
