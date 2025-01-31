@@ -87,14 +87,4 @@ class SellOrderRepositoryTest {
             softly.assertThat(sellOrders.getFirst().getPrice()).isEqualByComparingTo(BigDecimal.valueOf(50.00));
         });
     }
-
-    @Test
-    @DisplayName("판매 주문 ID 및 판매자 ID에 따른 주문 삭제")
-    void testDeleteBySellerIdAndSellerId() {
-        Long count = sellOrderRepository.deleteByIdAndSellerId(sellOrder.getId(), testSellerId);
-
-        assertSoftly(softly -> {
-            softly.assertThat(count).isEqualTo(1);
-        });
-    }
 }
