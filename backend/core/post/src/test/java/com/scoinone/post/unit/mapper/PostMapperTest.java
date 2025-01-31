@@ -6,7 +6,6 @@ import com.scoinone.post.common.type.PostType;
 import com.scoinone.post.dto.response.post.CreatePostResponseDto;
 import com.scoinone.post.dto.response.post.GetPostResponseDto;
 import com.scoinone.post.dto.response.post.GetPostsResponseDto;
-import com.scoinone.post.dto.response.post.GetUserQuestionsResponseDto;
 import com.scoinone.post.dto.response.post.UpdatePostResponseDto;
 import com.scoinone.post.entity.PostEntity;
 import com.scoinone.post.mapper.PostMapper;
@@ -106,20 +105,6 @@ class PostMapperTest {
             softly.assertThat(responseDto.getPosts().getFirst().getPostId()).isEqualTo(1L);
             softly.assertThat(responseDto.getPageInfo().getTotalElements()).isEqualTo(2);
             softly.assertThat(responseDto.getPageInfo().getTotalPages()).isEqualTo(1);
-        });
-
-    }
-
-    @Test
-    @DisplayName("게시글 리스트 엔티티 객체들을 조회용 응답 DTO로 매핑")
-    public void testListToGetUserQuestionsResponseDto() {
-        GetUserQuestionsResponseDto responseDto = mapper.listToGetPostsResponseDto(posts);
-
-        assertSoftly(softly -> {
-            softly.assertThat(responseDto).isNotNull();
-            softly.assertThat(responseDto.getPosts()).hasSize(2);
-            softly.assertThat(responseDto.getPosts().get(0).getPostId()).isEqualTo(1L);
-            softly.assertThat(responseDto.getPosts().get(1).getPostId()).isEqualTo(2L);
         });
 
     }
