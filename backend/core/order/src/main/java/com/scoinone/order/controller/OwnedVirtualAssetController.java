@@ -1,7 +1,7 @@
 package com.scoinone.order.controller;
 
 import com.scoinone.order.dto.common.DeleteResponseDto;
-import com.scoinone.order.dto.response.ownedvirtualasset.GetOwnedAssetsResponseDto;
+import com.scoinone.order.dto.response.ownedvirtualasset.GetOwnedAssetResponseDto;
 import com.scoinone.order.entity.OwnedVirtualAssetEntity;
 import com.scoinone.order.mapper.OwnedVirtualAssetMapper;
 import com.scoinone.order.service.OwnedVirtualAssetService;
@@ -23,13 +23,13 @@ public class OwnedVirtualAssetController {
     private final OwnedVirtualAssetService ownedVirtualAssetService;
 
     @GetMapping
-    public ResponseEntity<GetOwnedAssetsResponseDto> getOwnedVirtualAssets(
+    public ResponseEntity<List<GetOwnedAssetResponseDto>> getOwnedVirtualAssets(
             @RequestHeader(value = "UserId") String userId
     ) {
         List<OwnedVirtualAssetEntity> ownedVirtualAssets =
                 ownedVirtualAssetService.getOwnedVirtualAssetsByUserId(userId);
         return new ResponseEntity<>(
-                OwnedVirtualAssetMapper.INSTANCE.listToGetOwnedAssetsResponseDto(ownedVirtualAssets),
+                OwnedVirtualAssetMapper.INSTANCE.ownedVirtualAssetsToGetOwnedAssetsResponseDto(ownedVirtualAssets),
                 HttpStatus.OK
         );
     }

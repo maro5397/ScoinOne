@@ -1,8 +1,8 @@
 package com.scoinone.order.controller;
 
 import com.scoinone.order.dto.common.DeleteResponseDto;
-import com.scoinone.order.dto.response.order.GetOrdersByUserIdResponseDto;
-import com.scoinone.order.dto.response.order.GetOrdersResponseDto;
+import com.scoinone.order.dto.response.order.GetOrderByUserIdResponseDto;
+import com.scoinone.order.dto.response.order.GetOrderResponseDto;
 import com.scoinone.order.entity.base.OrderEntity;
 import com.scoinone.order.mapper.OrderMapper;
 import com.scoinone.order.service.OrderService;
@@ -25,33 +25,33 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping("/all/{assetId}")
-    public ResponseEntity<GetOrdersResponseDto> getOrdersByAssetId(@PathVariable("assetId") String assetId) {
+    public ResponseEntity<List<GetOrderResponseDto>> getOrdersByAssetId(@PathVariable("assetId") String assetId) {
         List<OrderEntity> orderByAssetId = orderService.getOrderByAssetId(assetId);
         return new ResponseEntity<>(
-                OrderMapper.INSTANCE.listToGetOrdersResponseDto(orderByAssetId),
+                OrderMapper.INSTANCE.orderToGetOrdersResponseDto(orderByAssetId),
                 HttpStatus.OK
         );
     }
 
     @GetMapping
-    public ResponseEntity<GetOrdersByUserIdResponseDto> getOrdersByUserId(
+    public ResponseEntity<List<GetOrderByUserIdResponseDto>> getOrdersByUserId(
             @RequestHeader(value = "UserId") String userId
     ) {
         List<OrderEntity> orderByUserId = orderService.getOrderByUserId(userId);
         return new ResponseEntity<>(
-                OrderMapper.INSTANCE.listToGetOrdersByUserIdResponseDto(orderByUserId),
+                OrderMapper.INSTANCE.orderToGetOrderByUserIdResponseDto(orderByUserId),
                 HttpStatus.OK
         );
     }
 
     @GetMapping("/{assetId}")
-    public ResponseEntity<GetOrdersByUserIdResponseDto> getOrdersByUserIdAndAssetId(
+    public ResponseEntity<List<GetOrderByUserIdResponseDto>> getOrdersByUserIdAndAssetId(
             @PathVariable("assetId") String assetId,
             @RequestHeader(value = "UserId") String userId
     ) {
         List<OrderEntity> orderByUserIdAndAssetId = orderService.getOrderByUserIdAndAssetId(userId, assetId);
         return new ResponseEntity<>(
-                OrderMapper.INSTANCE.listToGetOrdersByUserIdResponseDto(orderByUserIdAndAssetId),
+                OrderMapper.INSTANCE.orderToGetOrderByUserIdResponseDto(orderByUserIdAndAssetId),
                 HttpStatus.OK
         );
     }

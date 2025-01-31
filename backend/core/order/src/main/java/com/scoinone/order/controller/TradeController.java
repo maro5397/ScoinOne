@@ -1,7 +1,7 @@
 package com.scoinone.order.controller;
 
-import com.scoinone.order.dto.response.trade.GetTradesByUserIdResponseDto;
-import com.scoinone.order.dto.response.trade.GetTradesResponseDto;
+import com.scoinone.order.dto.response.trade.GetTradeByUserIdResponseDto;
+import com.scoinone.order.dto.response.trade.GetTradeResponseDto;
 import com.scoinone.order.entity.TradeEntity;
 import com.scoinone.order.mapper.TradeMapper;
 import com.scoinone.order.service.TradeService;
@@ -22,33 +22,33 @@ public class TradeController {
     private final TradeService tradeService;
 
     @GetMapping("/all/{assetId}")
-    public ResponseEntity<GetTradesResponseDto> getTradesByAssetId(@PathVariable("assetId") String assetId) {
+    public ResponseEntity<List<GetTradeResponseDto>> getTradesByAssetId(@PathVariable("assetId") String assetId) {
         List<TradeEntity> tradeByAssetId = tradeService.getTradeByAssetId(assetId);
         return new ResponseEntity<>(
-                TradeMapper.INSTANCE.listToGetTradesResponseDto(tradeByAssetId),
+                TradeMapper.INSTANCE.tradesToGetTradesResponseDto(tradeByAssetId),
                 HttpStatus.OK
         );
     }
 
     @GetMapping
-    public ResponseEntity<GetTradesByUserIdResponseDto> getTradesByUserId(
+    public ResponseEntity<List<GetTradeByUserIdResponseDto>> getTradesByUserId(
             @RequestHeader(value = "UserId") String userId
     ) {
         List<TradeEntity> tradeByUserId = tradeService.getTradeByUserId(userId);
         return new ResponseEntity<>(
-                TradeMapper.INSTANCE.listToGetTradesByUserIdResponseDto(userId, tradeByUserId),
+                TradeMapper.INSTANCE.tradeToGetTradesByUserIdResponseDto(userId, tradeByUserId),
                 HttpStatus.OK
         );
     }
 
     @GetMapping("/{assetId}")
-    public ResponseEntity<GetTradesByUserIdResponseDto> getTradesByUserIdAndAssetId(
+    public ResponseEntity<List<GetTradeByUserIdResponseDto>> getTradesByUserIdAndAssetId(
             @PathVariable("assetId") String assetId,
             @RequestHeader(value = "UserId") String userId
     ) {
         List<TradeEntity> tradeByUserIdAndAssetId = tradeService.getTradeByUserIdAndAssetId(userId, assetId);
         return new ResponseEntity<>(
-                TradeMapper.INSTANCE.listToGetTradesByUserIdResponseDto(userId, tradeByUserIdAndAssetId),
+                TradeMapper.INSTANCE.tradeToGetTradesByUserIdResponseDto(userId, tradeByUserIdAndAssetId),
                 HttpStatus.OK
         );
     }
