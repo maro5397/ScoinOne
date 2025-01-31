@@ -5,11 +5,11 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import com.scoinone.streamer.config.TestContainerConfig;
 import com.scoinone.streamer.dto.request.virtualasset.UpdateVirtualAssetRequestDto;
 import com.scoinone.streamer.dto.response.virtualasset.GetVirtualAssetResponseDto;
-import com.scoinone.streamer.dto.response.virtualasset.GetVirtualAssetsResponseDto;
 import com.scoinone.streamer.dto.response.virtualasset.UpdateVirtualAssetResponseDto;
 import com.scoinone.streamer.entity.StreamerEntity;
 import com.scoinone.streamer.repository.StreamerRepository;
 import com.scoinone.streamer.service.StreamerService;
+import java.util.List;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -64,16 +65,16 @@ class VirtualAssetControllerTest {
     @Test
     @DisplayName("가상 자산 목록 조회 테스트")
     void getVirtualAssets_shouldReturnListOfVirtualAssets() {
-        ResponseEntity<GetVirtualAssetsResponseDto> response = restTemplate.exchange(
+        ResponseEntity<List<GetVirtualAssetResponseDto>> response = restTemplate.exchange(
                 "/api/assets",
                 HttpMethod.GET,
                 null,
-                GetVirtualAssetsResponseDto.class
+                new ParameterizedTypeReference<List<GetVirtualAssetResponseDto>>() {}
         );
 
         assertSoftly(softly -> {
             softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            softly.assertThat(Objects.requireNonNull(response.getBody()).getVirtualAssets()).hasSize(1);
+            softly.assertThat(Objects.requireNonNull(response.getBody()).size()).isEqualTo(1);
         });
     }
 

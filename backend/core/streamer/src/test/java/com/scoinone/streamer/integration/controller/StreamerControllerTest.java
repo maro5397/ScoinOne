@@ -9,11 +9,11 @@ import com.scoinone.streamer.dto.request.streamer.CreateStreamerRequestDto.Creat
 import com.scoinone.streamer.dto.request.streamer.UpdateStreamerRequestDto;
 import com.scoinone.streamer.dto.response.streamer.CreateStreamerResponseDto;
 import com.scoinone.streamer.dto.response.streamer.GetStreamerResponseDto;
-import com.scoinone.streamer.dto.response.streamer.GetStreamersResponseDto;
 import com.scoinone.streamer.dto.response.streamer.UpdateStreamerResponseDto;
 import com.scoinone.streamer.entity.StreamerEntity;
 import com.scoinone.streamer.repository.StreamerRepository;
 import com.scoinone.streamer.service.StreamerService;
+import java.util.List;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -112,16 +113,16 @@ class StreamerControllerTest {
     @Test
     @DisplayName("스트리머 목록 조회 테스트")
     void getStreamers_shouldReturnListOfStreamers() {
-        ResponseEntity<GetStreamersResponseDto> response = restTemplate.exchange(
+        ResponseEntity<List<GetStreamerResponseDto>> response = restTemplate.exchange(
                 "/api/streamer",
                 HttpMethod.GET,
                 null,
-                GetStreamersResponseDto.class
+                new ParameterizedTypeReference<List<GetStreamerResponseDto>>() {}
         );
 
         assertSoftly(softly -> {
             softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            softly.assertThat(Objects.requireNonNull(response.getBody()).getStreamers()).hasSize(1);
+            softly.assertThat(Objects.requireNonNull(response.getBody()).size()).isEqualTo(1);
         });
     }
 
