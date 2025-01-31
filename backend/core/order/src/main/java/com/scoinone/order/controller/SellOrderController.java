@@ -43,7 +43,7 @@ public class SellOrderController {
     }
 
     @PatchMapping("/{orderId}")
-    public ResponseEntity<CancelSellOrderResponseDto> deleteSellOrder(
+    public ResponseEntity<CancelSellOrderResponseDto> cancelSellOrder(
             @PathVariable("orderId") Long orderId,
             @RequestHeader(value = "UserId") String userId
     ) {
