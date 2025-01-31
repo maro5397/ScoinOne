@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NotificationRepository extends JpaRepository<NotificationEntity, Long> {
-    @Query(
-            value = "SELECT * " +
-            "FROM notifications n " +
-            "WHERE n.user_id = :userId AND n.created_at >= NOW() - INTERVAL 30 DAY",
-            nativeQuery = true
-    )
+    @Query("""
+        SELECT n
+        FROM NotificationEntity n
+        WHERE n.user.id = :userId
+        AND n.createdAt >= CURRENT_TIMESTAMP - 30
+    """)
     List<NotificationEntity> findByUserIdAndLast30Days(@Param("userId") String userId);
 }
