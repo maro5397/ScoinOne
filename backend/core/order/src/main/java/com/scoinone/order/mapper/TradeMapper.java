@@ -9,6 +9,7 @@ import com.scoinone.order.entity.BuyOrderEntity;
 import com.scoinone.order.entity.SellOrderEntity;
 import com.scoinone.order.entity.TradeEntity;
 import java.util.List;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -43,7 +44,7 @@ public interface TradeMapper {
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "price", target = "price")
     @Mapping(target = "order", expression = "java(mapOrder(userId, trade))")
-    GetTradeByUserIdResponseDto tradeToGetTradeByUserIdResponseDto(String userId, TradeEntity trade);
+    GetTradeByUserIdResponseDto tradeToGetTradeByUserIdResponseDto(@Context String userId, TradeEntity trade);
 
     default OrderDto mapOrder(String userId, TradeEntity trade) {
         if (trade.getBuyOrder() != null && trade.getBuyOrder().getBuyerId().equals(userId)) {
@@ -80,11 +81,14 @@ public interface TradeMapper {
         return orderDto;
     }
 
-    List<GetTradeByUserIdResponseDto> tradeToGetTradesByUserIdResponseDto(List<TradeEntity> trades);
+    List<GetTradeByUserIdResponseDto> tradeToGetTradesByUserIdResponseDto(
+            @Context String userId,
+            List<TradeEntity> trades
+    );
 
-    default GetTradesByUserIdResponseDto listToGetTradesByUserIdResponseDto(List<TradeEntity> trades) {
+    default GetTradesByUserIdResponseDto listToGetTradesByUserIdResponseDto(String userId, List<TradeEntity> trades) {
         GetTradesByUserIdResponseDto responseDto = new GetTradesByUserIdResponseDto();
-        responseDto.setTrades(tradeToGetTradesByUserIdResponseDto(trades));
+        responseDto.setTrades(tradeToGetTradesByUserIdResponseDto(userId, trades));
         return responseDto;
     }
 }
