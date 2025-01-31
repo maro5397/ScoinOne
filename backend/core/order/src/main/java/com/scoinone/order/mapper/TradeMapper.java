@@ -1,5 +1,6 @@
 package com.scoinone.order.mapper;
 
+import com.scoinone.order.common.status.OrderType;
 import com.scoinone.order.dto.response.trade.GetTradeByUserIdResponseDto;
 import com.scoinone.order.dto.response.trade.GetTradeByUserIdResponseDto.OrderDto;
 import com.scoinone.order.dto.response.trade.GetTradeResponseDto;
@@ -16,9 +17,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface TradeMapper {
-    String BUY_TYPE = "BUY";
-    String SELL_TYPE = "SELL";
-
     TradeMapper INSTANCE = Mappers.getMapper(TradeMapper.class);
 
     @Mapping(source = "id", target = "tradeId")
@@ -60,10 +58,10 @@ public interface TradeMapper {
         orderDto.setOrderId(buyOrder.getId());
         orderDto.setUserId(buyOrder.getBuyerId());
         orderDto.setVirtualAssetId(buyOrder.getVirtualAssetId());
-        orderDto.setOrderType(BUY_TYPE);
+        orderDto.setOrderType(OrderType.BUY_TYPE.getValue());
         orderDto.setPrice(buyOrder.getPrice());
         orderDto.setStatus(buyOrder.getStatus().getValue());
-        orderDto.setTradeTime(buyOrder.getCreatedAt());
+        orderDto.setTradeTime(buyOrder.getTradeTime());
         orderDto.setCreatedAt(buyOrder.getCreatedAt());
         return orderDto;
     }
@@ -73,10 +71,10 @@ public interface TradeMapper {
         orderDto.setOrderId(sellOrder.getId());
         orderDto.setUserId(sellOrder.getSellerId());
         orderDto.setVirtualAssetId(sellOrder.getVirtualAssetId());
-        orderDto.setOrderType(SELL_TYPE);
+        orderDto.setOrderType(OrderType.SELL_TYPE.getValue());
         orderDto.setPrice(sellOrder.getPrice());
         orderDto.setStatus(sellOrder.getStatus().getValue());
-        orderDto.setTradeTime(sellOrder.getCreatedAt());
+        orderDto.setTradeTime(sellOrder.getTradeTime());
         orderDto.setCreatedAt(sellOrder.getCreatedAt());
         return orderDto;
     }
