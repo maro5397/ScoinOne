@@ -10,8 +10,6 @@ import lombok.Setter;
 @Setter
 public class GetTradeByUserIdResponseDto {
     private Long tradeId;
-    private Long buyId;
-    private Long sellId;
     private String virtualAssetId;
     private BigDecimal quantity;
     private BigDecimal price;
