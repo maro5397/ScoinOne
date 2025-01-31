@@ -4,8 +4,6 @@ import com.scoinone.order.common.status.OrderType;
 import com.scoinone.order.dto.response.trade.GetTradeByUserIdResponseDto;
 import com.scoinone.order.dto.response.trade.GetTradeByUserIdResponseDto.OrderDto;
 import com.scoinone.order.dto.response.trade.GetTradeResponseDto;
-import com.scoinone.order.dto.response.trade.GetTradesByUserIdResponseDto;
-import com.scoinone.order.dto.response.trade.GetTradesResponseDto;
 import com.scoinone.order.entity.BuyOrderEntity;
 import com.scoinone.order.entity.SellOrderEntity;
 import com.scoinone.order.entity.TradeEntity;
@@ -20,24 +18,15 @@ public interface TradeMapper {
     TradeMapper INSTANCE = Mappers.getMapper(TradeMapper.class);
 
     @Mapping(source = "id", target = "tradeId")
-    @Mapping(source = "buyOrder.id", target = "buyId")
-    @Mapping(source = "sellOrder.id", target = "sellId")
     @Mapping(source = "virtualAssetId", target = "virtualAssetId")
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "price", target = "price")
+    @Mapping(source = "createdAt", target = "createdAt")
     GetTradeResponseDto tradeToGetTradeResponseDto(TradeEntity trade);
 
     List<GetTradeResponseDto> tradesToGetTradesResponseDto(List<TradeEntity> trades);
 
-    default GetTradesResponseDto listToGetTradesResponseDto(List<TradeEntity> trades) {
-        GetTradesResponseDto responseDto = new GetTradesResponseDto();
-        responseDto.setTrades(tradesToGetTradesResponseDto(trades));
-        return responseDto;
-    }
-
     @Mapping(source = "id", target = "tradeId")
-    @Mapping(source = "buyOrder.id", target = "buyId")
-    @Mapping(source = "sellOrder.id", target = "sellId")
     @Mapping(source = "virtualAssetId", target = "virtualAssetId")
     @Mapping(source = "quantity", target = "quantity")
     @Mapping(source = "price", target = "price")
@@ -83,10 +72,4 @@ public interface TradeMapper {
             @Context String userId,
             List<TradeEntity> trades
     );
-
-    default GetTradesByUserIdResponseDto listToGetTradesByUserIdResponseDto(String userId, List<TradeEntity> trades) {
-        GetTradesByUserIdResponseDto responseDto = new GetTradesByUserIdResponseDto();
-        responseDto.setTrades(tradeToGetTradesByUserIdResponseDto(userId, trades));
-        return responseDto;
-    }
 }

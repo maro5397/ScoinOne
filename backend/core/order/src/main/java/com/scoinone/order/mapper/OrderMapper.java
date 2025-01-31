@@ -6,8 +6,6 @@ import com.scoinone.order.dto.response.order.CreateBuyOrderResponseDto;
 import com.scoinone.order.dto.response.order.CreateSellOrderResponseDto;
 import com.scoinone.order.dto.response.order.GetOrderByUserIdResponseDto;
 import com.scoinone.order.dto.response.order.GetOrderResponseDto;
-import com.scoinone.order.dto.response.order.GetOrdersByUserIdResponseDto;
-import com.scoinone.order.dto.response.order.GetOrdersResponseDto;
 import com.scoinone.order.entity.BuyOrderEntity;
 import com.scoinone.order.entity.SellOrderEntity;
 import com.scoinone.order.entity.base.OrderEntity;
@@ -63,12 +61,6 @@ public interface OrderMapper {
 
     List<GetOrderResponseDto> orderToGetOrdersResponseDto(List<OrderEntity> orders);
 
-    default GetOrdersResponseDto listToGetOrdersResponseDto(List<OrderEntity> orders) {
-        GetOrdersResponseDto responseDto = new GetOrdersResponseDto();
-        responseDto.setOrders(orderToGetOrdersResponseDto(orders));
-        return responseDto;
-    }
-
     default GetOrderByUserIdResponseDto orderToGetOrderByUserIdResponseDto(OrderEntity order) {
         GetOrderByUserIdResponseDto dto = new GetOrderByUserIdResponseDto();
 
@@ -90,10 +82,4 @@ public interface OrderMapper {
     }
 
     List<GetOrderByUserIdResponseDto> orderToGetOrderByUserIdResponseDto(List<OrderEntity> orders);
-
-    default GetOrdersByUserIdResponseDto listToGetOrdersByUserIdResponseDto(List<OrderEntity> orders) {
-        GetOrdersByUserIdResponseDto responseDto = new GetOrdersByUserIdResponseDto();
-        responseDto.setOrders(orderToGetOrderByUserIdResponseDto(orders));
-        return responseDto;
-    }
 }

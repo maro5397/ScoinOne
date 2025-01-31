@@ -1,7 +1,6 @@
 package com.scoinone.order.mapper;
 
 import com.scoinone.order.dto.response.ownedvirtualasset.GetOwnedAssetResponseDto;
-import com.scoinone.order.dto.response.ownedvirtualasset.GetOwnedAssetsResponseDto;
 import com.scoinone.order.entity.OwnedVirtualAssetEntity;
 import java.util.List;
 import org.mapstruct.Mapper;
@@ -22,12 +21,4 @@ public interface OwnedVirtualAssetMapper {
     List<GetOwnedAssetResponseDto> ownedVirtualAssetsToGetOwnedAssetsResponseDto(
             List<OwnedVirtualAssetEntity> ownedVirtualAssets
     );
-
-    default GetOwnedAssetsResponseDto listToGetOwnedAssetsResponseDto(
-            List<OwnedVirtualAssetEntity> ownedVirtualAssets
-    ) {
-        GetOwnedAssetsResponseDto responseDto = new GetOwnedAssetsResponseDto();
-        responseDto.setOwnedAssets(ownedVirtualAssetsToGetOwnedAssetsResponseDto(ownedVirtualAssets));
-        return responseDto;
-    }
 }
