@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "posts")
@@ -27,7 +27,7 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 public class PostEntity extends UpdatableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

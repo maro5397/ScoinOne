@@ -8,10 +8,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "virtual_assets")
@@ -19,7 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 public class VirtualAssetEntity extends UpdatableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

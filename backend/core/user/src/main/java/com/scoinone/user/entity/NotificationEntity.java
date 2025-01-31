@@ -13,10 +13,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "notifications")
@@ -24,7 +24,7 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 public class NotificationEntity extends CreatableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

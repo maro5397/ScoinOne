@@ -15,10 +15,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -26,7 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "users")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
+@SuperBuilder
 public class UserEntity extends UpdatableEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
