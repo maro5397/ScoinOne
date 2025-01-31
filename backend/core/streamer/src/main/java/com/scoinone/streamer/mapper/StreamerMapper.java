@@ -2,7 +2,6 @@ package com.scoinone.streamer.mapper;
 
 import com.scoinone.streamer.dto.response.streamer.CreateStreamerResponseDto;
 import com.scoinone.streamer.dto.response.streamer.GetStreamerResponseDto;
-import com.scoinone.streamer.dto.response.streamer.GetStreamersResponseDto;
 import com.scoinone.streamer.dto.response.streamer.UpdateStreamerResponseDto;
 import com.scoinone.streamer.entity.StreamerEntity;
 import java.util.List;
@@ -50,10 +49,4 @@ public interface StreamerMapper {
     UpdateStreamerResponseDto streamerToUpdateStreamerResponseDto(StreamerEntity streamer);
 
     List<GetStreamerResponseDto> streamersToGetStreamersResponseDto(List<StreamerEntity> streamers);
-
-    default GetStreamersResponseDto listToGetStreamersResponseDto(List<StreamerEntity> streamers) {
-        GetStreamersResponseDto responseDto = new GetStreamersResponseDto();
-        responseDto.setStreamers(streamersToGetStreamersResponseDto(streamers));
-        return responseDto;
-    }
 }

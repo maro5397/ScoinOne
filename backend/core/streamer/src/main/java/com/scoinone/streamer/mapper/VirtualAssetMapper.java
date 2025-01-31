@@ -1,7 +1,6 @@
 package com.scoinone.streamer.mapper;
 
 import com.scoinone.streamer.dto.response.virtualasset.GetVirtualAssetResponseDto;
-import com.scoinone.streamer.dto.response.virtualasset.GetVirtualAssetsResponseDto;
 import com.scoinone.streamer.dto.response.virtualasset.UpdateVirtualAssetResponseDto;
 import com.scoinone.streamer.entity.VirtualAssetEntity;
 import java.util.List;
@@ -30,10 +29,4 @@ public interface VirtualAssetMapper {
     UpdateVirtualAssetResponseDto virtualAssetToUpdateVirtualAssetResponseDto(VirtualAssetEntity virtualAsset);
 
     List<GetVirtualAssetResponseDto> virtualAssetsToGetVirtualAssetsResponseDto(List<VirtualAssetEntity> virtualAssets);
-
-    default GetVirtualAssetsResponseDto listToGetVirtualAssetsResponseDto(List<VirtualAssetEntity> virtualAssets) {
-        GetVirtualAssetsResponseDto responseDto = new GetVirtualAssetsResponseDto();
-        responseDto.setVirtualAssets(virtualAssetsToGetVirtualAssetsResponseDto(virtualAssets));
-        return responseDto;
-    }
 }
