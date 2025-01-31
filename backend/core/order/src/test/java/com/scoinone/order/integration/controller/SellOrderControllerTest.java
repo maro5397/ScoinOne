@@ -3,10 +3,9 @@ package com.scoinone.order.integration.controller;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.scoinone.order.config.TestContainerConfig;
-import com.scoinone.order.dto.common.DeleteResponseDto;
 import com.scoinone.order.dto.request.order.CreateSellOrderRequestDto;
+import com.scoinone.order.dto.response.order.CancelSellOrderResponseDto;
 import com.scoinone.order.dto.response.order.CreateSellOrderResponseDto;
-import com.scoinone.order.dto.response.order.GetSellOrdersResponseDto;
 import com.scoinone.order.entity.SellOrderEntity;
 import com.scoinone.order.repository.SellOrderRepository;
 import com.scoinone.order.service.SellOrderService;
@@ -83,35 +82,19 @@ class SellOrderControllerTest {
     }
 
     @Test
-    @DisplayName("판매 주문 삭제 테스트")
-    void deleteSellOrder_shouldReturnOk() {
-        ResponseEntity<DeleteResponseDto> response = restTemplate.exchange(
+    @DisplayName("판매 주문 취소 테스트")
+    void cancelSellOrder_shouldReturnOk() {
+        ResponseEntity<CancelSellOrderResponseDto> response = restTemplate.exchange(
                 "/api/sell/" + savedSellOrder.getId(),
-                HttpMethod.DELETE,
+                HttpMethod.PATCH,
                 new HttpEntity<>(headers),
-                DeleteResponseDto.class
+                CancelSellOrderResponseDto.class
         );
 
         assertSoftly(softly -> {
             softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            softly.assertThat(Objects.requireNonNull(response.getBody()).getMessage())
-                    .contains("SellOrder deleted successfully");
-        });
-    }
-
-    @Test
-    @DisplayName("판매 주문 리스트 조회 테스트")
-    void getSellOrders_shouldReturnListOfOrders() {
-        ResponseEntity<GetSellOrdersResponseDto> response = restTemplate.exchange(
-                "/api/sell",
-                HttpMethod.GET,
-                new HttpEntity<>(headers),
-                GetSellOrdersResponseDto.class
-        );
-
-        assertSoftly(softly -> {
-            softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            softly.assertThat(Objects.requireNonNull(response.getBody()).getSellOrders()).hasSize(1);
+            softly.assertThat(Objects.requireNonNull(response.getBody()).getOrderId())
+                    .isEqualTo(savedSellOrder.getId());
         });
     }
 }

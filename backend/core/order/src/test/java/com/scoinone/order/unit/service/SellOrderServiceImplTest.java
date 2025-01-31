@@ -13,6 +13,7 @@ import jakarta.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -64,14 +65,15 @@ class SellOrderServiceImplTest {
     }
 
     @Test
-    @DisplayName("판매 주문 삭제 테스트")
-    public void testDeleteSellOrder() {
+    @DisplayName("판매 주문 취소 테스트")
+    public void testCancelSellOrder() {
         Long sellOrderId = 1L;
 
-        when(sellOrderRepository.deleteByIdAndSellerId(sellOrderId, testSellerId)).thenReturn(1L);
+        when(sellOrderRepository.findByIdAndSellerIdAndStatus(sellOrderId, testSellerId, OrderStatus.PENDING))
+                .thenReturn(Optional.ofNullable(SellOrderEntity.builder().build()));
 
-        sellOrderService.deleteSellOrder(sellOrderId, testSellerId);
-        verify(sellOrderRepository).deleteByIdAndSellerId(sellOrderId, testSellerId);
+        sellOrderService.cancelSellOrder(sellOrderId, testSellerId);
+        verify(sellOrderRepository).findByIdAndSellerIdAndStatus(sellOrderId, testSellerId, OrderStatus.PENDING);
     }
 
     @Test
