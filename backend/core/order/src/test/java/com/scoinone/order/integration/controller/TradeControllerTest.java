@@ -3,13 +3,14 @@ package com.scoinone.order.integration.controller;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.scoinone.order.config.TestContainerConfig;
-import com.scoinone.order.dto.response.trade.GetTradesResponseDto;
+import com.scoinone.order.dto.response.trade.GetTradeResponseDto;
 import com.scoinone.order.repository.BuyOrderRepository;
 import com.scoinone.order.repository.SellOrderRepository;
 import com.scoinone.order.repository.TradeRepository;
 import com.scoinone.order.service.BuyOrderService;
 import com.scoinone.order.service.SellOrderService;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -86,18 +88,18 @@ class TradeControllerTest {
     }
 
     @Test
-    @DisplayName("사용자 거래 조회 테스트")
+    @DisplayName("사용자 거래 전체 조회 테스트")
     void getTrades_shouldReturnListOfTrades() {
-        ResponseEntity<GetTradesResponseDto> response = restTemplate.exchange(
+        ResponseEntity<List<GetTradeResponseDto>> response = restTemplate.exchange(
                 "/api/trade",
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
-                GetTradesResponseDto.class
+                new ParameterizedTypeReference<List<GetTradeResponseDto>>() {}
         );
 
         assertSoftly(softly -> {
             softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            softly.assertThat(Objects.requireNonNull(response.getBody()).getTrades()).hasSize(2);
+            softly.assertThat(Objects.requireNonNull(response.getBody()).size()).isEqualTo(2);
         });
     }
 }
