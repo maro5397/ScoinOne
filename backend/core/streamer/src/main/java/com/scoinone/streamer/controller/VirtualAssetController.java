@@ -2,7 +2,6 @@ package com.scoinone.streamer.controller;
 
 import com.scoinone.streamer.dto.request.virtualasset.UpdateVirtualAssetRequestDto;
 import com.scoinone.streamer.dto.response.virtualasset.GetVirtualAssetResponseDto;
-import com.scoinone.streamer.dto.response.virtualasset.GetVirtualAssetsResponseDto;
 import com.scoinone.streamer.dto.response.virtualasset.UpdateVirtualAssetResponseDto;
 import com.scoinone.streamer.entity.VirtualAssetEntity;
 import com.scoinone.streamer.mapper.VirtualAssetMapper;
@@ -25,10 +24,10 @@ public class VirtualAssetController {
     private final VirtualAssetService virtualAssetService;
 
     @GetMapping
-    public ResponseEntity<GetVirtualAssetsResponseDto> getVirtualAssets() {
+    public ResponseEntity<List<GetVirtualAssetResponseDto>> getVirtualAssets() {
         List<VirtualAssetEntity> virtualAssets = virtualAssetService.getVirtualAssets();
         return new ResponseEntity<>(
-                VirtualAssetMapper.INSTANCE.listToGetVirtualAssetsResponseDto(virtualAssets),
+                VirtualAssetMapper.INSTANCE.virtualAssetsToGetVirtualAssetsResponseDto(virtualAssets),
                 HttpStatus.OK
         );
     }

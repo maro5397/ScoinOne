@@ -5,7 +5,6 @@ import com.scoinone.streamer.dto.request.streamer.CreateStreamerRequestDto;
 import com.scoinone.streamer.dto.request.streamer.UpdateStreamerRequestDto;
 import com.scoinone.streamer.dto.response.streamer.CreateStreamerResponseDto;
 import com.scoinone.streamer.dto.response.streamer.GetStreamerResponseDto;
-import com.scoinone.streamer.dto.response.streamer.GetStreamersResponseDto;
 import com.scoinone.streamer.dto.response.streamer.UpdateStreamerResponseDto;
 import com.scoinone.streamer.entity.StreamerEntity;
 import com.scoinone.streamer.mapper.StreamerMapper;
@@ -50,10 +49,10 @@ public class StreamerController {
     }
 
     @GetMapping
-    public ResponseEntity<GetStreamersResponseDto> getStreamers() {
+    public ResponseEntity<List<GetStreamerResponseDto>> getStreamers() {
         List<StreamerEntity> streamers = streamerService.getStreamers();
         return new ResponseEntity<>(
-                StreamerMapper.INSTANCE.listToGetStreamersResponseDto(streamers),
+                StreamerMapper.INSTANCE.streamersToGetStreamersResponseDto(streamers),
                 HttpStatus.OK
         );
     }
