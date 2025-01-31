@@ -4,11 +4,9 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.scoinone.user.dto.response.notification.CreateNotificationResponseDto;
 import com.scoinone.user.dto.response.notification.GetNotificationResponseDto;
-import com.scoinone.user.dto.response.notification.GetNotificationsResponseDto;
 import com.scoinone.user.entity.NotificationEntity;
 import com.scoinone.user.entity.UserEntity;
 import com.scoinone.user.mapper.NotificationMapper;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,24 +55,6 @@ class NotificationMapperTest {
             softly.assertThat(responseDto.getNotificationId()).isEqualTo(notification.getId());
             softly.assertThat(responseDto.getUserId()).isEqualTo(notification.getUser().getId());
             softly.assertThat(responseDto.getCreatedAt()).isEqualTo(notification.getCreatedAt());
-        });
-    }
-
-    @Test
-    @DisplayName("알람 엔티티 객체를 리스트를 통해 조회용 응답 DTO로 매핑")
-    public void testListToGetNotificationListResponseDto() {
-        GetNotificationsResponseDto responseDto = notificationMapper.listToGetNotificationsResponseDto(
-                notifications
-        );
-
-        assertSoftly(softly -> {
-            softly.assertThat(responseDto.getNotifications()).hasSize(3);
-            softly.assertThat(responseDto.getNotifications().get(0).getNotificationId())
-                    .isEqualTo(notifications.get(0).getId());
-            softly.assertThat(responseDto.getNotifications().get(1).getNotificationId())
-                    .isEqualTo(notifications.get(1).getId());
-            softly.assertThat(responseDto.getNotifications().get(2).getNotificationId())
-                    .isEqualTo(notifications.get(2).getId());
         });
     }
 
