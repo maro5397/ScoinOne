@@ -69,10 +69,10 @@ public interface OrderMapper {
         return responseDto;
     }
 
-    default GetOrderByUserIdResponseDto orderToGetOrderByUserIdResponseDto(OrderEntity order, String orderId) {
+    default GetOrderByUserIdResponseDto orderToGetOrderByUserIdResponseDto(OrderEntity order) {
         GetOrderByUserIdResponseDto dto = new GetOrderByUserIdResponseDto();
 
-        dto.setOrderId(orderId);
+        dto.setOrderId(order.getId());
         dto.setVirtualAssetId(order.getVirtualAssetId());
         dto.setQuantity(order.getQuantity());
         dto.setPrice(order.getPrice());
