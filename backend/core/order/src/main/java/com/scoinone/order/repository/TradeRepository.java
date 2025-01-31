@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -21,7 +22,7 @@ public interface TradeRepository extends JpaRepository<TradeEntity, Long> {
         WHERE t.buyOrder.buyerId = :userId
         OR t.sellOrder.sellerId = :userId
     """)
-    List<TradeEntity> findTradesByUserId(String userId);
+    List<TradeEntity> findTradesByUserId(@Param("userId") String userId);
 
     @Query("""
         SELECT t
@@ -29,19 +30,22 @@ public interface TradeRepository extends JpaRepository<TradeEntity, Long> {
         WHERE (t.virtualAssetId = :virtualAssetId AND t.buyOrder.buyerId = :userId)
         OR (t.virtualAssetId = :virtualAssetId AND t.sellOrder.sellerId = :userId)
     """)
-    List<TradeEntity> findTradesByUserIdAndVirtualAssetId(String userId, String virtualAssetId);
+    List<TradeEntity> findTradesByUserIdAndVirtualAssetId(
+            @Param("userId") String userId,
+            @Param("virtualAssetId") String virtualAssetId
+    );
 
     @Query("""
         SELECT t FROM TradeEntity t
         WHERE t.virtualAssetId = :virtualAssetId
-        AND (:start IS NULL OR t.createdAt >= :start)
-        AND (:end IS NULL OR t.createdAt <= :end)
+        AND (:startDate IS NULL OR t.createdAt >= :startDate)
+        AND (:endDate IS NULL OR t.createdAt <= :endDate)
         ORDER BY t.createdAt ASC
     """)
     List<TradeEntity> findByVirtualAssetIdAndOptionalCreatedAt(
-            String virtualAssetId,
-            LocalDateTime start,
-            LocalDateTime end
+            @Param("virtualAssetId") String virtualAssetId,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate
     );
 
     @Query("""
@@ -52,7 +56,7 @@ public interface TradeRepository extends JpaRepository<TradeEntity, Long> {
         WHERE t.virtualAssetId = :virtualAssetId
         AND DATE(t.createdAt) = CURRENT_DATE
     """)
-    Optional<BigDecimal> findVolumePowerByVirtualAssetId(String virtualAssetId);
+    Optional<BigDecimal> findVolumePowerByVirtualAssetId(@Param("virtualAssetId") String virtualAssetId);
 
     @Query(
             value = """
@@ -64,7 +68,7 @@ public interface TradeRepository extends JpaRepository<TradeEntity, Long> {
                     """,
             nativeQuery = true
     )
-    Optional<BigDecimal> findPreviousCloseByVirtualAssetId(String virtualAssetId);
+    Optional<BigDecimal> findPreviousCloseByVirtualAssetId(@Param("virtualAssetId") String virtualAssetId);
 
     @Query("""
         SELECT MAX(t.price)
@@ -72,7 +76,7 @@ public interface TradeRepository extends JpaRepository<TradeEntity, Long> {
         WHERE t.virtualAssetId = :virtualAssetId
         AND DATE(t.createdAt) = CURRENT_DATE
     """)
-    Optional<BigDecimal> findHighPriceByVirtualAssetId(String virtualAssetId);
+    Optional<BigDecimal> findHighPriceByVirtualAssetId(@Param("virtualAssetId") String virtualAssetId);
 
     @Query("""
         SELECT MIN(t.price)
@@ -80,7 +84,7 @@ public interface TradeRepository extends JpaRepository<TradeEntity, Long> {
         WHERE t.virtualAssetId = :virtualAssetId
         AND DATE(t.createdAt) = CURRENT_DATE
     """)
-    Optional<BigDecimal> findLowPriceByVirtualAssetId(String virtualAssetId);
+    Optional<BigDecimal> findLowPriceByVirtualAssetId(@Param("virtualAssetId") String virtualAssetId);
 
     @Query(
             value = """
@@ -91,7 +95,7 @@ public interface TradeRepository extends JpaRepository<TradeEntity, Long> {
                     """,
             nativeQuery = true
     )
-    Optional<BigDecimal> findTotalVolumeByVirtualAssetId(String virtualAssetId);
+    Optional<BigDecimal> findTotalVolumeByVirtualAssetId(@Param("virtualAssetId") String virtualAssetId);
 
     @Query(
             value = """
@@ -102,5 +106,5 @@ public interface TradeRepository extends JpaRepository<TradeEntity, Long> {
                     """,
             nativeQuery = true
     )
-    Optional<BigDecimal> findTotalMoneyVolumeByVirtualAssetId(String virtualAssetId);
+    Optional<BigDecimal> findTotalMoneyVolumeByVirtualAssetId(@Param("virtualAssetId") String virtualAssetId);
 }
