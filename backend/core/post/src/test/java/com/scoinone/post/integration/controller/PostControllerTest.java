@@ -14,6 +14,7 @@ import com.scoinone.post.dto.response.post.UpdatePostResponseDto;
 import com.scoinone.post.entity.PostEntity;
 import com.scoinone.post.repository.PostRepository;
 import com.scoinone.post.service.PostService;
+import java.util.List;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
@@ -163,16 +165,16 @@ class PostControllerTest {
     @Test
     @DisplayName("사용자 질문 게시물 조회 테스트")
     void getQuestionPosts_shouldReturnListOfPosts() {
-        ResponseEntity<GetPostsResponseDto> response = restTemplate.exchange(
+        ResponseEntity<List<GetPostResponseDto>> response = restTemplate.exchange(
                 "/api/post/question",
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
-                GetPostsResponseDto.class
+                new ParameterizedTypeReference<List<GetPostResponseDto>>() {}
         );
 
         assertSoftly(softly -> {
             softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            softly.assertThat(Objects.requireNonNull(response.getBody()).getPosts()).hasSize(1);
+            softly.assertThat(Objects.requireNonNull(response.getBody()).size()).isEqualTo(1);
         });
     }
 
