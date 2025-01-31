@@ -7,12 +7,13 @@ import com.scoinone.user.config.UserDataInitializer;
 import com.scoinone.user.dto.common.DeleteResponseDto;
 import com.scoinone.user.dto.request.notification.CreateNotificationRequestDto;
 import com.scoinone.user.dto.response.notification.CreateNotificationResponseDto;
-import com.scoinone.user.dto.response.notification.GetNotificationsResponseDto;
+import com.scoinone.user.dto.response.notification.GetNotificationResponseDto;
 import com.scoinone.user.entity.NotificationEntity;
 import com.scoinone.user.entity.UserEntity;
 import com.scoinone.user.repository.NotificationRepository;
 import com.scoinone.user.service.NotificationService;
 import com.scoinone.user.service.UserService;
+import java.util.List;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +28,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -104,16 +106,16 @@ class NotificationControllerTest {
         notificationService.createNotification(savedUser.getEmail(), "Test Notification2");
         notificationService.createNotification(savedUser.getEmail(), "Test Notification3");
 
-        ResponseEntity<GetNotificationsResponseDto> response = restTemplate.exchange(
+        ResponseEntity<List<GetNotificationResponseDto>> response = restTemplate.exchange(
                 "/api/notification",
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
-                GetNotificationsResponseDto.class
+                new ParameterizedTypeReference<List<GetNotificationResponseDto>>() {}
         );
 
         assertSoftly(softly -> {
             softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-            softly.assertThat(Objects.requireNonNull(response.getBody()).getNotifications()).hasSize(4);
+            softly.assertThat(Objects.requireNonNull(response.getBody()).size()).isEqualTo(4);
         });
     }
 
